@@ -881,6 +881,15 @@ begin
     end;
     btnRelConsultasClick(Sender);
   end;
+
+  if Key = VK_F4 then
+  begin
+    if (cargoUsuario = 3) or (cargoUsuario = 4) then
+    begin
+      exit;
+    end;
+
+  end;
 end;
 
 procedure TfrmPrincipal.FormShow(Sender: TObject);

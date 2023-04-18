@@ -11,14 +11,13 @@ object dm: Tdm
       'Password=12345'
       'Server=bdteste.rpinfo.com.br'
       'DriverID=PG')
+    Connected = True
     LoginPrompt = False
     Left = 32
     Top = 8
   end
   object PgDriverLink: TFDPhysPgDriverLink
-    VendorLib = 
-      'C:\Users\mateus.5937\Desktop\ClinicaMedica\Win32\Debug\lib\libpq' +
-      '.dll'
+    VendorLib = 'C:\Users\User\Desktop\ClinicaMedica\Win32\Debug\lib\libpq.dll'
     Left = 96
     Top = 8
   end
@@ -953,6 +952,7 @@ object dm: Tdm
     Top = 112
   end
   object qryCarteirinha: TFDQuery
+    Active = True
     Connection = Connection
     SQL.Strings = (
       
@@ -2386,6 +2386,7 @@ object dm: Tdm
     end
   end
   object qryRelConsultas: TFDQuery
+    Active = True
     Connection = Connection
     SQL.Strings = (
       
@@ -2415,7 +2416,7 @@ object dm: Tdm
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45033.833403067100000000
-    ReportOptions.LastChange = 45033.833403067100000000
+    ReportOptions.LastChange = 45034.654467963000000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -2540,13 +2541,14 @@ object dm: Tdm
         FillGap.Right = 0
         Frame.Typ = []
         Height = 188.976500000000000000
-        Top = 275.905690000000000000
+        Top = 321.260050000000000000
         Width = 718.110700000000000000
         DataSet = relDsConsultas
         DataSetName = 'dsConsultas'
         RowCount = 0
         object Memo2: TfrxMemoView
           AllowVectorExport = True
+          Top = 18.897650000000000000
           Width = 124.000000000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2564,6 +2566,7 @@ object dm: Tdm
         object Memo3: TfrxMemoView
           AllowVectorExport = True
           Left = 142.897650000000000000
+          Top = 18.897650000000000000
           Width = 740.000000000000000000
           Height = 18.897650000000000000
           DataField = 'nome_paci_cons'
@@ -2577,43 +2580,6 @@ object dm: Tdm
           Frame.Typ = []
           Memo.UTF8W = (
             '[dsConsultas."nome_paci_cons"]')
-          ParentFont = False
-          Style = 'Data'
-        end
-        object Memo4: TfrxMemoView
-          AllowVectorExport = True
-          Top = 18.897650000000000000
-          Width = 124.000000000000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = []
-          Fill.BackColor = 15790320
-          Memo.UTF8W = (
-            'Data da Consulta:')
-          ParentFont = False
-          Style = 'Header'
-        end
-        object Memo5: TfrxMemoView
-          AllowVectorExport = True
-          Left = 142.897650000000000000
-          Top = 18.897650000000000000
-          Width = 78.000000000000000000
-          Height = 18.897650000000000000
-          DataField = 'dataconsulta'
-          DataSet = relDsConsultas
-          DataSetName = 'dsConsultas'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[dsConsultas."dataconsulta"]')
           ParentFont = False
           Style = 'Data'
         end
@@ -2884,8 +2850,8 @@ object dm: Tdm
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 26.456710000000000000
-        Top = 525.354670000000000000
+        Height = 27.456710000000000000
+        Top = 570.709030000000000000
         Width = 718.110700000000000000
         object Memo20: TfrxMemoView
           Align = baWidth
@@ -2913,7 +2879,17 @@ object dm: Tdm
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            'Page [Page#]')
+            'Pagin'#225' [Page#]')
+        end
+        object Memo23: TfrxMemoView
+          Align = baCenter
+          AllowVectorExport = True
+          Left = 213.543445000000000000
+          Width = 291.023810000000000000
+          Height = 18.897650000000000000
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'N'#250'mero de consultas: [COUNT(MasterData1)]')
         end
       end
       object PageHeader1: TfrxPageHeader
@@ -3314,6 +3290,37 @@ object dm: Tdm
           HightQuality = False
           Transparent = False
           TransparentColor = clWhite
+        end
+      end
+      object GroupHeader1: TfrxGroupHeader
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 22.677180000000000000
+        Top = 275.905690000000000000
+        Width = 718.110700000000000000
+        Condition = 'dsConsultas."dataconsulta"'
+        object Memo5: TfrxMemoView
+          AllowVectorExport = True
+          Left = 3.055040000000000000
+          Width = 232.960730000000000000
+          Height = 18.897650000000000000
+          DataField = 'dataconsulta'
+          DataSet = relDsConsultas
+          DataSetName = 'dsConsultas'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[dsConsultas."dataconsulta"]')
+          ParentFont = False
+          Style = 'Data'
         end
       end
     end

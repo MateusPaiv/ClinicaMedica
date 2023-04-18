@@ -41,7 +41,7 @@ object frmRelatorioCons: TfrmRelatorioCons
       Caption = 'Selecione a data final:'
     end
     object btnRelatorio: TSpeedButton
-      Left = 448
+      Left = 434
       Top = 232
       Width = 145
       Height = 41
@@ -91,18 +91,44 @@ object frmRelatorioCons: TfrmRelatorioCons
       Width = 314
       Height = 29
       TabOrder = 3
-      TextHint = 'Digite um nome aqui!'
+      TextHint = 'Digite o nome do paciente aqui!'
       Visible = False
-      OnExit = edtNomeExit
     end
     object rdFiltroNome: TRadioButton
-      Left = 104
+      Left = 41
       Top = 145
-      Width = 138
+      Width = 217
       Height = 17
-      Caption = 'Filtrar por nome'
+      Caption = 'Filtrar por nome do paciente'
       TabOrder = 4
       OnClick = rdFiltroNomeClick
+    end
+    object rdRetirarFiltro: TRadioButton
+      Left = 41
+      Top = 216
+      Width = 113
+      Height = 17
+      Caption = 'Retirar filtro'
+      TabOrder = 5
+      OnClick = rdRetirarFiltroClick
+    end
+    object rdFiltroMedico: TRadioButton
+      Left = 41
+      Top = 176
+      Width = 217
+      Height = 17
+      Caption = 'FIltrar pelo nome do m'#233'dico'
+      TabOrder = 6
+      OnClick = rdFiltroMedicoClick
+    end
+    object edtMedico: TEdit
+      Left = 264
+      Top = 174
+      Width = 314
+      Height = 29
+      TabOrder = 7
+      TextHint = 'Digite o nome do m'#233'dico aqui!'
+      Visible = False
     end
   end
 end

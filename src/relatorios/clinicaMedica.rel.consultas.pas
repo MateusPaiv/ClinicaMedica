@@ -20,18 +20,23 @@ type
     btnRelatorio: TSpeedButton;
     edtNome: TEdit;
     rdFiltroNome: TRadioButton;
+    rdRetirarFiltro: TRadioButton;
+    rdFiltroMedico: TRadioButton;
+    edtMedico: TEdit;
     procedure btnRelatorioClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure edtNomeExit(Sender: TObject);
     procedure rdFiltroNomeClick(Sender: TObject);
+    procedure rdRetirarFiltroClick(Sender: TObject);
+    procedure rdFiltroMedicoClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     procedure AbrirRelatorio(filtro: integer);
-    procedure AbrirRelatorioComNome(filtro: integer; nome: string);
+    procedure AbrirRelatorioComNome(filtro: integer; tipo: integer;
+      nome: string);
     procedure AbrirRelatorioSemFiltro;
-    procedure AbrirRelatorioComNomeSemfiltro(filtro, nome);
+    procedure AbrirRelatorioComNomeSemfiltro(nome: string; tipo: integer);
 
   end;
 
@@ -63,18 +68,57 @@ begin
 end;
 
 procedure TfrmRelatorioCons.AbrirRelatorioComNome(filtro: integer;
-  nome: string);
+  tipo: integer; nome: string);
+var
+  sql: string;
 begin
+  case tipo of
+    0:
+      sql := 'AND cons.nome_paci_cons LIKE :nome';
+    1:
+      sql := 'AND u.nome_user LIKE :nome';
+  end;
+
   dm.qryRelConsultas.close;
   dm.qryRelConsultas.sql.clear;
   dm.qryRelConsultas.sql.add
     ('select cons.* , p.cpf_paci , u.nome_user , u.crm, conv.nome_conv from consultas as cons inner join pacientes as p on cons.id_cons_paciente = p.id_paci');
   dm.qryRelConsultas.sql.add
-    ('inner join usuarios as u on cons.id_cons_medico = u.id_func_user inner join convenios as conv on conv.id_conv = cons.id_cons_conv where cons.status = :filtro AND dataconsulta BETWEEN :datainicio AND :datafim AND nome_paci_cons LIKE :nome');
+    ('inner join usuarios as u on cons.id_cons_medico = u.id_func_user inner join convenios as conv on conv.id_conv = cons.id_cons_conv where cons.status = :filtro AND cons.dataconsulta BETWEEN :datainicio AND :datafim '
+    + sql);
   dm.qryRelConsultas.parambyname('filtro').value := filtro;
   dm.qryRelConsultas.parambyname('datainicio').asdate := edtDateInicio.Date;
   dm.qryRelConsultas.parambyname('datafim').asdate := edtDateFim.Date;
-  dm.qryRelConsultas.parambyname('nome').value := nome;
+  dm.qryRelConsultas.parambyname('nome').value := '%' + nome + '%';
+  dm.qryRelConsultas.open;
+
+  dm.relconsultas.Variables.clear;
+  dm.relconsultas.ShowReport();
+end;
+
+procedure TfrmRelatorioCons.AbrirRelatorioComNomeSemfiltro(nome: string;
+  tipo: integer);
+var
+  sql: string;
+begin
+
+  case tipo of
+    0:
+      sql := 'AND cons.nome_paci_cons LIKE :nome';
+    1:
+      sql := 'AND u.nome_user LIKE :nome';
+  end;
+
+  dm.qryRelConsultas.close;
+  dm.qryRelConsultas.sql.clear;
+  dm.qryRelConsultas.sql.add
+    ('select cons.* , p.cpf_paci , u.nome_user , u.crm, conv.nome_conv from consultas as cons inner join pacientes as p on cons.id_cons_paciente = p.id_paci');
+  dm.qryRelConsultas.sql.add
+    ('inner join usuarios as u on cons.id_cons_medico = u.id_func_user inner join convenios as conv on conv.id_conv = cons.id_cons_conv where dataconsulta BETWEEN :datainicio AND :datafim '
+    + sql);
+  dm.qryRelConsultas.parambyname('datainicio').asdate := edtDateInicio.Date;
+  dm.qryRelConsultas.parambyname('datafim').asdate := edtDateFim.Date;
+  dm.qryRelConsultas.parambyname('nome').value := '%' + nome + '%';
   dm.qryRelConsultas.open;
 
   dm.relconsultas.Variables.clear;
@@ -99,6 +143,24 @@ end;
 
 procedure TfrmRelatorioCons.btnRelatorioClick(Sender: TObject);
 begin
+  if rdFiltroNome.Checked = true then
+  begin
+    if edtNome.Text = '' then
+    begin
+      MessageDlg('Preencha o nome do paciente', mtInformation, [mbOK], 0);
+      exit;
+    end;
+  end;
+
+  if rdFiltroMedico.Checked = true then
+  begin
+    if edtMedico.Text = '' then
+    begin
+      MessageDlg('Preencha o nome do Médico', mtInformation, [mbOK], 0);
+      exit;
+    end;
+  end;
+
   if cmbStatusCons.Text = '' then
   begin
     MessageDlg('Preencha o campo de filtro', mtInformation, [mbOK], 0);
@@ -131,21 +193,36 @@ begin
 
     case filtro of
       0:
-        AbrirRelatorioComNome(filtro, edtNome.Text);
+        AbrirRelatorioComNome(filtro, 0, edtNome.Text);
       1:
-        AbrirRelatorioComNome(filtro, edtNome.Text);
+        AbrirRelatorioComNome(filtro, 0, edtNome.Text);
       2:
-        AbrirRelatorioComNome(filtro, edtNome.Text);
+        AbrirRelatorioComNome(filtro, 0, edtNome.Text);
       3:
-        AbrirRelatorioComNome(filtro, edtNome.Text);
+        AbrirRelatorioComNome(filtro, 0, edtNome.Text);
       4:
-        AbrirRelatorioComNomeSemfiltro(filtro, edtNome.Text);
+        AbrirRelatorioComNomeSemfiltro(edtNome.Text, 0);
+    end;
+
+  end
+  else if rdFiltroMedico.Checked = true then
+  begin
+
+    case filtro of
+      0:
+        AbrirRelatorioComNome(filtro, 1, edtMedico.Text);
+      1:
+        AbrirRelatorioComNome(filtro, 1, edtMedico.Text);
+      2:
+        AbrirRelatorioComNome(filtro, 1, edtMedico.Text);
+      3:
+        AbrirRelatorioComNome(filtro, 1, edtMedico.Text);
+      4:
+        AbrirRelatorioComNomeSemfiltro(edtMedico.Text, 1);
     end;
 
   end
   else
-  begin
-
     case filtro of
       0:
         AbrirRelatorio(filtro);
@@ -159,19 +236,6 @@ begin
         AbrirRelatorioSemFiltro;
     end;
 
-  end;
-
-end;
-
-procedure TfrmRelatorioCons.edtNomeExit(Sender: TObject);
-begin
-  if edtNome.Text = '' then
-  begin
-    MessageDlg('Preencha o campo nome para a busca ser feita corretamente!',
-      mtInformation, [mbOK], 0);
-    edtNome.SetFocus;
-
-  end;
 end;
 
 procedure TfrmRelatorioCons.FormClose(Sender: TObject;
@@ -180,10 +244,28 @@ begin
   Action := CaFree;
 end;
 
+procedure TfrmRelatorioCons.rdRetirarFiltroClick(Sender: TObject);
+begin
+  edtNome.Visible := false;
+  edtNome.clear;
+  edtMedico.Visible := false;
+  edtMedico.clear;
+end;
+
+procedure TfrmRelatorioCons.rdFiltroMedicoClick(Sender: TObject);
+begin
+  edtMedico.Visible := true;
+  edtMedico.SetFocus;
+  edtNome.Visible := false;
+  edtNome.Text := '';
+end;
+
 procedure TfrmRelatorioCons.rdFiltroNomeClick(Sender: TObject);
 begin
   edtNome.Visible := true;
   edtNome.SetFocus;
+  edtMedico.Visible := false;
+  edtMedico.Text := '';
 end;
 
 end.
