@@ -95,6 +95,7 @@ type
     pnlOpcoesRelatorios: TPanel;
     btnRelConsultas: TSpeedButton;
     btnUser: TSpeedButton;
+    btnPacientes: TSpeedButton;
     procedure imgFecharClick(Sender: TObject);
     procedure Timage2Click(Sender: TObject);
     procedure btnFuncionariosClick(Sender: TObject);

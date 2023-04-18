@@ -1,9 +1,10 @@
 object frmRelatorioCons: TfrmRelatorioCons
   Left = 0
   Top = 0
+  BorderStyle = bsDialog
   Caption = 'Relat'#243'rio de consultas'
-  ClientHeight = 327
-  ClientWidth = 646
+  ClientHeight = 337
+  ClientWidth = 656
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,15 +19,13 @@ object frmRelatorioCons: TfrmRelatorioCons
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 646
-    Height = 327
+    Width = 656
+    Height = 337
     Align = alClient
     BevelOuter = bvNone
     Color = clWhite
     ParentBackground = False
     TabOrder = 0
-    ExplicitLeft = 784
-    ExplicitTop = 224
     object Label1: TLabel
       Left = 83
       Top = 48
@@ -35,15 +34,15 @@ object frmRelatorioCons: TfrmRelatorioCons
       Caption = 'Selecione a data inicial:'
     end
     object Label2: TLabel
-      Left = 381
+      Left = 429
       Top = 48
       Width = 149
-      Height = 28
+      Height = 21
       Caption = 'Selecione a data final:'
     end
     object btnRelatorio: TSpeedButton
-      Left = 240
-      Top = 240
+      Left = 448
+      Top = 232
       Width = 145
       Height = 41
       Caption = 'Gerar relat'#243'rio'
@@ -62,7 +61,7 @@ object frmRelatorioCons: TfrmRelatorioCons
       TabOrder = 0
     end
     object edtDateFim: TDatePicker
-      Left = 381
+      Left = 429
       Top = 75
       Date = 45033.000000000000000000
       DateFormat = 'dd/MM/yyyy'
@@ -74,8 +73,8 @@ object frmRelatorioCons: TfrmRelatorioCons
       TabOrder = 1
     end
     object cmbStatusCons: TComboBox
-      Left = 240
-      Top = 150
+      Left = 264
+      Top = 78
       Width = 145
       Height = 29
       TabOrder = 2
@@ -85,6 +84,25 @@ object frmRelatorioCons: TfrmRelatorioCons
         'Conclu'#237'da'
         'N'#227'o compareceu'
         'Todos')
+    end
+    object edtNome: TEdit
+      Left = 264
+      Top = 139
+      Width = 314
+      Height = 29
+      TabOrder = 3
+      TextHint = 'Digite um nome aqui!'
+      Visible = False
+      OnExit = edtNomeExit
+    end
+    object rdFiltroNome: TRadioButton
+      Left = 104
+      Top = 145
+      Width = 138
+      Height = 17
+      Caption = 'Filtrar por nome'
+      TabOrder = 4
+      OnClick = rdFiltroNomeClick
     end
   end
 end
