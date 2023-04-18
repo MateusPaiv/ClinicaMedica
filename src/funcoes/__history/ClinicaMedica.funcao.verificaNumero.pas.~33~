@@ -1,0 +1,48 @@
+unit ClinicaMedica.funcao.verificaNumero;
+
+interface
+
+uses
+  System.SysUtils, Vcl.Dialogs, ClinicaMedica.conn.Conexao,
+  FireDAC.Comp.Client;
+
+function verificaNumero(numero: string): string;
+
+implementation
+
+{ TVerificaEmail }
+
+function verificaNumero(numero: string): string;
+var
+  numeroLimpo: string;
+  i: integer;
+begin
+  numeroLimpo := ' ';
+
+  for i := 1 to Length(numero) do
+  begin
+    if pos(Copy(numero, i, 1), '"!%$#@&*().,:;/<>[]{}=+-_\|') = 0 then
+      numeroLimpo := numeroLimpo + Copy(numero, i, 1);
+  end;
+
+
+
+  dm.qryVerificaEmail.Connection := dm.Connection;
+  dm.qryVerificaEmail.Close;
+  dm.qryVerificaEmail.SQL.Clear;
+  dm.qryVerificaEmail.SQL.Add
+    ('select telefone_func from funcionarios where telefone_func = :telefone');
+  dm.qryVerificaEmail.ParamByName('telefone').AsString := numeroLimpo;
+  dm.qryVerificaEmail.open;
+
+  if dm.qryVerificaEmail.RecordCount > 0 then
+  begin
+    MessageDlg('telefone já existe!', mtInformation, [mbOK], 1);
+    Abort;
+  end
+  else
+    Result := numeroLimpo;
+
+end;
+
+end.

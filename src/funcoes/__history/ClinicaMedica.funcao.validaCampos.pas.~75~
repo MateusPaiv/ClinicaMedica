@@ -1,0 +1,132 @@
+unit ClinicaMedica.funcao.validaCampos;
+
+interface
+
+uses
+  Vcl.Forms, Vcl.StdCtrls, Vcl.Dialogs, Vcl.Mask, SysUtils;
+
+function validaCamposObrigatorios(Form: TForm): boolean;
+function RemoveCaracteres(asString: string): string;
+procedure limpacampos(Form: TForm);
+
+implementation
+
+function validaCamposObrigatorios(Form: TForm): boolean;
+var
+  i: integer;
+begin
+
+  // TEdit
+  for i := 0 to Form.ComponentCount - 1 do
+  begin
+    if Form.Components[i] is TEdit then
+    begin
+
+      if ((Form.Components[i] as TEdit).Hint <> '') and
+        (RemoveCaracteres((Form.Components[i] as TEdit).Text) = '') then
+      begin
+        messageDlg('Falta preencher o campo ' + (Form.Components[i] as TEdit).Hint, mtInformation, [mbOK], 1);
+        (Form.Components[i] as TEdit).SetFocus;
+        Result := false;
+        abort;
+      end
+      else
+        Result := true;
+
+    end;
+  end;
+
+
+  // TComboBox
+
+  for i := 0 to Form.ComponentCount - 1 do
+  begin
+    if Form.Components[i] is TComboBox then
+    begin
+      if ((Form.Components[i] as TComboBox).Hint <> '') and
+        ((Form.Components[i] as TComboBox).Text = '') then
+      begin
+        messageDlg('Falta preencher o campo ' + ''#13'' +
+          (Form.Components[i] as TComboBox).Hint, mtInformation, [mbOK], 1);
+        (Form.Components[i] as TComboBox).SetFocus;
+        Result := false;
+        abort;
+
+      end
+      else
+        Result := true;
+    end;
+
+  end;
+
+  for i := 0 to Form.ComponentCount - 1 do
+  begin
+    if Form.Components[i] is TMaskEdit then
+    begin
+      if ((Form.Components[i] as TMaskEdit).Hint <> '') and
+        ((Form.Components[i] as TMaskEdit).Text = '') then
+      begin
+        messageDlg('Falta preencher o campo ' + ''#13'' +
+          (Form.Components[i] as TMaskEdit).Hint, mtInformation, [mbOK], 1);
+        (Form.Components[i] as TMaskEdit).SetFocus;
+        Result := false;
+        abort;
+
+      end
+      else
+        Result := true;
+    end;
+
+  end;
+
+end;
+
+function RemoveCaracteres(asString: string): string;
+var
+  i: integer;
+  limpos: string;
+begin
+
+  limpos := '';
+
+  for i := 1 to Length(asString) do
+  begin
+    if pos(Copy(asString, i, 1), '"!%$#@&*().,:;/<>[]{}=+-_\|') = 0 then
+      limpos := limpos + Copy(asString, i, 1);
+  end;
+
+  Result := limpos;
+
+end;
+
+procedure limpacampos(Form: TForm);
+var
+  i: integer;
+begin
+  for i := 0 to Form.ComponentCount - 1 do
+  begin
+    if Form.Components[i] is TEdit then
+    begin
+      (Form.Components[i] as TEdit).Clear;
+    end;
+
+  end;
+
+  for i := 0 to Form.ComponentCount - 1 do
+  begin
+    if Form.Components[i] is TComboBox then
+    begin
+      (Form.Components[i] as TComboBox).Clear;
+    end;
+  end;
+
+  for i := 0 to Form.ComponentCount - 1 do
+  begin
+    if Form.Components[i] is TMaskEdit then
+    begin
+      (Form.Components[i] as TMaskEdit).Clear;
+    end;
+  end;
+end;
+
+end.

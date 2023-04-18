@@ -1,0 +1,63 @@
+unit ClinicaMedica.funcao.verificaemail;
+
+interface
+
+uses
+  System.SysUtils, Vcl.Dialogs, ClinicaMedica.conn.Conexao,
+  FireDAC.Comp.Client;
+
+function QtdCaracter(Char: string; Texto: string): integer;
+function ValidaEmail(email: string): boolean;
+
+implementation
+
+{ TVerificaEmail }
+
+function QtdCaracter(Char, Texto: string): integer;
+var
+  i, total: integer;
+begin
+  total := 0;
+  Texto := trim(Texto);
+
+  for i := 1 to Length(Texto) do
+  begin
+    if Texto[i] = Char then
+      total := total + 1;
+  end;
+
+  Result := total;
+end;
+
+function ValidaEmail(email: string): boolean;
+
+begin
+  if (Pos(' ', email) > 0) or (Pos('.', email) = 0) or
+    (QtdCaracter('@', email) <> 1) then
+  begin
+    MessageDlg('Email inválido', mtError, [mbOK], 1);
+    Result := false;
+    Abort;
+  end
+  else
+  begin
+    frmConexao.qryVerificaEmail.Connection := frmConexao.Connection;
+    frmConexao.qryVerificaEmail.Close;
+    frmConexao.qryVerificaEmail.SQL.Clear;
+    frmConexao.qryVerificaEmail.SQL.Add
+      ('select email from funcionarios where email = :email');
+    frmConexao.qryVerificaEmail.ParamByName('email').AsString := email;
+    frmConexao.qryVerificaEmail.open;
+
+    if frmConexao.qryVerificaEmail.RecordCount > 0 then
+    begin
+      MessageDlg('Email já existe!', mtInformation, [mbOK], 1);
+      Abort;
+    end
+    else
+      Result := True;
+  end;
+
+end;
+
+end.

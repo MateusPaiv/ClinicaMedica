@@ -1,0 +1,46 @@
+unit ClinicaMedica.classe.ValidaCampos;
+
+interface
+
+uses
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Imaging.pngimage, Vcl.ExtCtrls,
+  Vcl.Buttons, Vcl.StdCtrls, ClinicaMedica.funcoes.funcao, System.SysUtils,
+  ClinicaMedica.classe.RetiraMascara;
+
+type
+  TValidaCamposObrigatorios = class
+    Aviso: TAvisos;
+    RetiraMascara : TRetiraMascara;
+    procedure ValidaCamposObrigatórios(Form: TForm);
+  end;
+
+implementation
+
+{ TValidaCamposObrigatorios }
+
+procedure TValidaCamposObrigatorios.ValidaCamposObrigatórios(Form: TForm);
+var i: integer;
+    edit:TEdit;
+begin
+  RetiraMascara := TRetiraMascara.Create();
+  try
+     for i := 0 to Form.ComponentCount - 1 do begin
+         if Form.Components[i] is TEdit then  begin
+            edit:=(Form.Components[i] as  TEdit);
+            if Form.Components[i].Tag = 5 then begin
+
+               if (edit.Text) = ''  then begin
+                  Aviso := TAvisos.Create;
+                  Aviso.CriaMensagem('FORMULÁRIOS', 'CAMPO(S) VAZIOS','Faltou Preencher o(s) Campo(s) ' + (Form.Components[i] as TEdit).Hint,ExtractFilePath(Application.ExeName)+ '..\..\assets\FotoErro.png', 'OK');
+                  Aviso.Free;
+                  Exit;
+               end;
+            end;
+         end;
+     end;
+  finally
+     RetiraMascara.Free;
+  end;
+end;
+
+end.

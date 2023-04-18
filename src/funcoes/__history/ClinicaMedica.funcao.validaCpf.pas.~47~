@@ -1,0 +1,12 @@
+unit ClinicaMedica.funcao.validaCpf;
+
+interface
+
+uses
+  Vcl.Dialogs, System.SysUtils;
+
+function validaCpf(cpf: string): boolean;
+
+implementation
+
+end.

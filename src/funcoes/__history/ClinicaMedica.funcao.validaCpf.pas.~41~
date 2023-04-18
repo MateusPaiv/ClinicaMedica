@@ -1,0 +1,68 @@
+unit ClinicaMedica.funcao.validaCpf;
+
+interface
+
+uses
+  Vcl.Dialogs, System.SysUtils;
+
+function RemoveCaracteres(asString: string): string;
+function validaCpf(cpf: string): boolean;
+
+implementation
+
+function RemoveCaracteres(asString: string): string;
+var
+  i: integer;
+  cpf: string;
+begin
+  for i := 1 to Length(asString) do
+  begin
+    if pos(Copy(asString, i, 1), '"!%$#@&*().,:;/<>[]{}=+-_\|') = 0 then
+      cpf := cpf + Copy(asString, i, 1);
+  end;
+  ShowMessage(cpf);
+  validaCpf(cpf);
+end;
+
+function validaCpf(cpf: string): boolean;
+var
+  Soma, Resto, i: integer;
+  Digito: string;
+begin
+  Result := false;
+  if Length(cpf) <> 11 then
+  begin
+    MessageDlg('CPF inválido', mtInformation, [mbOK], 1);
+    exit;
+  end;
+  Soma := 0;
+  for i := 1 to 9 do
+    Soma := Soma + StrToInt(cpf[i]) * (11 - i);
+  Resto := Soma mod 11;
+  if Resto < 2 then
+    Digito := '0'
+  else
+    Digito := IntToStr(11 - Resto);
+  if cpf[10] <> Digito then
+  begin
+    MessageDlg('CPF inválido', mtInformation, [mbOK], 1);
+    exit;
+  end;
+  Soma := 0;
+  for i := 1 to 10 do
+    Soma := Soma + StrToInt(cpf[i]) * (12 - i);
+  Resto := Soma mod 11;
+  if Resto < 2 then
+    Digito := '0'
+  else
+    Digito := IntToStr(11 - Resto);
+  if cpf[11] <> Digito then
+  begin
+    MessageDlg('CPF inválido', mtInformation, [mbOK], 1);
+    exit;
+    Result := false;
+  end;
+
+end;
+
+end.

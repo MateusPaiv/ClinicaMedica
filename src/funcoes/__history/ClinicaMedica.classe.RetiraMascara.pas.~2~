@@ -1,0 +1,27 @@
+unit ClinicaMedica.classe.RetiraMascara;
+
+interface
+
+type
+  TRetiraMascara = class
+  private
+  public
+
+    function RemoveCaracteres(AString: string): string;
+  end;
+
+implementation
+
+{ TRetiraMascara }
+
+function TRetiraMascara.RemoveCaracteres(AString: string): string;
+var
+
+  i: integer;
+  limpos: string;
+
+begin
+
+end;
+
+end.

@@ -1,0 +1,104 @@
+unit ClinicaMedica.classe.funcionario.Cadastro;
+
+interface
+
+uses
+  FireDAC.Comp.Client, System.SysUtils;
+
+type
+
+  TFuncionario = class
+  private
+    FnomeFuncionario: string;
+    FConexao: TFDConnection;
+    Femail: string;
+    Fsenha: string;
+    FconfirmarSenha: string;
+    FFuncID: integer;
+    FCPF: string;
+    Fendereco: string;
+    Fcargo: integer;
+    Fremuneracao: currency;
+    FdataDeAdmissao: TDateTime;
+    Ftelefone: string;
+  public
+    constructor Create(Conexao: TFDConnection);
+    destructor Destroy; override;
+    property Conexao: TFDConnection read FConexao write FConexao;
+
+    property FuncID: integer read FFuncID write FFuncID;
+    property nomeFuncionario: string read FnomeFuncionario
+      write FnomeFuncionario;
+    property email: string read Femail write Femail;
+    property senha: string read Fsenha write Fsenha;
+    property CPF: string read FCPF write FCPF;
+    property endereco: string read Fendereco write Fendereco;
+    property cargo: integer read Fcargo write Fcargo;
+    property remuneracao: currency read Fremuneracao write Fremuneracao;
+    property dataDeAdmissao: TDateTime read FdataDeAdmissao write FdataDeAdmissao;
+    property telefone: string read Ftelefone write Ftelefone;
+
+    function inserirFuncionario(nomeFuncionario, email, senha,cpf, endereco, cargo, remuneracao,dataDeAdmissao,telefone:string): boolean;
+
+  end;
+
+var
+  QryConsulta: TFDQuery;
+
+implementation
+
+{ TFuncionario }
+
+constructor TFuncionario.Create(Conexao: TFDConnection);
+begin
+  FConexao := Conexao;
+
+  QryConsulta := TFDQuery.Create(nil);
+  QryConsulta.Connection := FConexao;
+end;
+
+destructor TFuncionario.Destroy;
+begin
+
+  inherited;
+end;
+function inserirFuncionario(nomeFuncionario, email, senha,cpf, endereco, cargo, remuneracao,dataDeAdmissao,telefone:string): boolean;
+
+begin
+  try
+    try
+      FConexao.Connected := true;
+      QryConsulta.Connection := FConexao;
+      QryConsulta.Close;
+      QryConsulta.SQL.Clear;
+
+      QryConsulta.SQL.Add('INSERT INTO funcionarios( nomefuncionario, email, senha, cpf, endereco, cargo, remuneracao, datadeadmissao) VALUES(:nomeFuncionario,:email,;senha,:cpf,:endereco,:cargo ,:remuneracao, :datadeadmissao)');
+
+
+      QryConsulta.ParamByName('nomeFuncionario').AsString := nomeFuncionario;
+      QryConsulta.ParamByName('email').AsString := email;
+      QryConsulta.ParamByName('senha').AsString := senha;
+      QryConsulta.ParamByName('cpf').AsString := CPF;
+      QryConsulta.ParamByName('endereco').AsString := endereco;
+      QryConsulta.ParamByName('cargo').asString := cargo;
+      QryConsulta.ParamByName('remuneracao').AsString := remuneracao;
+      QryConsulta.ParamByName('datadeadmissao').AsString := dataDeAdmmissao;
+
+
+      QryConsulta.ExecSQL;
+
+      Result := true;
+    Except
+      on E: Exception do
+      begin
+        Erro := E.Message;
+        Result := false;
+      end;
+
+    end;
+  finally
+    QryConsulta.Free;
+  end;
+end;
+
+end.

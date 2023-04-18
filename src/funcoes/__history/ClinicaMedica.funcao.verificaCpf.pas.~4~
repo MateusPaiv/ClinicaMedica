@@ -1,0 +1,19 @@
+unit ClinicaMedica.funcao.verificaCpf;
+
+interface
+
+uses
+
+  System.SysUtils, Vcl.Dialogs, ClinicaMedica.conn.Conexao,
+  FireDAC.Comp.Client;
+
+function verificaEmail(cpf: string): boolean;
+
+implementation
+
+function verificaEmail(cpf: string): boolean;
+begin
+
+end;
+
+end.

@@ -1,0 +1,62 @@
+unit ClinicaMedica.funcoes.funcao;
+
+interface
+uses System.SysUtils, Vcl.Forms;
+
+type
+  TAvisos = class
+  private
+    FTituloJanela: string;
+    FTituloMsg: string;
+    FMsg: string;
+    FCaminhoIcone: string;
+    FTipo: string;
+  public
+    property TituloJanela: string read FTituloJanela write FTituloJanela;
+    property TituloMsg: string read FTituloMsg write FTituloMsg;
+    property Msg: string read FMsg write FMsg;
+    property CaminhoIcone: string read FCaminhoIcone write FCaminhoIcone;
+    property Tipo: string read FTipo write FTipo;
+    function CriaMensagem(TituloJanela, TituloMsg, Msg, CaminhoIcone,    Tipo: string): Boolean;
+    function AvisoErro(TituloJanela, TituloMsg, Msg: string): Boolean;
+  end;
+
+implementation
+
+uses ClinicaMedica.view.MensagemDeAviso;
+
+{ TAvisos }
+
+function TAvisos.CriaMensagem(TituloJanela, TituloMsg, Msg, CaminhoIcone,
+  Tipo: string): Boolean;
+begin
+  Result := false;
+
+  frmMensagens := TfrmMensagens.Create(nil);
+  frmMensagens.TituloJanela := TituloJanela;
+  frmMensagens.TituloMsg := TituloMsg;
+  frmMensagens.Msg := Msg;
+
+  frmMensagens.CaminhoIcone := CaminhoIcone;
+  frmMensagens.ShowModal;
+  Result := frmMensagens.bRespostaMsg;
+  frmMensagens.Free;
+end;
+
+
+//        Aviso.CriaMensagem(, 'OK');
+function TAvisos.AvisoErro(TituloJanela, TituloMsg, Msg: string): Boolean;
+begin
+  Result := false;
+  frmMensagens := TfrmMensagens.Create(nil);
+  frmMensagens.TituloJanela := TituloJanela;
+  frmMensagens.TituloMsg := TituloMsg;
+  frmMensagens.Msg := Msg;
+
+  frmMensagens.CaminhoIcone := ExtractFilePath(Application.ExeName)+ '..\..\assets\FotoErro.png';
+  frmMensagens.ShowModal;
+  Result := frmMensagens.bRespostaMsg;
+  frmMensagens.Free;
+end;
+
+end.

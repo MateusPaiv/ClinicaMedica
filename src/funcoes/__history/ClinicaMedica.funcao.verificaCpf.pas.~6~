@@ -1,0 +1,33 @@
+unit ClinicaMedica.funcao.verificaCpf;
+
+interface
+
+uses
+
+  System.SysUtils, Vcl.Dialogs, ClinicaMedica.conn.Conexao,
+  FireDAC.Comp.Client;
+
+function verificaCPF(cpf: string): boolean;
+
+implementation
+
+function verificaCPF(cpf: string): boolean;
+begin
+      frmConexao.qryVerificaEmail.Connection := frmConexao.Connection;
+    frmConexao.qryVerificaEmail.Close;
+    frmConexao.qryVerificaEmail.SQL.Clear;
+    frmConexao.qryVerificaEmail.SQL.Add
+      ('select email from funcionarios where email = :email');
+    frmConexao.qryVerificaEmail.ParamByName('email').AsString := email;
+    frmConexao.qryVerificaEmail.open;
+
+    if frmConexao.qryVerificaEmail.RecordCount > 0 then
+    begin
+      MessageDlg('Email já existe!', mtInformation, [mbOK], 1);
+      Abort;
+    end
+    else
+      Result := True;
+end;
+
+end.

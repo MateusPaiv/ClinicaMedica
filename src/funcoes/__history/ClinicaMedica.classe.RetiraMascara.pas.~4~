@@ -1,0 +1,37 @@
+unit ClinicaMedica.classe.RetiraMascara;
+
+interface
+
+type
+  TRetiraMascara = class
+  private
+  public
+
+    function RemoveCaracteres(AString: string): string;
+  end;
+
+implementation
+
+{ TRetiraMascara }
+
+function TRetiraMascara.RemoveCaracteres(AString: string): string;
+var
+
+  i: integer;
+  limpos: string;
+
+begin
+
+  limpos := '';
+
+  for i := 1 to Length(AString) do
+  begin
+    if Pos(Copy(AString, i, i), '"!%$#@&*().,;:/<>[]{}=+-_\|') = 0 then
+      limpos := limpos + Copy(AString, i, i);
+  end;
+
+  result := limpos;
+
+end;
+
+end.

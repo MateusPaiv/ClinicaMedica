@@ -1,0 +1,131 @@
+unit clinicaMedica.view.ConfigServidor;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Imaging.pngimage, Vcl.ExtCtrls,
+  Vcl.Buttons, Vcl.StdCtrls, clinicaMedica.classe.conexao,
+  clinicaMedica.funcoes.funcao, clinicaMedica.classe.ValidaCampos;
+
+type
+  TfrmConfigServer = class(TForm)
+    pnlPai: TPanel;
+    pnlTop: TPanel;
+    pnlMain: TPanel;
+    pnlLogo: TPanel;
+    Image1: TImage;
+    pnlLblConfig: TPanel;
+    pnllblTitulo: TPanel;
+    pnlSub: TPanel;
+    pnlBtnConfimar: TPanel;
+    Shape3: TShape;
+    btnConfirmar: TSpeedButton;
+    pnlCancelar: TPanel;
+    Shape1: TShape;
+    btnCancelar: TSpeedButton;
+    pnlDoisBotoes: TPanel;
+    pnlNovaConfig: TPanel;
+    pnlConfigAntiga: TPanel;
+    pnlLblNovaConfig: TPanel;
+    pnlInputs: TPanel;
+    pnlLblConfigAtual: TPanel;
+    Panel3: TPanel;
+    pnlInputsAtuais: TPanel;
+    Panel2: TPanel;
+    pnlinputsTop: TPanel;
+    pnlEdtServidor: TPanel;
+    edtServidor: TEdit;
+    pnlControleEdtTop: TPanel;
+    lblCaminhoBanco: TLabel;
+    pnlinputBot: TPanel;
+    pnlPortaBanco: TPanel;
+    pnlLblPorta: TPanel;
+    lblPorta: TLabel;
+    pnlEdtPorta: TPanel;
+    edtPorta: TEdit;
+    pnlEdtNomeBase: TPanel;
+    pnlEdtUsuario: TPanel;
+    pnlEdtSenha: TPanel;
+    edtBaseDeDados: TEdit;
+    edtSenha: TEdit;
+    edtUsuario: TEdit;
+    Label1: TLabel;
+    Label3: TLabel;
+    Label2: TLabel;
+    pnlPrincipalConfigAtual: TPanel;
+    Panel4: TPanel;
+    Panel5: TPanel;
+    Panel6: TPanel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    pnlEdtServerAtual: TPanel;
+    edtCaminhoBancoAtual: TEdit;
+    pnlPorta: TPanel;
+    Panel9: TPanel;
+    Label8: TLabel;
+    pnlEdtPortaAtual: TPanel;
+    edtPortaAtual: TEdit;
+    pnlinpBot: TPanel;
+    pnlEdtNomeBaseDeDados: TPanel;
+    edtNomeDaBaseAtual: TEdit;
+    pnlEdtLoginAtual: TPanel;
+    edtLoginAtual: TEdit;
+    pnlEdtSenhaAtual: TPanel;
+    edtSenhaAtual: TEdit;
+    procedure btnConfirmarClick(Sender: TObject);
+  private
+    { Private declarations }
+    conexao: TConexao;
+    aviso: TAvisos;
+    validaCampo: TValidaCamposObrigatorios;
+  public
+    { Public declarations }
+
+  end;
+
+var
+  frmConfigServer: TfrmConfigServer;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmConfigServer.btnConfirmarClick(Sender: TObject);
+begin
+  validaCampo := TValidaCamposObrigatorios.Create;
+
+  if not validaCampo.ValidaCamposObrigatórios(self) then
+  begin
+    exit;
+  end;
+
+  conexao := TConexao.Create(nil);
+
+  frmConfigServer.conexao.Servidor := edtServidor.Text;
+  frmConfigServer.conexao.Base := edtBaseDeDados.Text;
+  frmConfigServer.conexao.Login := edtUsuario.Text;
+  frmConfigServer.conexao.Senha := edtSenha.Text;
+  frmConfigServer.conexao.Porta := edtPorta.Text;
+
+  if frmConfigServer.conexao.ConexaoBancoDeDados then
+  begin
+
+    frmConfigServer.conexao.gravarArquivoIni;
+
+    aviso := TAvisos.Create;
+    aviso.AvisoSucesso('SUCESSO', 'Conexão foi feita com sucesso');
+    aviso.Free;
+    Close;
+  end
+  else
+    aviso := TAvisos.Create;
+  aviso.AvisoErro('ERRO', 'Não foi possível conectar ao banco de dados');
+  edtServidor.SetFocus;
+  aviso.Free;
+end;
+
+end.

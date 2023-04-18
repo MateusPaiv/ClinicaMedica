@@ -1,0 +1,300 @@
+unit clinicaMedica.view.CadastrarFuncionario;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics, FireDAC.Comp.Client, FireDAC.DApt,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Buttons, Vcl.ExtCtrls, Vcl.StdCtrls,
+  Vcl.Imaging.pngimage, Vcl.Mask, Vcl.DBCtrls, REST.Types, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
+  REST.Response.Adapter, REST.Client, Data.Bind.Components,
+  Data.Bind.ObjectScope, FireDAC.Stan.Async, clinicaMedica.funcao.verificaCpf,
+  clinicaMedica.funcao.verificaNumero;
+
+type
+  TfrmCadastrarFuncionario = class(TForm)
+    pnlFundo: TPanel;
+    pnlImgLogo: TPanel;
+    Image1: TImage;
+    pnlClient: TPanel;
+    lblCargo: TLabel;
+    Label1: TLabel;
+    pnlTitulo: TPanel;
+    Panel2: TPanel;
+    pnlBtnConfimar: TPanel;
+    Shape3: TShape;
+    btnConfirmar: TSpeedButton;
+    pnlBtnCancelar: TPanel;
+    Shape1: TShape;
+    SpeedButton1: TSpeedButton;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
+    edtNome: TEdit;
+    edtEmail: TEdit;
+    edtSenha: TEdit;
+    edtConfirmarSenha: TEdit;
+    cmbCargo: TComboBox;
+    edtEndereco: TEdit;
+    edtNumero: TEdit;
+    edtRemuneracao: TEdit;
+    Label10: TLabel;
+    RESTClient1: TRESTClient;
+    RESTRequest1: TRESTRequest;
+    RESTResponse1: TRESTResponse;
+    RESTResponseDataSetAdapter1: TRESTResponseDataSetAdapter;
+    MemTable: TFDMemTable;
+    edtMunioipio: TEdit;
+    lblMunicipio: TLabel;
+    Image2: TImage;
+    edtCep: TMaskEdit;
+    edtCelular: TMaskEdit;
+    edtCpf: TMaskEdit;
+    QryVerifica: TFDQuery;
+    edtBairro: TEdit;
+    Label11: TLabel;
+    edtComplemento: TEdit;
+    Label12: TLabel;
+    edtUf: TEdit;
+    Label14: TLabel;
+    procedure btnConfirmarClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure Image2Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    function CadastrarFuncionario(nome, email, senha, cpf, cargo,
+      telefone: string; remuneracao: currency; cep, endereco, complemento,
+      bairro, cidade, uf: string): boolean;
+
+    function validaCpf(cpf: string): boolean;
+    procedure ConsultarCEP(cep: string);
+
+  public { Public declarations }
+    cargoCadastro: string;
+    QryInserir: TFDQuery;
+
+  end;
+
+var
+  frmCadastrarFuncionario: TfrmCadastrarFuncionario;
+
+implementation
+
+{$R *.dfm}
+
+uses clinicaMedica.conn.Conexao, clinicaMedica.view.Funcionarios,
+  clinicaMedica.funcao.validaCampos, clinicaMedica.funcao.verificaemail;
+
+procedure TfrmCadastrarFuncionario.btnConfirmarClick(Sender: TObject);
+var
+  i: integer;
+  cpf: string;
+  textocm: string;
+
+  numeroLimpo: string;
+begin
+  validaCamposObrigatorios(self);
+
+  ValidaEmail(edtEmail.Text);
+
+  numeroLimpo := verificaNumero(edtCelular.Text);
+
+  cpf := '';
+
+  for i := 1 to Length(edtCpf.Text) do
+  begin
+    if pos(Copy(edtCpf.Text, i, 1), '"!%$#@&*().,:;/<>[]{}=+-_\|') = 0 then
+      cpf := cpf + Copy(edtCpf.Text, i, 1);
+  end;
+
+  if validaCpf(cpf) = false then
+  begin
+    Exit;
+  end;
+
+  verificaCpf(cpf);
+
+  if edtSenha.Text <> edtConfirmarSenha.Text then
+  begin
+    MessageDlg('Senhas estão diferentes', mtInformation, [mbOK], 1);
+    Exit;
+  end;
+
+  textocm := '';
+  if cmbCargo.ItemIndex >= 0 then
+  begin
+    textocm := cmbCargo.Items[cmbCargo.ItemIndex];
+    if not textocm.IsEmpty then
+      textocm := textocm.Substring(0, 1);
+    cargoCadastro := textocm;
+  end;
+
+  CadastrarFuncionario(edtNome.Text, edtEmail.Text, edtSenha.Text, cpf, textocm,
+    numeroLimpo, StrToCurr(edtRemuneracao.Text), edtCep.Text, edtEndereco.Text,
+    edtComplemento.Text, edtBairro.Text, edtMunioipio.Text, edtUf.Text);
+end;
+
+function TfrmCadastrarFuncionario.CadastrarFuncionario(nome, email, senha, cpf,
+  cargo, telefone: string; remuneracao: currency;
+  cep, endereco, complemento, bairro, cidade, uf: string): boolean;
+var
+  i: integer;
+  Data: TDateTime;
+begin
+  Data := now;
+
+  try
+    QryInserir := TFDQuery.Create(nil);
+    QryInserir.Connection := frmConexao.Connection;
+    QryInserir.Close;
+    QryInserir.SQL.Clear;
+    QryInserir.SQL.Add
+      ('INSERT INTO funcionarios( nome_func,email_func,senha_func,cpf_func,datadeadmissao_func,telefone_func, remuneracao_func,cargo_func, cep_func , endereco_func, complemento_func, bairro_func, cidade_func, uf_func )');
+    QryInserir.SQL.Add
+      ('VALUES (:nome, :email, :senha, :cpf, :datadeadmissao,:telefone, :remuneracao,:cargo, :cep, :endereco, :complemento, :bairro, :cidade, :uf)');
+    QryInserir.ParamByName('nome').asString := nome;
+    QryInserir.ParamByName('email').asString := email;
+    QryInserir.ParamByName('senha').asString := senha;
+    QryInserir.ParamByName('cpf').asString := cpf;
+    QryInserir.ParamByName('cargo').asString := cargoCadastro;
+    QryInserir.ParamByName('telefone').asString := telefone;
+    QryInserir.ParamByName('cep').asString := cep;
+    QryInserir.ParamByName('endereco').asString := endereco;
+    QryInserir.ParamByName('complemento').asString := complemento;
+    QryInserir.ParamByName('bairro').asString := bairro;
+    QryInserir.ParamByName('cidade').asString := cidade;
+    QryInserir.ParamByName('uf').asString := uf;
+    QryInserir.ParamByName('remuneracao').AsCurrency := remuneracao;
+    QryInserir.ParamByName('dataDeAdmissao').AsDate := now;
+    QryInserir.ExecSQL;
+    Result := true;
+
+    if Result = true then
+    begin
+      MessageDlg('Funcionário cadastrado com succeso', mtInformation,
+        [mbOK], 1);
+      limpacampos(self);
+
+    end
+    else
+    begin
+      MessageDlg('Não foi possível cadastrar o usuário', mtInformation,
+        [mbOK], 1);
+    end;
+  finally
+    QryInserir.Free;
+  end;
+
+end;
+
+procedure TfrmCadastrarFuncionario.ConsultarCEP(cep: string);
+begin
+  if cep.Length <> 8 then
+  begin
+    MessageDlg('CEP inválido', mtError, [mbOK], 1);
+    Exit;
+  end;
+
+  RESTRequest1.Resource := cep + '/json';
+  RESTRequest1.Execute;
+
+  if RESTRequest1.Response.StatusCode = 200 then
+  begin
+    if RESTRequest1.Response.Content.IndexOf('erro') > 0 then
+    begin
+      MessageDlg('CEP não encontrado', mtError, [mbOK], 1);
+    end
+    else
+    begin
+      with MemTable do
+      begin
+        edtEndereco.Text := FieldByName('logradouro').asString;
+        edtMunioipio.Text := FieldByName('localidade').asString;
+        edtBairro.Text := FieldByName('bairro').asString;
+        edtComplemento.Text := FieldByName('complemento').asString;
+        edtUf.Text := FieldByName('uf').asString;
+        edtNumero.SetFocus;
+        Exit;
+
+      end;
+    end;
+  end;
+end;
+
+procedure TfrmCadastrarFuncionario.FormActivate(Sender: TObject);
+begin
+  pnlFundo.Left := Round((frmCadastrarFuncionario.Width - pnlFundo.Width) / 2);
+  pnlFundo.top := Round((frmCadastrarFuncionario.Height - pnlFundo.Height) / 2);
+end;
+
+procedure TfrmCadastrarFuncionario.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+
+  Action := caFree;
+end;
+
+procedure TfrmCadastrarFuncionario.Image2Click(Sender: TObject);
+begin
+  ConsultarCEP(RemoveCaracteres(edtCep.Text));
+end;
+
+procedure TfrmCadastrarFuncionario.SpeedButton1Click(Sender: TObject);
+begin
+  QryVerifica.Free;
+  Close;
+end;
+
+function TfrmCadastrarFuncionario.validaCpf(cpf: string): boolean;
+var
+  Soma, Resto, i: integer;
+  Digito: string;
+begin
+  Result := true;
+
+  if Length(cpf) <> 11 then
+  begin
+    MessageDlg('CPF inválido', mtInformation, [mbOK], 1);
+    Result := false;
+    Exit;
+  end;
+  Soma := 0;
+  for i := 1 to 9 do
+    Soma := Soma + StrToInt(cpf[i]) * (11 - i);
+  Resto := Soma mod 11;
+  if Resto < 2 then
+    Digito := '0'
+  else
+    Digito := IntToStr(11 - Resto);
+  if cpf[10] <> Digito then
+  begin
+    MessageDlg('CPF inválido', mtInformation, [mbOK], 1);
+    Result := false;
+    Exit;
+  end;
+  Soma := 0;
+  for i := 1 to 10 do
+    Soma := Soma + StrToInt(cpf[i]) * (12 - i);
+  Resto := Soma mod 11;
+  if Resto < 2 then
+    Digito := '0'
+  else
+    Digito := IntToStr(11 - Resto);
+  if cpf[11] <> Digito then
+  begin
+    MessageDlg('CPF inválido', mtInformation, [mbOK], 1);
+    Result := false;
+    Exit;
+  end;
+
+end;
+
+end.

@@ -1,0 +1,50 @@
+unit clinicaMedica.view.CadastrarAgendamento;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
+  clinicaMedica.view.Agendamento, clinicaMedica.conn.Conexao,
+  clinicaMedica.classe.funcionario.Cadastro;
+
+type
+  TfrmCadastrarAgendamento = class(TForm)
+    Button1: TButton;
+    procedure Button1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmCadastrarAgendamento: TfrmCadastrarAgendamento;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmCadastrarAgendamento.Button1Click(Sender: TObject);
+begin
+  frmAgendamento := TfrmAgendamento.Create(nil);
+  frmAgendamento.Show;
+end;
+
+procedure TfrmCadastrarAgendamento.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+
+  frmConexao.FuncionarioCadastro.Destroy;
+  Action := caFree;
+end;
+
+procedure TfrmCadastrarAgendamento.FormCreate(Sender: TObject);
+begin
+  frmConexao.FuncionarioCadastro := TFuncionario.Create(frmConexao.Connection);
+end;
+
+end.

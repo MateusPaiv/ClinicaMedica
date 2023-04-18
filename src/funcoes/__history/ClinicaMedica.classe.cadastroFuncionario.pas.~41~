@@ -1,0 +1,44 @@
+unit ClinicaMedica.classe.cadastroFuncionario;
+
+interface
+
+uses ClinicaMedica.conn.Conexao, FireDAC.Comp.Client, System.SysUtils,
+  Vcl.Dialogs;
+
+type
+  TFuncionarios = class
+  private
+    Fid: integer;
+    Fnome: string;
+    Femail: string;
+    Fsenha: string;
+    Fcpf: string;
+    Fendereco: string;
+    FnumeroCasa: string;
+    Fcargo: string;
+    Fremuneracao: currency;
+    Fcep: string;
+    Ftelefone: string;
+    FConexao: TFDConnection;
+  public
+
+    property Conexao: TFDConnection read FConexao write FConexao;
+    property id: integer read Fid write Fid;
+    property nome: string read Fnome write Fnome;
+    property email: string read Femail write Femail;
+    property senha: string read Fsenha write Fsenha;
+    property cpf: string read Fcpf write Fcpf;
+    property cep: string read Fcep write Fcep;
+    property endereco: string read Fendereco write Fendereco;
+    property numeroCasa: string read FnumeroCasa write FnumeroCasa;
+    property cargo: string read Fcargo write Fcargo;
+    property remuneracao: currency read Fremuneracao write Fremuneracao;
+    property telefone: string read Ftelefone write Ftelefone;
+
+  end;
+
+implementation
+
+{ TFuncionarios }
+
+end.

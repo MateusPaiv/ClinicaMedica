@@ -1,0 +1,202 @@
+unit clinicaMedica.view.Cargos;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Data.DB, Vcl.StdCtrls,
+  Vcl.Grids, Vcl.DBGrids, clinicaMedica.conn.Conexao, Vcl.Buttons,
+  System.ImageList, Vcl.ImgList, PngImageList;
+
+type
+  TfrmCargos = class(TForm)
+    pnlPrincipal: TPanel;
+    DBGrid1: TDBGrid;
+    edtCargo: TEdit;
+    Label1: TLabel;
+    pnlExcluir: TPanel;
+    pnlEditar: TPanel;
+    pnlSalvar: TPanel;
+    pnlNovo: TPanel;
+    btnNovo: TSpeedButton;
+    btnSalvar: TSpeedButton;
+    btnEditar: TSpeedButton;
+    btnExcluir: TSpeedButton;
+    Png: TPngImageList;
+    procedure FormActivate(Sender: TObject);
+    procedure DBGrid1CellClick(Column: TColumn);
+    procedure btnNovoClick(Sender: TObject);
+    procedure btnSalvarClick(Sender: TObject);
+    procedure btnEditarClick(Sender: TObject);
+    procedure btnExcluirClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+    procedure listar;
+    procedure associarCampos;
+
+  public
+    { Public declarations }
+  end;
+
+var
+  frmCargos: TfrmCargos;
+  id: integer;
+
+implementation
+
+{$R *.dfm}
+
+uses clinicaMedica.funcao.verificaNumero;
+{ TfrmCargos }
+
+procedure TfrmCargos.associarCampos;
+begin
+  dm.tbCargos.FieldByName('cargo').Value := edtCargo.Text;
+end;
+
+procedure TfrmCargos.btnEditarClick(Sender: TObject);
+var
+  cargo: string;
+begin
+  if trim(edtCargo.Text) = '' then
+  begin
+    MessageDlg('Campo obrigatório', mtinformation, [mbOK], 0);
+    edtCargo.SetFocus;
+    exit;
+  end;
+  dm.qryCargos.Close;
+  dm.qryCargos.SQL.Clear;
+  dm.qryCargos.SQL.Add('select * from cargos WHERE cargo = :edtCargo');
+  dm.qryCargos.ParamByName('edtCargo').AsString := trim(edtCargo.Text);
+  dm.qryCargos.open;
+
+  if not dm.qryCargos.IsEmpty then
+  begin
+    cargo := dm.qryCargos['cargo'];
+    MessageDlg('O cargo ' + cargo + ' já está cadastrado!',
+      TMsgDlgType.mtinformation, [mbOK], 0);
+    edtCargo.Text := '';
+    edtCargo.SetFocus;
+    exit;
+  end;
+
+  associarCampos;
+  dm.qryCargos.Close;
+  dm.qryCargos.SQL.Clear;
+  dm.qryCargos.SQL.Add
+    ('update cargos set cargo = :edtcargo where id_carg = :id');
+  dm.qryCargos.ParamByName('id').AsInteger := id;
+  dm.qryCargos.ParamByName('edtcargo').AsString := trim(edtCargo.Text);
+
+  try
+    dm.qryCargos.ExecSQL;
+    MessageDlg('Editado com sucesso', mtinformation, [mbOK], 0);
+    listar;
+    exit;
+  except
+    on E: exception do
+      MessageDlg('Ocorreu um erro ao digitar o cargo.' + #13 +
+        'Mensagem de erro: ' + E.Message, mtError, [mbOK], 0);
+  end;
+end;
+
+procedure TfrmCargos.btnExcluirClick(Sender: TObject);
+begin
+  if MessageDlg('Deseja excluir registro?', mtConfirmation, [mbYes, mbNo], 0) = mrYes
+  then
+  begin
+    dm.tbCargos.Delete;
+    MessageDlg('Excluído com sucesso', TMsgDlgType.mtinformation, [mbOK], 0);
+  end;
+
+  listar;
+  edtCargo.Text := '';
+  edtCargo.Enabled := false;
+  btnEditar.Enabled := false;
+  btnExcluir.Enabled := false;
+end;
+
+procedure TfrmCargos.btnNovoClick(Sender: TObject);
+begin
+  edtCargo.Enabled := true;
+
+  edtCargo.Text := '';
+  edtCargo.SetFocus;
+  dm.tbCargos.Insert;
+end;
+
+procedure TfrmCargos.btnSalvarClick(Sender: TObject);
+var
+  cargo: string;
+begin
+  if trim(edtCargo.Text) = '' then
+  begin
+    MessageDlg('Campo ' + edtCargo.Hint + ' obrigatório', mtinformation,
+      [mbOK], 0);
+    edtCargo.SetFocus;
+    exit;
+  end;
+
+  dm.qryCargos.Close;
+  dm.qryCargos.SQL.Clear;
+  dm.qryCargos.SQL.Add('select * from cargos WHERE cargo = :edtCargo');
+  dm.qryCargos.ParamByName('edtCargo').AsString := trim(edtCargo.Text);
+  dm.qryCargos.open;
+
+  if not dm.qryCargos.IsEmpty then
+  begin
+    cargo := dm.qryCargos['cargo'];
+    MessageDlg('O cargo ' + cargo + ' já está cadastrado!',
+      TMsgDlgType.mtinformation, [mbOK], 0);
+    edtCargo.Text := '';
+    edtCargo.SetFocus;
+    exit;
+  end;
+
+  associarCampos;
+  dm.tbCargos.Post;
+  MessageDlg('Salvo com sucesso', mtinformation, [mbOK], 0);
+  edtCargo.Text := '';
+  edtCargo.Enabled := false;
+  listar;
+end;
+
+procedure TfrmCargos.DBGrid1CellClick(Column: TColumn);
+begin
+  edtCargo.Enabled := true;
+  btnEditar.Enabled := true;
+  btnExcluir.Enabled := true;
+
+  dm.tbCargos.Edit;
+
+  if dm.qryCargos.FieldByName('cargo').Value <> null then
+  begin
+    edtCargo.Text := dm.qryCargos.FieldByName('cargo').Value;
+  end;
+
+  id := dm.qryCargos.FieldByName('id_carg').Value;
+end;
+
+procedure TfrmCargos.FormActivate(Sender: TObject);
+begin
+  dm.tbCargos.Active := true;
+  listar;
+end;
+
+procedure TfrmCargos.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action := caFree;
+end;
+
+procedure TfrmCargos.listar;
+begin
+  dm.qryCargos.Close;
+  dm.qryCargos.SQL.Clear;
+  dm.qryCargos.SQL.Add('select * from cargos order by cargo asc');
+  dm.qryCargos.open;
+
+end;
+
+end.

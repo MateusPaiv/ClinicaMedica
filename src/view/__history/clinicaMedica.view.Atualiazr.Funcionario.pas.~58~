@@ -1,0 +1,98 @@
+unit clinicaMedica.view.Atualiazr.Funcionario;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Mask, Vcl.StdCtrls, Vcl.Buttons,
+  Vcl.ExtCtrls, Vcl.Imaging.pngimage, Vcl.DBCtrls,
+  clinicaMedica.funcao.verificaNumero, clinicaMedica.funcao.validaCampos;
+
+type
+  TfrmAtualizarFuncionario = class(TForm)
+    pnlFundo: TPanel;
+    pnlImgLogo: TPanel;
+    Image1: TImage;
+    pnlClient: TPanel;
+    lblCargo: TLabel;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
+    Label10: TLabel;
+    lblMunicipio: TLabel;
+    Image2: TImage;
+    Label11: TLabel;
+    Label12: TLabel;
+    Label14: TLabel;
+    pnlTitulo: TPanel;
+    Panel2: TPanel;
+    pnlBtnConfimar: TPanel;
+    Shape3: TShape;
+    btnConfirmar: TSpeedButton;
+    pnlBtnCancelar: TPanel;
+    Shape1: TShape;
+    SpeedButton1: TSpeedButton;
+    edtConfirmarSenha: TEdit;
+    edtNome: TDBEdit;
+    edtEmail: TDBEdit;
+    edtSenha: TDBEdit;
+    edtCelular: TDBEdit;
+    edtCPF: TDBEdit;
+    cmbCargo: TDBComboBox;
+    edtCEP: TDBEdit;
+    edtRemuneracao: TDBEdit;
+    edtEndereco: TDBEdit;
+    edtNumeroCasa: TDBEdit;
+    edtBairro: TDBEdit;
+    edtComplemento: TDBEdit;
+    edtCidade: TDBEdit;
+    edtUF: TDBEdit;
+    procedure btnConfirmarClick(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmAtualizarFuncionario: TfrmAtualizarFuncionario;
+
+implementation
+
+uses clinicaMedica.view.Funcionarios;
+
+procedure TfrmAtualizarFuncionario.btnConfirmarClick(Sender: TObject);
+begin
+  if edtSenha.Text <> edtConfirmarSenha.Text then
+  begin
+    MessageDlg('Senhas diferentes', mtInformation, [mbOK], 1);
+    exit;
+  end;
+  validaCamposObrigatorios(self);
+  verificaNumero(edtCelular.Text);
+
+  frmFuncionarios.FDQuery1.Post;
+  MessageDlg('Funcionário atualizado !', mtInformation, [mbOK], 1);
+end;
+
+procedure TfrmAtualizarFuncionario.FormShow(Sender: TObject);
+begin
+  Action := Free;
+end;
+
+procedure TfrmAtualizarFuncionario.SpeedButton1Click(Sender: TObject);
+begin
+  Close;
+end;
+
+end.
