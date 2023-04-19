@@ -117,14 +117,12 @@
             <Form>frmLogin</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="src\funcoes\ClinicaMedica.classe.conexao.pas"/>
         <DCCReference Include="src\view\clinicaMedica.view.Funcionarios.pas">
             <Form>frmFuncionarios</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="src\funcoes\ClinicaMedica.funcao.verificaemail.pas"/>
         <DCCReference Include="src\funcoes\ClinicaMedica.funcao.validaCampos.pas"/>
-        <DCCReference Include="src\funcoes\ClinicaMedica.funcao.verificaCpf.pas"/>
         <DCCReference Include="src\funcoes\ClinicaMedica.funcao.verificaNumero.pas"/>
         <DCCReference Include="src\view\clinicaMedica.view.Cargos.pas">
             <Form>frmCargos</Form>
@@ -150,6 +148,16 @@
             <Form>frmRelatorioCons</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="src\relatorios\clinicaMedica.rel.pacientes.pas">
+            <Form>frmPacientesRel</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="src\relatorios\clinicaMedica.rel.funcionários.pas">
+            <Form>frmRelFuncionarios</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="src\funcoes\ClinicaMedica.funcao.verificaCpf.pas"/>
+        <DCCReference Include="src\funcoes\ClinicaMedica.classe.conexao.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -171,8 +179,6 @@
                     <Source Name="MainSource">ClinicaMedica.dpr</Source>
                 </Source>
                 <Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k270.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp270.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
                     <Excluded_Packages Name="C:\Program Files (x86)\FastReport VCL Trial\LibD27\dclfrxIBX27.bpl">FastReport VCL IBX Components</Excluded_Packages>
                     <Excluded_Packages Name="C:\Program Files (x86)\FastReport VCL Trial\LibD27\dclfsIBX27.bpl">FastScript 1.9 IBX Components</Excluded_Packages>
                 </Excluded_Packages>

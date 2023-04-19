@@ -1,0 +1,145 @@
+object frmPacientesRel: TfrmPacientesRel
+  Left = 0
+  Top = 0
+  Caption = 'frmPacientesRel'
+  ClientHeight = 304
+  ClientWidth = 620
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -15
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 20
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 620
+    Height = 304
+    Align = alClient
+    BevelOuter = bvNone
+    Color = clWhite
+    ParentBackground = False
+    TabOrder = 0
+    ExplicitWidth = 656
+    ExplicitHeight = 337
+    object Label1: TLabel
+      Left = 83
+      Top = 48
+      Width = 156
+      Height = 20
+      Caption = 'Selecione a data inicial:'
+    end
+    object Label2: TLabel
+      Left = 301
+      Top = 48
+      Width = 146
+      Height = 20
+      Caption = 'Selecione a data final:'
+    end
+    object btnRelatorio: TSpeedButton
+      Left = 434
+      Top = 232
+      Width = 145
+      Height = 41
+      Caption = 'Gerar relat'#243'rio'
+    end
+    object edtDateInicio: TDatePicker
+      Left = 92
+      Top = 75
+      Date = 45033.000000000000000000
+      DateFormat = 'dd/MM/yyyy'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      TabOrder = 0
+    end
+    object edtDateFim: TDatePicker
+      Left = 429
+      Top = 75
+      Date = 45033.000000000000000000
+      DateFormat = 'dd/MM/yyyy'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      TabOrder = 1
+    end
+    object edtNome: TEdit
+      Left = 264
+      Top = 139
+      Width = 314
+      Height = 28
+      TabOrder = 2
+      TextHint = 'Digite o nome do paciente aqui!'
+      Visible = False
+    end
+    object rdFiltroNome: TRadioButton
+      Left = 25
+      Top = 144
+      Width = 217
+      Height = 17
+      Caption = 'Filtrar por nome do paciente'
+      TabOrder = 3
+      OnClick = rdFiltroNomeClick
+    end
+    object rdRetirarFiltro: TRadioButton
+      Left = 25
+      Top = 216
+      Width = 113
+      Height = 17
+      Caption = 'Retirar filtro'
+      TabOrder = 4
+      OnClick = rdRetirarFiltroClick
+    end
+    object edtDataInicio: TDatePicker
+      Left = 83
+      Top = 74
+      Width = 156
+      Date = 45035.000000000000000000
+      DateFormat = 'dd/MM/yyyy'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      TabOrder = 5
+    end
+    object edtDataFinal: TDatePicker
+      Left = 301
+      Top = 74
+      Width = 156
+      Date = 45035.000000000000000000
+      DateFormat = 'dd/MM/yyyy'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      TabOrder = 6
+    end
+    object edtConvenio: TEdit
+      Left = 264
+      Top = 173
+      Width = 314
+      Height = 28
+      TabOrder = 7
+      TextHint = 'Digite o nome do conv'#234'nio aqui!'
+      Visible = False
+    end
+    object rdConvenio: TRadioButton
+      Left = 25
+      Top = 178
+      Width = 214
+      Height = 17
+      Caption = 'Filtrar por nome do conv'#234'nio'
+      TabOrder = 8
+      OnClick = rdConvenioClick
+    end
+  end
+end

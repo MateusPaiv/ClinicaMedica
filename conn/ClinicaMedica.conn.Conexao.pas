@@ -147,6 +147,12 @@ type
     qryRelConsultas: TFDQuery;
     relDsConsultas: TfrxDBDataset;
     relConsultas: TfrxReport;
+    relPacientes: TfrxReport;
+    relDsPacientes: TfrxDBDataset;
+    qryRelPacientes: TFDQuery;
+    qryRelFuncionarios: TFDQuery;
+    relFuncionarios: TfrxReport;
+    relDsFuncionarios2: TfrxDBDataset;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private

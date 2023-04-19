@@ -1,0 +1,24 @@
+unit clinicaMedica.rel.funcionários;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs;
+
+type
+  TfrmRelFuncionarios = class(TForm)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmRelFuncionarios: TfrmRelFuncionarios;
+
+implementation
+
+{$R *.dfm}
+
+end.

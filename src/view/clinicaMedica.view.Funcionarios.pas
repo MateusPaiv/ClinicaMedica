@@ -150,7 +150,7 @@ begin
   dm.tbFunc.FieldByName('cidade_func').Value := edtMunioipio.Text;
   dm.tbFunc.FieldByName('uf_func').Value := edtUf.Text;
   dm.tbFunc.FieldByName('numerocasa_func').Value := edtNumero.Text;
-  dm.tbFunc.FieldByName('foto_func').Value := OpenPictureDialog1.Filename;
+  dm.tbFunc.FieldByName('foto_func').Value := OpenPictureDialog1.FileName;
 
 end;
 
@@ -239,7 +239,7 @@ begin
   dm.qryFunc.ParamByName('ufFunc').AsString := trim(edtUf.Text);
   dm.qryFunc.ParamByName('statusFunc').AsString := trim(cmbStatus.Text);
   dm.qryFunc.ParamByName('numeroFunc').AsString := trim(edtNumero.Text);
-  dm.qryFunc.ParamByName('foto').Value := OpenPictureDialog1.Filename;
+  dm.qryFunc.ParamByName('foto').Value := OpenPictureDialog1.FileName;
   dm.qryFunc.ParamByName('id').Value := id;
   dm.qryFunc.ExecSQL;
 
@@ -283,7 +283,7 @@ begin
   cmbStatus.Visible := true;
   Label1.Visible := true;
   btnSalvar.Visible := false;
-
+  dm.tbFunc.Edit;
   if dm.qryFunc.FieldByName('nome_func').Value <> null then
   begin
     edtNome.Text := dm.qryFunc.FieldByName('nome_func').Value;
@@ -359,7 +359,7 @@ begin
 
   id := dm.qryFunc.FieldByName('id_func').Value;
   emailAntigo := dm.qryFunc.FieldByName('email_func').Value;
-  dm.tbFunc.Edit;
+
 end;
 
 procedure TfrmFuncionarios.DBGrid1DblClick(Sender: TObject);
@@ -622,7 +622,7 @@ procedure TfrmFuncionarios.btnSelecionarImagemClick(Sender: TObject);
 begin
   if OpenPictureDialog1.Execute = true then
   begin
-    Image1.Picture.LoadFromFile(OpenPictureDialog1.Filename);
+    Image1.Picture.LoadFromFile(OpenPictureDialog1.FileName);
   end;
 
 end;

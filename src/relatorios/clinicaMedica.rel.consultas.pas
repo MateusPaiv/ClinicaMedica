@@ -16,18 +16,19 @@ type
     edtDateFim: TDatePicker;
     Label1: TLabel;
     Label2: TLabel;
-    cmbStatusCons: TComboBox;
     btnRelatorio: TSpeedButton;
     edtNome: TEdit;
     rdFiltroNome: TRadioButton;
     rdRetirarFiltro: TRadioButton;
-    rdFiltroMedico: TRadioButton;
     edtMedico: TEdit;
+    rdFiltroMedico: TRadioButton;
+    cmbStatusCons: TComboBox;
     procedure btnRelatorioClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure rdFiltroNomeClick(Sender: TObject);
     procedure rdRetirarFiltroClick(Sender: TObject);
     procedure rdFiltroMedicoClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -143,23 +144,6 @@ end;
 
 procedure TfrmRelatorioCons.btnRelatorioClick(Sender: TObject);
 begin
-  if rdFiltroNome.Checked = true then
-  begin
-    if edtNome.Text = '' then
-    begin
-      MessageDlg('Preencha o nome do paciente', mtInformation, [mbOK], 0);
-      exit;
-    end;
-  end;
-
-  if rdFiltroMedico.Checked = true then
-  begin
-    if edtMedico.Text = '' then
-    begin
-      MessageDlg('Preencha o nome do Médico', mtInformation, [mbOK], 0);
-      exit;
-    end;
-  end;
 
   if cmbStatusCons.Text = '' then
   begin
@@ -190,7 +174,11 @@ begin
 
   if rdFiltroNome.Checked = true then
   begin
-
+    if edtNome.Text = '' then
+    begin
+      MessageDlg('Preencha o nome do paciente', mtInformation, [mbOK], 0);
+      exit;
+    end;
     case filtro of
       0:
         AbrirRelatorioComNome(filtro, 0, edtNome.Text);
@@ -207,6 +195,11 @@ begin
   end
   else if rdFiltroMedico.Checked = true then
   begin
+    if edtMedico.Text = '' then
+    begin
+      MessageDlg('Preencha o nome do Médico', mtInformation, [mbOK], 0);
+      exit;
+    end;
 
     case filtro of
       0:
@@ -242,6 +235,15 @@ procedure TfrmRelatorioCons.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
   Action := CaFree;
+end;
+
+procedure TfrmRelatorioCons.FormCreate(Sender: TObject);
+var
+  dataHoje: TDate;
+begin
+  dataHoje := now;
+  edtDateFim.Date := dataHoje;
+  edtDateInicio.Date := dataHoje;
 end;
 
 procedure TfrmRelatorioCons.rdRetirarFiltroClick(Sender: TObject);

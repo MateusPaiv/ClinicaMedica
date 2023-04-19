@@ -3,8 +3,8 @@ object frmRelatorioCons: TfrmRelatorioCons
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Relat'#243'rio de consultas'
-  ClientHeight = 337
-  ClientWidth = 656
+  ClientHeight = 313
+  ClientWidth = 623
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,34 +14,37 @@ object frmRelatorioCons: TfrmRelatorioCons
   OldCreateOrder = False
   Position = poMainFormCenter
   OnClose = FormClose
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 21
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 656
-    Height = 337
+    Width = 623
+    Height = 313
     Align = alClient
     BevelOuter = bvNone
     Color = clWhite
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 656
+    ExplicitHeight = 337
     object Label1: TLabel
-      Left = 83
+      Left = 25
       Top = 48
       Width = 159
       Height = 21
       Caption = 'Selecione a data inicial:'
     end
     object Label2: TLabel
-      Left = 429
+      Left = 408
       Top = 48
       Width = 149
       Height = 21
       Caption = 'Selecione a data final:'
     end
     object btnRelatorio: TSpeedButton
-      Left = 434
+      Left = 433
       Top = 232
       Width = 145
       Height = 41
@@ -49,7 +52,7 @@ object frmRelatorioCons: TfrmRelatorioCons
       OnClick = btnRelatorioClick
     end
     object edtDateInicio: TDatePicker
-      Left = 92
+      Left = 25
       Top = 75
       Date = 45033.000000000000000000
       DateFormat = 'dd/MM/yyyy'
@@ -61,7 +64,7 @@ object frmRelatorioCons: TfrmRelatorioCons
       TabOrder = 0
     end
     object edtDateFim: TDatePicker
-      Left = 429
+      Left = 408
       Top = 75
       Date = 45033.000000000000000000
       DateFormat = 'dd/MM/yyyy'
@@ -72,63 +75,63 @@ object frmRelatorioCons: TfrmRelatorioCons
       Font.Style = []
       TabOrder = 1
     end
-    object cmbStatusCons: TComboBox
-      Left = 264
-      Top = 78
-      Width = 145
-      Height = 29
-      TabOrder = 2
-      Items.Strings = (
-        'Pendente'
-        'Em andamento'
-        'Conclu'#237'da'
-        'N'#227'o compareceu'
-        'Todos')
-    end
     object edtNome: TEdit
       Left = 264
       Top = 139
       Width = 314
       Height = 29
-      TabOrder = 3
+      TabOrder = 2
       TextHint = 'Digite o nome do paciente aqui!'
       Visible = False
     end
     object rdFiltroNome: TRadioButton
-      Left = 41
+      Left = 25
       Top = 145
-      Width = 217
+      Width = 233
       Height = 17
       Caption = 'Filtrar por nome do paciente'
-      TabOrder = 4
+      TabOrder = 3
       OnClick = rdFiltroNomeClick
     end
     object rdRetirarFiltro: TRadioButton
-      Left = 41
+      Left = 25
       Top = 216
       Width = 113
       Height = 17
       Caption = 'Retirar filtro'
-      TabOrder = 5
+      TabOrder = 4
       OnClick = rdRetirarFiltroClick
-    end
-    object rdFiltroMedico: TRadioButton
-      Left = 41
-      Top = 176
-      Width = 217
-      Height = 17
-      Caption = 'FIltrar pelo nome do m'#233'dico'
-      TabOrder = 6
-      OnClick = rdFiltroMedicoClick
     end
     object edtMedico: TEdit
       Left = 264
       Top = 174
       Width = 314
       Height = 29
-      TabOrder = 7
+      TabOrder = 5
       TextHint = 'Digite o nome do m'#233'dico aqui!'
       Visible = False
+    end
+    object rdFiltroMedico: TRadioButton
+      Left = 25
+      Top = 180
+      Width = 233
+      Height = 17
+      Caption = 'FIltrar pelo nome de m'#233'dico'
+      TabOrder = 6
+      OnClick = rdFiltroMedicoClick
+    end
+    object cmbStatusCons: TComboBox
+      Left = 216
+      Top = 78
+      Width = 145
+      Height = 29
+      TabOrder = 7
+      Items.Strings = (
+        'Pendente'
+        'Em andamento'
+        'Conclu'#237'da'
+        'N'#227'o compareceu'
+        'Todos')
     end
   end
 end
