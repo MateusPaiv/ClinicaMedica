@@ -26,8 +26,7 @@ object frmProntuario: TfrmProntuario
     Color = clMenu
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 764
-    ExplicitHeight = 788
+    ExplicitLeft = 8
     object Label4: TLabel
       Left = 24
       Top = 26
@@ -71,8 +70,8 @@ object frmProntuario: TfrmProntuario
       Caption = 'Hora Fim da Consulta:'
     end
     object btnFinalizarConsulta: TSpeedButton
-      Left = 492
-      Top = 700
+      Left = 452
+      Top = 647
       Width = 197
       Height = 47
       Caption = 'FINALIZAR CONSULTA'
@@ -266,6 +265,20 @@ object frmProntuario: TfrmProntuario
       ParentFont = False
       OnClick = btnDeclaracaoClick
     end
+    object btnRelatorio: TSpeedButton
+      Left = 492
+      Top = 152
+      Width = 197
+      Height = 49
+      Caption = 'GERAR RELAT'#211'RIOS ANTERIORES'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      ParentFont = False
+      OnClick = btnRelatorioClick
+    end
     object edtNomePac: TEdit
       Left = 176
       Top = 23
@@ -372,7 +385,7 @@ object frmProntuario: TfrmProntuario
   end
   object Timer1: TTimer
     Enabled = False
-    Interval = 200
+    Interval = 100
     OnTimer = Timer1Timer
     Left = 728
     Top = 56

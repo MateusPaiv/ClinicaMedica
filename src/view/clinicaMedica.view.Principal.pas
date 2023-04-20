@@ -16,7 +16,8 @@ uses
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
   FireDAC.DApt.Intf, REST.Types, REST.Client, Data.Bind.Components,
   Data.Bind.ObjectScope, REST.Response.Adapter, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, clinicaMedica.rel.consultas, clinicaMedica.rel.pacientes;
+  FireDAC.Comp.Client, clinicaMedica.rel.consultas, clinicaMedica.rel.pacientes,
+  clinicaMedica.rel.funcionários, clinicaMedica.rel.Prontuario;
 
 type
   TfrmPrincipal = class(TForm)
@@ -97,6 +98,12 @@ type
     btnUser: TSpeedButton;
     btnPacientes: TSpeedButton;
     Label16: TLabel;
+    btnRelFunc: TSpeedButton;
+    Label17: TLabel;
+    Label18: TLabel;
+    btnAdm: TSpeedButton;
+    btnTelaRecp: TSpeedButton;
+    btnProntuariosMed: TSpeedButton;
     procedure imgFecharClick(Sender: TObject);
     procedure Timage2Click(Sender: TObject);
     procedure btnFuncionariosClick(Sender: TObject);
@@ -130,6 +137,10 @@ type
     procedure btnRelatoriosClick(Sender: TObject);
     procedure btnRelConsultasClick(Sender: TObject);
     procedure btnPacientesClick(Sender: TObject);
+    procedure btnRelFuncClick(Sender: TObject);
+    procedure btnAdmClick(Sender: TObject);
+    procedure btnTelaRecpClick(Sender: TObject);
+    procedure btnProntuariosMedClick(Sender: TObject);
   private
     { Private declarations }
     procedure CloseForm;
@@ -288,6 +299,12 @@ begin
   frmRelatorioCons.showmodal;
 end;
 
+procedure TfrmPrincipal.btnRelFuncClick(Sender: TObject);
+begin
+  frmRelFuncionarios := TfrmRelFuncionarios.Create(nil);
+  frmRelFuncionarios.showmodal;
+end;
+
 procedure TfrmPrincipal.btnUserClick(Sender: TObject);
 begin
   frmUsuarios := TfrmUsuarios.Create(nil);
@@ -312,7 +329,10 @@ begin
 end;
 
 procedure TfrmPrincipal.associarCampos;
+var
+  Data: TDate;
 begin
+  Data := Now;
   dm.tbPaci.fieldbyname('nome_paci').Value := edtNomePaci.Text;
   dm.tbPaci.fieldbyname('cpf_paci').Value := cpfLimpo;
   dm.tbPaci.fieldbyname('numero_paci').Value := numeroLimpo;
@@ -324,7 +344,13 @@ begin
   dm.tbPaci.fieldbyname('numerocasa_paci').Value := edtNumero.Text;
   dm.tbPaci.fieldbyname('bairro_paci').Value := edtBairro.Text;
   dm.tbPaci.fieldbyname('cidade_paci').Value := edtMunicipio.Text;
+  dm.tbPaci.fieldbyname('datacadastro').Value := Data;
 
+end;
+
+procedure TfrmPrincipal.btnAdmClick(Sender: TObject);
+begin
+  cards.ActiveCard := cardMedico;
 end;
 
 procedure TfrmPrincipal.btnAtualizarClick(Sender: TObject);
@@ -454,6 +480,12 @@ begin
   frmPacientesRel.showmodal;
 end;
 
+procedure TfrmPrincipal.btnProntuariosMedClick(Sender: TObject);
+begin
+  frmRelPront := TfrmRelPront.Create(nil);
+  frmRelPront.showmodal;
+end;
+
 procedure TfrmPrincipal.btnRelatoriosClick(Sender: TObject);
 begin
   pnlOpcoesRelatorios.Visible := not pnlOpcoesRelatorios.Visible;
@@ -510,6 +542,11 @@ begin
   limpacampos(self);
   listar;
   btnSalvar.Enabled := false;
+end;
+
+procedure TfrmPrincipal.btnTelaRecpClick(Sender: TObject);
+begin
+  cards.ActiveCard := cardPacientes;
 end;
 
 procedure TfrmPrincipal.CloseForm;
@@ -724,6 +761,7 @@ procedure TfrmPrincipal.dbPacientesDblClick(Sender: TObject);
 begin
   frmConsulta := TfrmConsulta.Create(nil);
   frmConsulta.edtNomePac.Text := dm.qryPaci.fieldbyname('nome_paci').Value;
+  frmConsulta.cmbConvenios.Text := dm.qryPaci.fieldbyname('nome_conv').Value;
   id := dm.qryPaci.fieldbyname('id_paci').Value;
   frmConsulta.habilitarCampos;
 
@@ -864,64 +902,70 @@ procedure TfrmPrincipal.FormKeyDown(Sender: TObject;
 begin
   if Key = VK_F1 then
   begin
-    if (cargoUsuario = 3) or (cargoUsuario = 4) then
+    if cargoUsuario = 3 then
     begin
       exit;
     end;
     btnFuncionariosClick(Sender);
-  end;
 
+  end;
   if Key = VK_F2 then
   begin
-    if (cargoUsuario = 3) or (cargoUsuario = 4) then
+    if cargoUsuario = 3 then
     begin
       exit;
     end;
-
     btnUserClick(Sender);
   end;
 
   if Key = VK_F3 then
   begin
-    if (cargoUsuario = 3) or (cargoUsuario = 4) then
-    begin
-      exit;
-    end;
+
     btnRelConsultasClick(Sender);
   end;
 
   if Key = VK_F4 then
   begin
-    if (cargoUsuario = 3) or (cargoUsuario = 4) then
-    begin
-      exit;
-    end;
-
+    btnPacientesClick(Sender);
   end;
+
+  if Key = VK_F5 then
+  begin
+    btnRelFuncClick(Sender);
+  end;
+
 end;
 
 procedure TfrmPrincipal.FormShow(Sender: TObject);
 begin
 
+  cards.ActiveCard := cardPacientes;
   dm.tbPaci.Active := true;
-  if (cargoUsuario = 3) or (cargoUsuario = 4) then
-  begin
-    btnUser.Enabled := false;
-  end;
-  if cargoUsuario = 4 then
-  begin
-    cards.ActiveCard := cardMedico;
-    ListarConsultasMedico;
-    lblNomeMedico.caption := 'Olá ' + nomeUsuario;
-    btnCadastros.Enabled := false;
 
-  end
-  else
-  begin
-    cards.ActiveCard := cardPacientes;
+  case cargoUsuario of
+    2:
+      begin
+        btnAdm.Visible := false;
+        btnTelaRecp.Visible := false;
+      end;
+    3:
+      begin
+        btnCadastros.Enabled := false;
+        btnAdm.Visible := false;
+        btnTelaRecp.Visible := false;
+      end;
+    4:
+      begin
+        cards.ActiveCard := cardMedico;
+        ListarConsultasMedico;
+        lblNomeMedico.caption := 'Olá,' + nomeUsuario;
+        pnlSideBar.Visible := false;
+        btnAdm.Visible := false;
+        btnTelaRecp.Visible := false;
+      end;
   end;
+
   desabilitarCampos;
-
   carregarComboBox;
 
 end;

@@ -71,8 +71,6 @@ type
     cmbStatus: TComboBox;
     SpeedButton1: TSpeedButton;
     Label1: TLabel;
-    Image1: TImage;
-    btnSelecionarImagem: TSpeedButton;
     OpenPictureDialog1: TOpenPictureDialog;
     btnGerarCarteirinha: TSpeedButton;
 
@@ -94,7 +92,6 @@ type
     procedure SpeedButton1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure DBGrid1DblClick(Sender: TObject);
-    procedure btnSelecionarImagemClick(Sender: TObject);
     procedure btnGerarCarteirinhaClick(Sender: TObject);
     procedure DBGrid1Exit(Sender: TObject);
 
@@ -134,8 +131,10 @@ implementation
 
 procedure TfrmFuncionarios.associarCampos;
 var
-  i: Integer;
+  Data: TDate;
 begin
+
+  Data := now;
   dm.tbFunc.FieldByName('nome_func').Value := edtNome.Text;
   dm.tbFunc.FieldByName('email_func').Value := edtEmail.Text;
   dm.tbFunc.FieldByName('datadeadmissao_func').Value := Date;
@@ -150,7 +149,7 @@ begin
   dm.tbFunc.FieldByName('cidade_func').Value := edtMunioipio.Text;
   dm.tbFunc.FieldByName('uf_func').Value := edtUf.Text;
   dm.tbFunc.FieldByName('numerocasa_func').Value := edtNumero.Text;
-  dm.tbFunc.FieldByName('foto_func').Value := OpenPictureDialog1.FileName;
+  dm.tbFunc.FieldByName('datacadastro').Value := Data;
 
 end;
 
@@ -220,7 +219,7 @@ begin
   dm.qryFunc.SQL.Add
     (', telefone_func = :telefoneFunc, remuneracao_func= :remuneracaoFunc, cargo_func= :cargoFunc, cep_func= :cepFunc, endereco_func= :enderecoFunc, complemento_func= :complementoFunc');
   dm.qryFunc.SQL.Add
-    (', bairro_func= :bairroFunc, cidade_func= :cidadeFunc, uf_func= :ufFunc, status= :statusFunc, numerocasa_func = :numeroFunc, foto_func = :foto');
+    (', bairro_func= :bairroFunc, cidade_func= :cidadeFunc, uf_func= :ufFunc, status= :statusFunc, numerocasa_func = :numeroFunc');
   dm.qryFunc.SQL.Add('WHERE id_func = :id');
   dm.qryFunc.ParamByName('nomeFunc').AsString := trim(edtNome.Text);
   dm.qryFunc.ParamByName('emailFunc').AsString := trim(edtEmail.Text);
@@ -239,7 +238,7 @@ begin
   dm.qryFunc.ParamByName('ufFunc').AsString := trim(edtUf.Text);
   dm.qryFunc.ParamByName('statusFunc').AsString := trim(cmbStatus.Text);
   dm.qryFunc.ParamByName('numeroFunc').AsString := trim(edtNumero.Text);
-  dm.qryFunc.ParamByName('foto').Value := OpenPictureDialog1.FileName;
+
   dm.qryFunc.ParamByName('id').Value := id;
   dm.qryFunc.ExecSQL;
 
@@ -351,7 +350,6 @@ begin
   edtComplemento.Text := dm.qryFunc.FieldByName('complemento_func').Value;
   edtMunioipio.Text := dm.qryFunc.FieldByName('cidade_func').Value;
   edtUf.Text := dm.qryFunc.FieldByName('uf_func').Value;
-  Image1.Picture.LoadFromFile(dm.qryFunc.FieldByName('foto_func').Value);
   if dm.qryFunc.FieldByName('endereco_func').Value <> null then
   begin
     edtEndereco.Text := dm.qryFunc.FieldByName('endereco_func').Value;
@@ -615,15 +613,6 @@ begin
   limpacampos(self);
   btnSalvar.Visible := false;
   listar;
-
-end;
-
-procedure TfrmFuncionarios.btnSelecionarImagemClick(Sender: TObject);
-begin
-  if OpenPictureDialog1.Execute = true then
-  begin
-    Image1.Picture.LoadFromFile(OpenPictureDialog1.FileName);
-  end;
 
 end;
 

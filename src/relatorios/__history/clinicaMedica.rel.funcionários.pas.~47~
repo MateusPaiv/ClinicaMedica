@@ -1,0 +1,151 @@
+unit clinicaMedica.rel.funcionários;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls,
+  clinicaMedica.conn.Conexao;
+
+type
+  TfrmRelFuncionarios = class(TForm)
+    Panel1: TPanel;
+    btnRelatorio: TSpeedButton;
+    edtNome: TEdit;
+    rdFiltraTodos: TRadioButton;
+    rdFunc: TRadioButton;
+    Label1: TLabel;
+    cmbStatus: TComboBox;
+    procedure rdFuncClick(Sender: TObject);
+    procedure btnRelatorioClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure rdFiltraTodosClick(Sender: TObject);
+  private
+    { Private declarations }
+    procedure abrirTodososFuncionarios;
+    procedure abrirRelFuncNome;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmRelFuncionarios: TfrmRelFuncionarios;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmRelFuncionarios.abrirRelFuncNome;
+var
+  sql: string;
+begin
+  if cmbStatus.Text = '' then
+  begin
+    MessageDlg('Campo vazio!', mtinformation, [mbOK], 0);
+    cmbStatus.SetFocus;
+    exit;
+  end;
+  if edtNome.Text = '' then
+  begin
+    MessageDlg('Campo vazio!', mtinformation, [mbOK], 0);
+    edtNome.SetFocus;
+    exit;
+  end;
+
+  if cmbStatus.Text = 'Ativos' then
+  begin
+    sql := 'WHERE f.nome_func LIKE :nome AND f.status = ''S'' ';
+  end
+  else if cmbStatus.Text = 'Inativos' then
+  begin
+    sql := 'WHERE f.nome_func LIKE :nome AND f.status =''N'' ';
+  end
+  else
+  begin
+    sql := '';
+  end;
+  dm.qryRelFuncionarios.Close;
+  dm.qryRelFuncionarios.sql.Clear;
+  dm.qryRelFuncionarios.sql.Add
+    ('SELECT f.* , c.cargo FROM funcionarios as f inner join cargos as c on f.cargo_func = c.id_carg '
+    + sql);
+  dm.qryRelFuncionarios.ParamByName('nome').Value := '%' + edtNome.Text + '%';
+  dm.qryRelFuncionarios.Open;
+
+  dm.relFuncionarios.Variables.Clear;
+  dm.relFuncionarios.ShowReport();
+end;
+
+procedure TfrmRelFuncionarios.abrirTodososFuncionarios;
+var
+  sql: string;
+begin
+  if cmbStatus.Text = '' then
+  begin
+    MessageDlg('Campo vazio!', mtinformation, [mbOK], 0);
+    cmbStatus.SetFocus;
+    exit;
+  end;
+  if cmbStatus.Text = 'Ativos' then
+  begin
+    sql := 'WHERE f.status = ''S'' ';
+  end
+  else if cmbStatus.Text = 'Inativos' then
+  begin
+    sql := 'WHERE f.status =''N'' ';
+  end
+  else
+  begin
+    sql := '';
+  end;
+
+  dm.qryRelFuncionarios.Close;
+  dm.qryRelFuncionarios.sql.Clear;
+  dm.qryRelFuncionarios.sql.Add
+    ('SELECT f.* , c.cargo FROM funcionarios as f inner join cargos as c on f.cargo_func = c.id_carg '
+    + sql);
+  dm.qryRelFuncionarios.Open;
+
+  dm.relFuncionarios.Variables.Clear;
+  dm.relFuncionarios.ShowReport();
+end;
+
+procedure TfrmRelFuncionarios.btnRelatorioClick(Sender: TObject);
+
+begin
+
+  if rdFiltraTodos.Checked = true then
+  begin
+    abrirTodososFuncionarios;
+  end;
+
+  if rdFunc.Checked = true then
+  begin
+    abrirRelFuncNome;
+  end;
+
+end;
+
+procedure TfrmRelFuncionarios.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  Action := caFree;
+end;
+
+procedure TfrmRelFuncionarios.rdFiltraTodosClick(Sender: TObject);
+begin
+  cmbStatus.Visible := true;
+  Label1.Visible := true;
+  btnRelatorio.Enabled := true;
+  edtNome.Visible := false;
+end;
+
+procedure TfrmRelFuncionarios.rdFuncClick(Sender: TObject);
+begin
+  edtNome.Visible := true;
+  edtNome.SetFocus;
+  btnRelatorio.Enabled := true;
+end;
+
+end.

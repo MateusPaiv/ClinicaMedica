@@ -49,6 +49,7 @@ type
     Label13: TLabel;
     btnAtestado: TSpeedButton;
     btnDeclaracao: TSpeedButton;
+    btnRelatorio: TSpeedButton;
     procedure Timer1Timer(Sender: TObject);
     procedure btnIniciarConsultaClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -56,6 +57,7 @@ type
     procedure btnNaoVeioClick(Sender: TObject);
     procedure btnAtestadoClick(Sender: TObject);
     procedure btnDeclaracaoClick(Sender: TObject);
+    procedure btnRelatorioClick(Sender: TObject);
   private
     { Private declarations }
     procedure asssociarCampos;
@@ -84,6 +86,7 @@ begin
   dm.tbPront.FieldByName('historico_sintoma').value := edtHistoricoSintoma.Text;
   dm.tbPront.FieldByName('data_ultima_consulta').value := edtUltimaCons.Date;
   dm.tbPront.FieldByName('crm_med').value := edtCRM.Text;
+  dm.tbPront.FieldByName('id_pront_paci').value := idPaciente;
 
 end;
 
@@ -171,13 +174,19 @@ end;
 
 procedure TfrmProntuario.btnIniciarConsultaClick(Sender: TObject);
 begin
-  frmProntuario.BorderStyle := bsNone;
-  dm.qryCons.Close;
-  dm.qryCons.SQL.Clear;
-  dm.qryCons.SQL.Add('UPDATE consultas SET status = 1 WHERE id_cons = :id');
-  dm.qryCons.ParamByName('id').value := id;
-  dm.qryCons.execSQL;
-  Timer1.Enabled := true;
+  if messageDlg('Deseja iniciar a consulta', MtInformation, [MbOK], 0) = mrYes
+  then
+  begin
+    frmProntuario.BorderStyle := bsNone;
+    dm.qryCons.Close;
+    dm.qryCons.SQL.Clear;
+    dm.qryCons.SQL.Add('UPDATE consultas SET status = 1 WHERE id_cons = :id');
+    dm.qryCons.ParamByName('id').value := id;
+    dm.qryCons.execSQL;
+    Timer1.Enabled := true;
+    btnIniciarConsulta.Enabled := false;
+    btnFinalizarConsulta.Enabled := false;
+  end;
 
 end;
 
@@ -195,6 +204,19 @@ begin
     Close;
   end;
 
+end;
+
+procedure TfrmProntuario.btnRelatorioClick(Sender: TObject);
+begin
+  dm.qryRelPront.Close;
+  dm.qryRelPront.SQL.Clear;
+  dm.qryRelPront.SQL.Add
+    ('select p.*, c.*, u.nome_user from prontuarios as p inner join consultas as c on p.id_pront_paci = c.id_cons_paciente inner join usuarios as u on u.id_func_user = c.id_cons_medico ');
+  dm.qryRelPront.SQL.Add('WHERE c.nome_paci_cons LIKE :nome');
+  dm.qryRelPront.ParamByName('nome').value := '%' + edtNomePac.Text + '%';
+  dm.qryRelPront.Open;
+  dm.relProntuarios.Variables.Clear;
+  dm.relProntuarios.ShowReport();
 end;
 
 procedure TfrmProntuario.FormClose(Sender: TObject; var Action: TCloseAction);

@@ -64,8 +64,7 @@ implementation
 
 procedure TfrmLogin.btnLoginClick(Sender: TObject);
 begin
-  // Login;
-  close;
+  Login;
 end;
 
 procedure TfrmLogin.FormActivate(Sender: TObject);

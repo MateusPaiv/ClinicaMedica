@@ -158,6 +158,10 @@
         </DCCReference>
         <DCCReference Include="src\funcoes\ClinicaMedica.funcao.verificaCpf.pas"/>
         <DCCReference Include="src\funcoes\ClinicaMedica.classe.conexao.pas"/>
+        <DCCReference Include="src\relatorios\clinicaMedica.rel.prontuario.pas">
+            <Form>frmRelPront</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

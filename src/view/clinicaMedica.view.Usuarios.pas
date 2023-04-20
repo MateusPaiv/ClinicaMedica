@@ -66,13 +66,18 @@ implementation
 uses clinicaMedica.conn.conexao;
 
 procedure TfrmUsuarios.associarCampos;
+var
+  Data: TDate;
 begin
+
+  Data := now;
   dm.tbUser.FieldByName('nome_user').Value := edtNomeCad.Text;
   dm.tbUser.FieldByName('usuario_user').Value := edtUser.Text;
   dm.tbUser.FieldByName('senha_user').Value := edtSenha.Text;
   dm.tbUser.FieldByName('crm').Value := edtCrm.Text;
   dm.tbUser.FieldByName('nivel_acesso_user').Value := cargoFunc;
   dm.tbUser.FieldByName('id_func_user').Value := idFunc;
+  dm.tbUser.FieldByName('datacadastro').Value := Data;
 end;
 
 procedure TfrmUsuarios.btnSairClick(Sender: TObject);

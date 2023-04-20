@@ -18,7 +18,8 @@ uses
   clinicaMedica.rel.pacientes in 'src\relatorios\clinicaMedica.rel.pacientes.pas' {frmPacientesRel},
   clinicaMedica.rel.funcionários in 'src\relatorios\clinicaMedica.rel.funcionários.pas' {frmRelFuncionarios},
   ClinicaMedica.funcao.verificaCpf in 'src\funcoes\ClinicaMedica.funcao.verificaCpf.pas',
-  ClinicaMedica.classe.conexao in 'src\funcoes\ClinicaMedica.classe.conexao.pas';
+  ClinicaMedica.classe.conexao in 'src\funcoes\ClinicaMedica.classe.conexao.pas',
+  clinicaMedica.rel.prontuario in 'src\relatorios\clinicaMedica.rel.prontuario.pas' {frmRelPront};
 
 {$R *.res}
 
@@ -30,6 +31,7 @@ begin
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
   Application.CreateForm(TfrmLogin, frmLogin);
   Application.CreateForm(TfrmRelFuncionarios, frmRelFuncionarios);
+  Application.CreateForm(TfrmRelPront, frmRelPront);
   frmLogin := TfrmLogin.Create(nil);
   frmLogin.ShowModal;
   Application.CreateForm(TfrmPrincipal, frmPrincipal);

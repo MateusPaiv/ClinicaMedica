@@ -31,7 +31,6 @@ type
     btnEditar: TSpeedButton;
     cmbFimCons: TComboBox;
     Label7: TLabel;
-    btnFinalizarConsulta: TSpeedButton;
     procedure btnSairClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -63,7 +62,11 @@ uses clinicaMedica.conn.Conexao, clinicaMedica.view.Principal,
   clinicaMedica.funcao.validaCampos;
 
 procedure TfrmConsulta.associarCampos;
+var
+  data: TDate;
 begin
+
+  data := now;
   dm.tbcons.fieldbyname('nome_paci_cons').value := edtNomePac.Text;
   dm.tbcons.fieldbyname('dataconsulta').value := edtDataConsulta.date;
   dm.tbcons.fieldbyname('valor').value := strtocurr(edtValor.Text);
@@ -71,6 +74,7 @@ begin
   dm.tbcons.fieldbyname('id_cons_paciente').value := id;
   dm.tbcons.fieldbyname('id_cons_medico').value := idMedico;
   dm.tbcons.fieldbyname('id_cons_conv').value := idConv;
+  dm.tbcons.fieldbyname('datacadastro').value := now;
 end;
 
 procedure TfrmConsulta.btnEditarClick(Sender: TObject);
