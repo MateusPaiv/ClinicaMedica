@@ -15,8 +15,8 @@ object frmDesafio: TfrmDesafio
   PixelsPerInch = 96
   TextHeight = 13
   object Button1: TButton
-    Left = 432
-    Top = 208
+    Left = 376
+    Top = 216
     Width = 75
     Height = 25
     Caption = 'Button1'

@@ -956,12 +956,14 @@ begin
       begin
         btnAdm.Visible := false;
         btnTelaRecp.Visible := false;
+        btnDesafio.Visible := false;
       end;
     3:
       begin
         btnCadastros.Enabled := false;
         btnAdm.Visible := false;
         btnTelaRecp.Visible := false;
+        btnDesafio.Visible := false;
       end;
     4:
       begin
@@ -971,6 +973,7 @@ begin
         pnlSideBar.Visible := false;
         btnAdm.Visible := false;
         btnTelaRecp.Visible := false;
+        btnDesafio.Visible := false;
       end;
   end;
 

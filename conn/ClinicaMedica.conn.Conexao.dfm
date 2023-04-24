@@ -17,7 +17,9 @@ object dm: Tdm
     Top = 8
   end
   object PgDriverLink: TFDPhysPgDriverLink
-    VendorLib = 'C:\Users\User\Desktop\ClinicaMedica\Win32\Debug\lib\libpq.dll'
+    VendorLib = 
+      'C:\Users\mateus.5937\Desktop\ClinicaMedica\Win32\Debug\lib\libpq' +
+      '.dll'
     Left = 96
     Top = 8
   end
@@ -6573,6 +6575,10 @@ object dm: Tdm
   end
   object qryDesafioP: TFDQuery
     Connection = Connection
+    SQL.Strings = (
+      
+        'select id_paci,nome_paci , datacadastro, cpf_paci, cidade_paci f' +
+        'rom pacientes ')
     Left = 536
     Top = 472
   end
