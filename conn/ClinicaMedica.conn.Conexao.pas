@@ -159,6 +159,27 @@ type
     tbConshorariofimconsulta: TTimeField;
     tbConsdatacadastro: TDateField;
     tbUserdatacadastro: TDateField;
+    qryDesafioM: TFDQuery;
+    qryDesafioP: TFDQuery;
+    qryDesafioC: TFDQuery;
+    qryDesafioMcrm: TWideStringField;
+    qryDesafioMid_func: TIntegerField;
+    qryDesafioMnome_func: TWideStringField;
+    qryDesafioMemail_func: TWideStringField;
+    qryDesafioMcpf_func: TWideStringField;
+    qryDesafioMdatadeadmissao_func: TDateField;
+    qryDesafioMtelefone_func: TWideStringField;
+    qryDesafioMremuneracao_func: TBCDField;
+    qryDesafioMcep_func: TWideStringField;
+    qryDesafioMendereco_func: TWideStringField;
+    qryDesafioMcomplemento_func: TWideStringField;
+    qryDesafioMbairro_func: TWideStringField;
+    qryDesafioMcidade_func: TWideStringField;
+    qryDesafioMuf_func: TWideStringField;
+    qryDesafioMstatus: TWideStringField;
+    qryDesafioMnumerocasa_func: TWideStringField;
+    qryDesafioMcargo_func: TIntegerField;
+    qryDesafioMdatacadastro: TDateField;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private

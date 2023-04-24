@@ -2,8 +2,8 @@ object dm: Tdm
   OldCreateOrder = False
   OnCreate = DataModuleCreate
   OnDestroy = DataModuleDestroy
-  Height = 581
-  Width = 1311
+  Height = 724
+  Width = 1561
   object Connection: TFDConnection
     Params.Strings = (
       'Database=apr_mateus'
@@ -17,9 +17,7 @@ object dm: Tdm
     Top = 8
   end
   object PgDriverLink: TFDPhysPgDriverLink
-    VendorLib = 
-      'C:\Users\Auditorio\Desktop\ClinicaMedica\Win32\Debug\lib\libpq.d' +
-      'll'
+    VendorLib = 'C:\Users\User\Desktop\ClinicaMedica\Win32\Debug\lib\libpq.dll'
     Left = 96
     Top = 8
   end
@@ -681,8 +679,8 @@ object dm: Tdm
       'begin'
       ''
       'end.')
-    Left = 1008
-    Top = 48
+    Left = 1160
+    Top = 88
     Datasets = <
       item
         DataSet = relDsFuncionarios
@@ -961,8 +959,8 @@ object dm: Tdm
     DataSet = qryCarteirinha
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 1000
-    Top = 112
+    Left = 1160
+    Top = 136
   end
   object qryCarteirinha: TFDQuery
     Connection = Connection
@@ -970,8 +968,8 @@ object dm: Tdm
       
         'select f.* , c.cargo from funcionarios as f inner join cargos as' +
         ' c on f.cargo_func = c.id_carg ')
-    Left = 928
-    Top = 80
+    Left = 1088
+    Top = 120
   end
   object frxXLSXExport1: TfrxXLSXExport
     UseFileCache = True
@@ -981,7 +979,7 @@ object dm: Tdm
     ChunkSize = 0
     OpenAfterExport = False
     PictureType = gpPNG
-    Left = 1168
+    Left = 1320
   end
   object frxPDFExport1: TfrxPDFExport
     FileName = 'Consultas.pdf'
@@ -1030,7 +1028,7 @@ object dm: Tdm
       'begin'
       ''
       'end.')
-    Left = 1008
+    Left = 1128
     Top = 192
     Datasets = <
       item
@@ -1734,8 +1732,8 @@ object dm: Tdm
     DataSet = qryAtestado
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 1032
-    Top = 240
+    Left = 1160
+    Top = 248
   end
   object qryAtestado: TFDQuery
     Connection = Connection
@@ -1743,7 +1741,7 @@ object dm: Tdm
       
         'select cons.* ,u.nome_user, u.crm from consultas as cons inner j' +
         'oin usuarios as u on cons.id_cons_medico = u.id_func_user')
-    Left = 928
+    Left = 1080
     Top = 216
   end
   object relDeclaracaoComp: TfrxReport
@@ -1763,7 +1761,7 @@ object dm: Tdm
       'begin'
       ''
       'end.')
-    Left = 1064
+    Left = 1192
     Top = 192
     Datasets = <
       item
@@ -2406,7 +2404,7 @@ object dm: Tdm
         's_paciente = p.id_paci inner join usuarios as u on cons.id_cons_' +
         'medico = u.id_func_user inner join convenios as conv on conv.id_' +
         'conv = cons.id_cons_conv')
-    Left = 936
+    Left = 1088
     Top = 328
   end
   object relDsConsultas: TfrxDBDataset
@@ -2415,7 +2413,7 @@ object dm: Tdm
     DataSet = qryRelConsultas
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 1008
+    Left = 1160
     Top = 368
   end
   object relConsultas: TfrxReport
@@ -2434,7 +2432,7 @@ object dm: Tdm
       'begin'
       ''
       'end.')
-    Left = 1008
+    Left = 1160
     Top = 312
     Datasets = <
       item
@@ -3352,7 +3350,7 @@ object dm: Tdm
       'begin'
       ''
       'end.')
-    Left = 1032
+    Left = 1168
     Top = 496
     Datasets = <
       item
@@ -4334,7 +4332,7 @@ object dm: Tdm
     DataSet = qryRelPacientes
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 1032
+    Left = 1160
     Top = 440
   end
   object qryRelPacientes: TFDQuery
@@ -4343,7 +4341,7 @@ object dm: Tdm
       
         'select p.* , c.nome_conv from pacientes as p inner join convenio' +
         's as c on p.convenio_paci = c.id_conv')
-    Left = 944
+    Left = 1096
     Top = 480
   end
   object qryRelFuncionarios: TFDQuery
@@ -4352,8 +4350,8 @@ object dm: Tdm
       
         'select f.* , c.cargo from funcionarios as f inner join cargos as' +
         ' c on f.cargo_func =  c.id_carg ')
-    Left = 1136
-    Top = 344
+    Left = 1096
+    Top = 592
   end
   object relFuncionarios: TfrxReport
     Version = '2023.1.3'
@@ -4371,8 +4369,8 @@ object dm: Tdm
       'begin'
       ''
       'end.')
-    Left = 1200
-    Top = 320
+    Left = 1168
+    Top = 568
     Datasets = <
       item
         DataSet = relDsFuncionarios2
@@ -5443,19 +5441,18 @@ object dm: Tdm
     DataSet = qryRelFuncionarios
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 1200
-    Top = 376
+    Left = 1176
+    Top = 624
   end
   object qryRelPront: TFDQuery
-    Active = True
     Connection = Connection
     SQL.Strings = (
       
         'select p.*, c.*, u.nome_user from prontuarios as p inner join co' +
         'nsultas as c on p.id_pront_paci = c.id_cons_paciente inner join ' +
         'usuarios as u on u.id_func_user = c.id_cons_medico')
-    Left = 696
-    Top = 408
+    Left = 1296
+    Top = 120
   end
   object relProntuarios: TfrxReport
     Version = '2023.1.3'
@@ -5473,8 +5470,8 @@ object dm: Tdm
       'begin'
       ''
       'end.')
-    Left = 760
-    Top = 368
+    Left = 1352
+    Top = 96
     Datasets = <
       item
         DataSet = relDsPront
@@ -6460,7 +6457,128 @@ object dm: Tdm
     DataSet = qryRelPront
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 760
-    Top = 456
+    Left = 1352
+    Top = 144
+  end
+  object qryDesafioM: TFDQuery
+    Connection = Connection
+    SQL.Strings = (
+      'select * from desafio_m')
+    Left = 424
+    Top = 472
+    object qryDesafioMcrm: TWideStringField
+      FieldName = 'crm'
+      Origin = 'crm'
+      Size = 10
+    end
+    object qryDesafioMid_func: TIntegerField
+      AutoGenerateValue = arDefault
+      FieldName = 'id_func'
+      Origin = 'id_func'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+    end
+    object qryDesafioMnome_func: TWideStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'nome_func'
+      Origin = 'nome_func'
+      Size = 150
+    end
+    object qryDesafioMemail_func: TWideStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'email_func'
+      Origin = 'email_func'
+      Size = 130
+    end
+    object qryDesafioMcpf_func: TWideStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'cpf_func'
+      Origin = 'cpf_func'
+      Size = 25
+    end
+    object qryDesafioMdatadeadmissao_func: TDateField
+      AutoGenerateValue = arDefault
+      FieldName = 'datadeadmissao_func'
+      Origin = 'datadeadmissao_func'
+    end
+    object qryDesafioMtelefone_func: TWideStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'telefone_func'
+      Origin = 'telefone_func'
+      Size = 13
+    end
+    object qryDesafioMremuneracao_func: TBCDField
+      AutoGenerateValue = arDefault
+      FieldName = 'remuneracao_func'
+      Origin = 'remuneracao_func'
+      Precision = 12
+      Size = 2
+    end
+    object qryDesafioMcep_func: TWideStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'cep_func'
+      Origin = 'cep_func'
+    end
+    object qryDesafioMendereco_func: TWideStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'endereco_func'
+      Origin = 'endereco_func'
+      Size = 100
+    end
+    object qryDesafioMcomplemento_func: TWideStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'complemento_func'
+      Origin = 'complemento_func'
+      Size = 80
+    end
+    object qryDesafioMbairro_func: TWideStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'bairro_func'
+      Origin = 'bairro_func'
+      Size = 40
+    end
+    object qryDesafioMcidade_func: TWideStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'cidade_func'
+      Origin = 'cidade_func'
+      Size = 50
+    end
+    object qryDesafioMuf_func: TWideStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'uf_func'
+      Origin = 'uf_func'
+      Size = 5
+    end
+    object qryDesafioMstatus: TWideStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'status'
+      Origin = 'status'
+      Size = 3
+    end
+    object qryDesafioMnumerocasa_func: TWideStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'numerocasa_func'
+      Origin = 'numerocasa_func'
+      Size = 10
+    end
+    object qryDesafioMcargo_func: TIntegerField
+      AutoGenerateValue = arDefault
+      FieldName = 'cargo_func'
+      Origin = 'cargo_func'
+    end
+    object qryDesafioMdatacadastro: TDateField
+      AutoGenerateValue = arDefault
+      FieldName = 'datacadastro'
+      Origin = 'datacadastro'
+    end
+  end
+  object qryDesafioP: TFDQuery
+    Connection = Connection
+    Left = 536
+    Top = 472
+  end
+  object qryDesafioC: TFDQuery
+    Connection = Connection
+    Left = 496
+    Top = 544
   end
 end
