@@ -7,7 +7,8 @@ uses
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Buttons,
   Data.DB, Vcl.Grids, Vcl.DBGrids, clinicaMedica.conn.Conexao,
-  clinicaMedica.funcao.validaCampos;
+  clinicaMedica.funcao.validaCampos, System.ImageList, Vcl.ImgList,
+  PngImageList;
 
 type
   TfrmMovimentos = class(TForm)
@@ -20,12 +21,20 @@ type
     edtValorEntrada: TLabeledEdit;
     edtMovimentoEntrada: TLabeledEdit;
     Panel4: TPanel;
-    DBFinan: TDBGrid;
     btnLancar: TSpeedButton;
     edtValorSaida: TLabeledEdit;
     edtMovimentoSaida: TLabeledEdit;
     Label2: TLabel;
     Label3: TLabel;
+    DBFinan: TDBGrid;
+    lbEntrada: TLabel;
+    lbSaida: TLabel;
+    lbtotal: TLabel;
+    Label9: TLabel;
+    btnEditar: TSpeedButton;
+    lbTotalConsultas: TLabel;
+    Label5: TLabel;
+    PngImageList1: TPngImageList;
     procedure btnEntradaClick(Sender: TObject);
     procedure DBFinanDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
@@ -33,19 +42,25 @@ type
     procedure btnLancarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnSaidaClick(Sender: TObject);
+    procedure DBFinanCellClick(Column: TColumn);
+    procedure btnEditarClick(Sender: TObject);
   private
     { Private declarations }
     procedure associarCampos;
     procedure listar;
+    procedure valorEntrada;
+    procedure valorSaida;
+    procedure valorTotal;
+    procedure valorConsultas;
   public
     { Public declarations }
   end;
 
 var
   frmMovimentos: TfrmMovimentos;
-  valor: currency;
+  valor, entrada, saida, totalCons: currency;
   mov: string;
-  status: Integer;
+  status, id: Integer;
 
 implementation
 
@@ -58,13 +73,48 @@ begin
   dm.tbfinanceiro.fieldbyname('status').value := status;
 end;
 
+procedure TfrmMovimentos.btnEditarClick(Sender: TObject);
+begin
+  if status = 1 then
+  begin
+    valor := StrToCurr(edtValorEntrada.Text);
+    mov := edtMovimentoEntrada.Text;
+  end;
+  if status = 0 then
+  begin
+    valor := StrToCurr(edtValorSaida.Text);
+    mov := edtMovimentoSaida.Text;
+  end;
+  dm.qryFinanceiro.close;
+  dm.qryFinanceiro.SQL.clear;
+  dm.qryFinanceiro.SQL.add
+    ('UPDATE movimentos SET valor_mov = :valor , desc_mov = :desc where id_mov = :id AND status = :status');
+  dm.qryFinanceiro.ParamByName('valor').value := valor;
+  dm.qryFinanceiro.ParamByName('desc').value := mov;
+  dm.qryFinanceiro.ParamByName('id').value := id;
+  dm.qryFinanceiro.ParamByName('status').value := status;
+  dm.qryFinanceiro.ExecSQL;
+
+  MessageDlg('Movimento editado com sucesso!', mtinformation, [mbok], 0);
+
+  valorEntrada;
+  valorSaida;
+  valorTotal;
+  valorConsultas;
+  listar;
+
+end;
+
 procedure TfrmMovimentos.btnEntradaClick(Sender: TObject);
 begin
   edtValorEntrada.Visible := true;
   edtMovimentoEntrada.Visible := true;
+  edtValorEntrada.Text := '';
+  edtMovimentoEntrada.Text := '';
   edtValorSaida.Visible := false;
   edtMovimentoSaida.Visible := false;
   btnLancar.Enabled := true;
+  btnEditar.Visible := false;
   status := 1;
   dm.tbfinanceiro.insert;
 end;
@@ -143,6 +193,10 @@ begin
   end;
 
   dm.tbfinanceiro.post;
+  valorEntrada;
+  valorSaida;
+  valorTotal;
+  valorConsultas;
   listar;
 
   MessageDlg('Movimento salvo com sucesso!', mtinformation, [mbok], 0);
@@ -153,11 +207,43 @@ procedure TfrmMovimentos.btnSaidaClick(Sender: TObject);
 begin
   edtValorSaida.Visible := true;
   edtMovimentoSaida.Visible := true;
+  edtValorSaida.Text := '';
+  edtMovimentoSaida.Text := '';
   edtValorEntrada.Visible := false;
   edtMovimentoEntrada.Visible := false;
   btnLancar.Enabled := true;
+  btnEditar.Visible := false;
   status := 0;
   dm.tbfinanceiro.insert;
+end;
+
+//
+procedure TfrmMovimentos.DBFinanCellClick(Column: TColumn);
+begin
+  if dm.qryFinanceiro.fieldbyname('status').value = 1 then
+  begin
+    edtValorEntrada.Text := dm.qryFinanceiro.fieldbyname('valor_mov').value;
+    edtMovimentoEntrada.Text := dm.qryFinanceiro.fieldbyname('desc_mov').value;
+    edtValorEntrada.Visible := true;
+    edtMovimentoEntrada.Visible := true;
+    edtValorSaida.Visible := false;
+    edtMovimentoSaida.Visible := false;
+    status := dm.qryFinanceiro.fieldbyname('status').value;
+    id := dm.qryFinanceiro.fieldbyname('id_mov').value;
+  end
+  else
+  begin
+    edtValorSaida.Text := dm.qryFinanceiro.fieldbyname('valor_mov').value;
+    edtMovimentoSaida.Text := dm.qryFinanceiro.fieldbyname('desc_mov').value;
+    edtValorEntrada.Visible := false;
+    edtMovimentoEntrada.Visible := false;
+    edtValorSaida.Visible := true;
+    edtMovimentoSaida.Visible := true;
+    status := dm.qryFinanceiro.fieldbyname('status').value;
+    id := dm.qryFinanceiro.fieldbyname('id_mov').value;
+  end;
+  btnEditar.Visible := true;
+
 end;
 
 procedure TfrmMovimentos.DBFinanDrawColumnCell(Sender: TObject;
@@ -194,15 +280,84 @@ end;
 procedure TfrmMovimentos.FormShow(Sender: TObject);
 begin
   dm.tbfinanceiro.active := true;
+  valorEntrada;
+  valorSaida;
+  valorConsultas;
+  valorTotal;
+
   listar;
 end;
 
 procedure TfrmMovimentos.listar;
 begin
-  dm.qryfinanceiro.close;
-  dm.qryfinanceiro.SQL.clear;
-  dm.qryfinanceiro.SQL.add('SELECT * FROM movimentos');
-  dm.qryfinanceiro.open;
+  dm.qryFinanceiro.close;
+  dm.qryFinanceiro.SQL.clear;
+  dm.qryFinanceiro.SQL.add('SELECT * FROM movimentos');
+  dm.qryFinanceiro.open;
+end;
+
+procedure TfrmMovimentos.valorConsultas;
+var
+  hoje: TDate;
+begin
+
+  hoje := now;
+
+  dm.qryCons.close;
+  dm.qryCons.SQL.clear;
+  dm.qryCons.SQL.add
+    ('SELECT sum(valor) FROM consultas where status = 2 and dataconsulta = :data');
+  dm.qryCons.ParamByName('data').AsDate := hoje;
+  dm.qryCons.open;
+  lbTotalConsultas.Caption := 'R$ ' + dm.qryCons.fieldbyname('sum')
+    .AsString + ',00';
+
+  totalCons := dm.qryCons.fieldbyname('sum').AsInteger;
+
+end;
+
+procedure TfrmMovimentos.valorEntrada;
+begin
+  dm.qryFinanceiro.close;
+  dm.qryFinanceiro.SQL.clear;
+  dm.qryFinanceiro.SQL.add
+    ('SELECT sum(valor_mov) FROM movimentos where status = 1');
+  dm.qryFinanceiro.open;
+
+  lbEntrada.Caption := 'R$ ' + dm.qryFinanceiro.fieldbyname('sum')
+    .AsString + ',00';
+
+  entrada := dm.qryFinanceiro.fieldbyname('sum').AsInteger;
+end;
+
+procedure TfrmMovimentos.valorSaida;
+begin
+  dm.qryFinanceiro.close;
+  dm.qryFinanceiro.SQL.clear;
+  dm.qryFinanceiro.SQL.add
+    ('SELECT sum(valor_mov) FROM movimentos where status = 0');
+  dm.qryFinanceiro.open;
+
+  lbSaida.Caption := 'R$ ' + dm.qryFinanceiro.fieldbyname('sum')
+    .AsString + ',00';
+
+  saida := dm.qryFinanceiro.fieldbyname('sum').AsInteger;
+end;
+
+procedure TfrmMovimentos.valorTotal;
+var
+  soma: currency;
+begin
+  soma := (totalCons + entrada) - saida;
+  if soma > 0 then
+  begin
+    lbtotal.Font.Color := clTeal;
+  end
+  else
+  begin
+    lbtotal.Font.Color := $000000BF;
+  end;
+  lbtotal.Caption := 'R$ ' + CurrToStr(soma) + ',00';
 end;
 
 end.

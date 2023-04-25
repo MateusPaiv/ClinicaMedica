@@ -20,7 +20,8 @@ uses
   ClinicaMedica.funcao.verificaCpf in 'src\funcoes\ClinicaMedica.funcao.verificaCpf.pas',
   ClinicaMedica.classe.conexao in 'src\funcoes\ClinicaMedica.classe.conexao.pas',
   clinicaMedica.rel.prontuario in 'src\relatorios\clinicaMedica.rel.prontuario.pas' {frmRelPront},
-  clinicaMedica.desafio in 'src\desafio\clinicaMedica.desafio.pas' {frmDesafio};
+  clinicaMedica.desafio in 'src\desafio\clinicaMedica.desafio.pas' {frmDesafio},
+  clinicaMedica.view.financeiro in 'src\view\clinicaMedica.view.financeiro.pas' {frmMovimentos};
 
 {$R *.res}
 
@@ -31,7 +32,6 @@ begin
   Application.CreateForm(Tdm, dm);
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
   Application.CreateForm(TfrmLogin, frmLogin);
-  Application.CreateForm(TfrmDesafio, frmDesafio);
   frmLogin := TfrmLogin.Create(nil);
   frmLogin.ShowModal;
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
