@@ -6,7 +6,8 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Buttons,
-  Data.DB, Vcl.Grids, Vcl.DBGrids, clinicaMedica.conn.Conexao;
+  Data.DB, Vcl.Grids, Vcl.DBGrids, clinicaMedica.conn.Conexao,
+  clinicaMedica.funcao.validaCampos;
 
 type
   TfrmMovimentos = class(TForm)
@@ -23,6 +24,8 @@ type
     btnLancar: TSpeedButton;
     edtValorSaida: TLabeledEdit;
     edtMovimentoSaida: TLabeledEdit;
+    Label2: TLabel;
+    Label3: TLabel;
     procedure btnEntradaClick(Sender: TObject);
     procedure DBFinanDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
@@ -103,7 +106,7 @@ begin
     end
     else
     begin
-
+      valor := StrToCurr(edtValorSaida.Text);
     end;
 
     if edtMovimentoSaida.Text = '' then
@@ -115,13 +118,31 @@ begin
     end
     else
     begin
-
+      mov := edtMovimentoSaida.Text;
     end;
   end;
 
   associarCampos;
+  if status = 0 then
+  begin
+    edtValorSaida.Text := '';
+    edtMovimentoSaida.Text := '';
+    edtValorSaida.Visible := false;
+    edtMovimentoSaida.Visible := false;
+    btnLancar.Enabled := false;
+  end
+  else
+  begin
+    edtValorEntrada.Text := '';
+    edtMovimentoEntrada.Text := '';
+     edtValorEntrada.Visible := false;
+    edtMovimentoEntrada.Visible := false;
+    btnLancar.Enabled := false;
+  end;
+
   dm.tbfinanceiro.post;
   listar;
+
   MessageDlg('Movimento salvo com sucesso!', mtinformation, [mbok], 0);
 
 end;

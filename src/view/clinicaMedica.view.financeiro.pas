@@ -62,6 +62,8 @@ procedure TfrmMovimentos.btnEntradaClick(Sender: TObject);
 begin
   edtValorEntrada.Visible := true;
   edtMovimentoEntrada.Visible := true;
+  edtValorSaida.Visible := false;
+  edtMovimentoSaida.Visible := false;
   btnLancar.Enabled := true;
   status := 1;
   dm.tbfinanceiro.insert;
@@ -135,7 +137,7 @@ begin
   begin
     edtValorEntrada.Text := '';
     edtMovimentoEntrada.Text := '';
-     edtValorEntrada.Visible := false;
+    edtValorEntrada.Visible := false;
     edtMovimentoEntrada.Visible := false;
     btnLancar.Enabled := false;
   end;
@@ -151,6 +153,8 @@ procedure TfrmMovimentos.btnSaidaClick(Sender: TObject);
 begin
   edtValorSaida.Visible := true;
   edtMovimentoSaida.Visible := true;
+  edtValorEntrada.Visible := false;
+  edtMovimentoEntrada.Visible := false;
   btnLancar.Enabled := true;
   status := 0;
   dm.tbfinanceiro.insert;

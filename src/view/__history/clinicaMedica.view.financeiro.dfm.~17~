@@ -1,9 +1,10 @@
 object frmMovimentos: TfrmMovimentos
   Left = 0
   Top = 0
-  Caption = 'frmMovimentos'
-  ClientHeight = 594
-  ClientWidth = 872
+  BorderStyle = bsDialog
+  Caption = 'Movimentos'
+  ClientHeight = 604
+  ClientWidth = 882
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,27 +12,33 @@ object frmMovimentos: TfrmMovimentos
   Font.Name = 'Segoe UI'
   Font.Style = []
   OldCreateOrder = False
+  Position = poMainFormCenter
+  OnClose = FormClose
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 20
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 872
-    Height = 594
+    Width = 882
+    Height = 604
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
     ExplicitLeft = -64
+    ExplicitWidth = 872
+    ExplicitHeight = 594
     object Panel2: TPanel
       Left = 0
       Top = 0
-      Width = 872
+      Width = 882
       Height = 73
       Align = alTop
       BevelOuter = bvNone
       Color = clSkyBlue
       ParentBackground = False
       TabOrder = 0
+      ExplicitWidth = 872
       object Label1: TLabel
         Left = 376
         Top = 19
@@ -49,15 +56,17 @@ object frmMovimentos: TfrmMovimentos
     object Panel3: TPanel
       Left = 0
       Top = 73
-      Width = 872
-      Height = 521
+      Width = 882
+      Height = 531
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 1
       ExplicitLeft = 32
       ExplicitTop = 79
+      ExplicitWidth = 872
+      ExplicitHeight = 521
       object btnEntrada: TSpeedButton
-        Left = 282
+        Left = 176
         Top = 24
         Width = 127
         Height = 33
@@ -71,7 +80,7 @@ object frmMovimentos: TfrmMovimentos
         OnClick = btnEntradaClick
       end
       object btnSaida: TSpeedButton
-        Left = 528
+        Left = 608
         Top = 24
         Width = 127
         Height = 33
@@ -82,13 +91,14 @@ object frmMovimentos: TfrmMovimentos
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
+        OnClick = btnSaidaClick
       end
-      object btnLancarEntrada: TSpeedButton
+      object btnLancar: TSpeedButton
         Left = 376
-        Top = 200
+        Top = 184
         Width = 161
         Height = 41
-        Caption = 'Enviar entrada'
+        Caption = 'Enviar'
         Enabled = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -96,7 +106,7 @@ object frmMovimentos: TfrmMovimentos
         Font.Name = 'Segoe UI'
         Font.Style = [fsBold]
         ParentFont = False
-        Visible = False
+        OnClick = btnLancarClick
       end
       object edtValorEntrada: TLabeledEdit
         Left = 502
@@ -106,7 +116,7 @@ object frmMovimentos: TfrmMovimentos
         EditLabel.Width = 113
         EditLabel.Height = 20
         EditLabel.Caption = 'Valor da entrada:'
-        TabOrder = 0
+        TabOrder = 2
         Visible = False
       end
       object edtMovimentoEntrada: TLabeledEdit
@@ -117,36 +127,62 @@ object frmMovimentos: TfrmMovimentos
         EditLabel.Width = 144
         EditLabel.Height = 20
         EditLabel.Caption = 'Descri'#231#227'o da entrada:'
-        TabOrder = 1
+        TabOrder = 0
         Visible = False
       end
       object Panel4: TPanel
         Left = 0
-        Top = 272
-        Width = 872
+        Top = 282
+        Width = 882
         Height = 249
         Align = alBottom
         BevelOuter = bvNone
-        TabOrder = 2
-        object DBGrid1: TDBGrid
+        TabOrder = 1
+        ExplicitLeft = -2
+        object Label2: TLabel
+          Left = 520
+          Top = 56
+          Width = 102
+          Height = 20
+          Caption = 'Total de sa'#237'das:'
+        end
+        object Label3: TLabel
+          Left = 520
+          Top = 104
+          Width = 118
+          Height = 20
+          Caption = 'Total de entradas:'
+        end
+        object DBFinan: TDBGrid
           AlignWithMargins = True
-          Left = 3
-          Top = 3
-          Width = 866
-          Height = 243
-          Align = alClient
+          Left = 0
+          Top = 0
+          Width = 457
+          Height = 241
           DataSource = dm.dsFinanceiro
+          Options = [dgTitles, dgColumnResize, dgColLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
           TitleFont.Height = -15
           TitleFont.Name = 'Segoe UI'
           TitleFont.Style = []
+          OnDrawColumnCell = DBFinanDrawColumnCell
           Columns = <
             item
               Expanded = False
               FieldName = 'desc_mov'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -15
+              Font.Name = 'Segoe UI'
+              Font.Style = []
               Title.Caption = 'Movimento'
+              Title.Font.Charset = DEFAULT_CHARSET
+              Title.Font.Color = clWindowText
+              Title.Font.Height = -15
+              Title.Font.Name = 'Segoe UI'
+              Title.Font.Style = [fsBold]
               Width = 150
               Visible = True
             end
@@ -154,6 +190,11 @@ object frmMovimentos: TfrmMovimentos
               Expanded = False
               FieldName = 'valor_mov'
               Title.Caption = 'Valor'
+              Title.Font.Charset = DEFAULT_CHARSET
+              Title.Font.Color = clWindowText
+              Title.Font.Height = -15
+              Title.Font.Name = 'Segoe UI'
+              Title.Font.Style = [fsBold]
               Width = 150
               Visible = True
             end
@@ -161,6 +202,11 @@ object frmMovimentos: TfrmMovimentos
               Expanded = False
               FieldName = 'status'
               Title.Caption = 'Entrada/Sa'#237'da'
+              Title.Font.Charset = DEFAULT_CHARSET
+              Title.Font.Color = clWindowText
+              Title.Font.Height = -15
+              Title.Font.Name = 'Segoe UI'
+              Title.Font.Style = [fsBold]
               Width = 150
               Visible = True
             end>
@@ -174,7 +220,7 @@ object frmMovimentos: TfrmMovimentos
         EditLabel.Width = 97
         EditLabel.Height = 20
         EditLabel.Caption = 'Valor da sa'#237'da:'
-        TabOrder = 3
+        TabOrder = 4
         Visible = False
       end
       object edtMovimentoSaida: TLabeledEdit
@@ -185,7 +231,7 @@ object frmMovimentos: TfrmMovimentos
         EditLabel.Width = 128
         EditLabel.Height = 20
         EditLabel.Caption = 'Descri'#231#227'o da sa'#237'da:'
-        TabOrder = 4
+        TabOrder = 3
         Visible = False
       end
     end

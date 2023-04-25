@@ -41,12 +41,12 @@ object frmMovimentos: TfrmMovimentos
       ExplicitWidth = 872
       object Label1: TLabel
         Left = 376
-        Top = 19
+        Top = 12
         Width = 127
         Height = 37
         Caption = 'Financeiro'
         Font.Charset = ANSI_CHARSET
-        Font.Color = clGray
+        Font.Color = clBlack
         Font.Height = -27
         Font.Name = 'Segoe UI Semibold'
         Font.Style = [fsBold]
@@ -60,6 +60,8 @@ object frmMovimentos: TfrmMovimentos
       Height = 531
       Align = alClient
       BevelOuter = bvNone
+      Color = clMenu
+      ParentBackground = False
       TabOrder = 1
       ExplicitLeft = 32
       ExplicitTop = 79
@@ -95,7 +97,7 @@ object frmMovimentos: TfrmMovimentos
       end
       object btnLancar: TSpeedButton
         Left = 376
-        Top = 200
+        Top = 184
         Width = 161
         Height = 41
         Caption = 'Enviar'
@@ -155,10 +157,11 @@ object frmMovimentos: TfrmMovimentos
         end
         object DBFinan: TDBGrid
           AlignWithMargins = True
-          Left = 0
-          Top = 0
+          Left = 3
+          Top = 3
           Width = 457
-          Height = 241
+          Height = 243
+          Align = alLeft
           DataSource = dm.dsFinanceiro
           Options = [dgTitles, dgColumnResize, dgColLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
           TabOrder = 0
