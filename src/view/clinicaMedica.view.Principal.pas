@@ -18,7 +18,7 @@ uses
   Data.Bind.ObjectScope, REST.Response.Adapter, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, clinicaMedica.rel.consultas, clinicaMedica.rel.pacientes,
   clinicaMedica.rel.funcionários, clinicaMedica.rel.Prontuario,
-  clinicaMedica.desafio;
+  clinicaMedica.desafio, clinicaMedica.view.financeiro;
 
 type
   TfrmPrincipal = class(TForm)
@@ -106,6 +106,8 @@ type
     btnTelaRecp: TSpeedButton;
     btnProntuariosMed: TSpeedButton;
     btnDesafio: TSpeedButton;
+    btnMovimentos: TSpeedButton;
+    Label19: TLabel;
     procedure imgFecharClick(Sender: TObject);
     procedure Timage2Click(Sender: TObject);
     procedure btnFuncionariosClick(Sender: TObject);
@@ -144,6 +146,7 @@ type
     procedure btnTelaRecpClick(Sender: TObject);
     procedure btnProntuariosMedClick(Sender: TObject);
     procedure btnDesafioClick(Sender: TObject);
+    procedure btnMovimentosClick(Sender: TObject);
   private
     { Private declarations }
     procedure CloseForm;
@@ -481,6 +484,13 @@ begin
   frmFuncionarios := TFrmFuncionarios.Create(nil);
   pnlOpcoesUsuarios.Visible := false;
   frmFuncionarios.showmodal;
+end;
+
+procedure TfrmPrincipal.btnMovimentosClick(Sender: TObject);
+begin
+  frmmovimentos := tfrmmovimentos.Create(nil);
+  frmmovimentos.showmodal;
+
 end;
 
 procedure TfrmPrincipal.btnPacientesClick(Sender: TObject);

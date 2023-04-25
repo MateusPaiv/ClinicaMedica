@@ -180,6 +180,13 @@ type
     qryDesafioMnumerocasa_func: TWideStringField;
     qryDesafioMcargo_func: TIntegerField;
     qryDesafioMdatacadastro: TDateField;
+    qryFinanceiro: TFDQuery;
+    tbFinanceiro: TFDTable;
+    dsFinanceiro: TDataSource;
+    tbFinanceiroid_mov: TIntegerField;
+    tbFinanceirovalor_mov: TBCDField;
+    tbFinanceirodesc_mov: TWideStringField;
+    tbFinanceirostatus: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private

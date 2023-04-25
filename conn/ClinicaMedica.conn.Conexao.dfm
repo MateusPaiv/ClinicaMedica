@@ -6587,4 +6587,43 @@ object dm: Tdm
     Left = 496
     Top = 544
   end
+  object qryFinanceiro: TFDQuery
+    Connection = Connection
+    SQL.Strings = (
+      'select * from movimentos')
+    Left = 72
+    Top = 408
+  end
+  object tbFinanceiro: TFDTable
+    IndexFieldNames = 'id_mov'
+    Connection = Connection
+    TableName = 'movimentos'
+    Left = 152
+    Top = 408
+    object tbFinanceiroid_mov: TIntegerField
+      FieldName = 'id_mov'
+      Origin = 'id_mov'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+    end
+    object tbFinanceirovalor_mov: TBCDField
+      FieldName = 'valor_mov'
+      Origin = 'valor_mov'
+      Precision = 15
+      Size = 2
+    end
+    object tbFinanceirodesc_mov: TWideStringField
+      FieldName = 'desc_mov'
+      Origin = 'desc_mov'
+      Size = 200
+    end
+    object tbFinanceirostatus: TIntegerField
+      FieldName = 'status'
+      Origin = 'status'
+    end
+  end
+  object dsFinanceiro: TDataSource
+    DataSet = qryFinanceiro
+    Left = 112
+    Top = 480
+  end
 end
