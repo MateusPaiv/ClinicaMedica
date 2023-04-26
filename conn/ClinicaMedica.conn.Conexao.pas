@@ -191,6 +191,7 @@ type
     qryRelFinan: TFDQuery;
     relFinanceiro: TfrxReport;
     relDsFinanceiro: TfrxDBDataset;
+    qryVerificaConsulta: TFDQuery;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private

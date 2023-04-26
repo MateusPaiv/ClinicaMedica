@@ -110,6 +110,12 @@ type
     btnMovimentos: TSpeedButton;
     Label19: TLabel;
     btnRelFinan: TSpeedButton;
+    Label20: TLabel;
+    Image1: TImage;
+    lbConsultasHoje: TLabel;
+    Label21: TLabel;
+    lbConsultasRealizadas: TLabel;
+    Image2: TImage;
     procedure imgFecharClick(Sender: TObject);
     procedure Timage2Click(Sender: TObject);
     procedure btnFuncionariosClick(Sender: TObject);
@@ -159,8 +165,10 @@ type
     procedure desabilitarCampos;
     procedure listar;
     procedure listarConsultas;
+    procedure listarConsultasRealizadas;
     procedure ListarConsultasMedico;
     procedure carregarComboBox;
+    procedure verificaConsHoje;
     procedure ConsultarCEP(cep: string);
 
   public
@@ -227,6 +235,23 @@ begin
   dm.qryConsMedico.ParamByName('datahoje').AsDate := Now;
   dm.qryConsMedico.ParamByName('idUser').Value := idFunc;
   dm.qryConsMedico.Open;
+end;
+
+procedure TfrmPrincipal.listarConsultasRealizadas;
+var
+  hoje: TDate;
+begin
+
+  hoje := Now;
+  dm.qryVerificaConsulta.Close;
+  dm.qryVerificaConsulta.SQL.Clear;
+  dm.qryVerificaConsulta.SQL.add
+    ('SELECT COUNT(id_cons)FROM consultas WHERE dataconsulta = :data AND status = 2 ');
+  dm.qryVerificaConsulta.ParamByName('data').AsDate := hoje;
+  dm.qryVerificaConsulta.Open;
+
+  lbConsultasRealizadas.caption := dm.qryVerificaConsulta.fieldbyname
+    ('count').AsString;
 end;
 
 procedure TfrmPrincipal.rdCPFClick(Sender: TObject);
@@ -370,8 +395,9 @@ end;
 
 procedure TfrmPrincipal.btnAtualizarClick(Sender: TObject);
 begin
-
+  listarConsultasRealizadas;
   listarConsultas;
+  verificaConsHoje;
 end;
 
 procedure TfrmPrincipal.btnAtualizarConsultaMedicoClick(Sender: TObject);
@@ -922,6 +948,9 @@ procedure TfrmPrincipal.FormActivate(Sender: TObject);
 begin
   listar;
   listarConsultas;
+  verificaConsHoje;
+  listarConsultasRealizadas;
+
 end;
 
 procedure TfrmPrincipal.FormKeyDown(Sender: TObject;
@@ -981,6 +1010,14 @@ begin
     end;
     btnMovimentosClick(Sender);
   end;
+  if Key = VK_F7 then
+  begin
+    if (cargoUsuario = 4) or (cargoUsuario = 3) then
+    begin
+      exit;
+    end;
+    btnRelFinanClick(Sender);
+  end;
 
 end;
 
@@ -1003,6 +1040,7 @@ begin
         btnAdm.Visible := false;
         btnTelaRecp.Visible := false;
         btnDesafio.Visible := false;
+        btnRelFinan.Visible := false;
       end;
     4:
       begin
@@ -1082,6 +1120,24 @@ begin
     Result := false;
     exit;
   end;
+end;
+
+procedure TfrmPrincipal.verificaConsHoje;
+var
+  hoje: TDate;
+begin
+
+  hoje := Now;
+  dm.qryVerificaConsulta.Close;
+  dm.qryVerificaConsulta.SQL.Clear;
+  dm.qryVerificaConsulta.SQL.add
+    ('SELECT COUNT(id_cons)FROM consultas WHERE dataconsulta = :data ');
+  dm.qryVerificaConsulta.ParamByName('data').AsDate := hoje;
+  dm.qryVerificaConsulta.Open;
+
+  lbConsultasHoje.caption := dm.qryVerificaConsulta.fieldbyname
+    ('count').AsString;
+
 end;
 
 end.
