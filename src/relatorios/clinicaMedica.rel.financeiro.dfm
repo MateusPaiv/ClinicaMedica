@@ -1,0 +1,97 @@
+object frmRelFinanceiro: TfrmRelFinanceiro
+  Left = 0
+  Top = 0
+  Caption = 'Relat'#243'rio de movimentos'
+  ClientHeight = 299
+  ClientWidth = 607
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -15
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poMainFormCenter
+  OnClose = FormClose
+  PixelsPerInch = 96
+  TextHeight = 20
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 607
+    Height = 299
+    Align = alClient
+    BevelOuter = bvNone
+    Color = clWhite
+    ParentBackground = False
+    TabOrder = 0
+    ExplicitTop = 8
+    ExplicitWidth = 623
+    object Label1: TLabel
+      Left = 68
+      Top = 48
+      Width = 156
+      Height = 20
+      Caption = 'Selecione a data inicial:'
+    end
+    object Label2: TLabel
+      Left = 397
+      Top = 48
+      Width = 146
+      Height = 20
+      Caption = 'Selecione a data final:'
+    end
+    object btnRelatorio: TSpeedButton
+      Left = 224
+      Top = 224
+      Width = 145
+      Height = 41
+      Caption = 'Gerar relat'#243'rio'
+      OnClick = btnRelatorioClick
+    end
+    object Label3: TLabel
+      Left = 193
+      Top = 142
+      Width = 68
+      Height = 20
+      Caption = 'Filtrar por:'
+    end
+    object cmbStatusMov: TComboBox
+      Left = 193
+      Top = 168
+      Width = 209
+      Height = 28
+      TabOrder = 0
+      Items.Strings = (
+        'Entrada'
+        'Sa'#237'da'
+        'Todos')
+    end
+    object edtDataInicio: TDatePicker
+      Left = 57
+      Top = 74
+      Width = 176
+      Date = 45042.000000000000000000
+      DateFormat = 'dd/MM/yyyy'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      TabOrder = 1
+    end
+    object edtDataFim: TDatePicker
+      Left = 381
+      Top = 74
+      Width = 177
+      Date = 45042.000000000000000000
+      DateFormat = 'dd/MM/yyyy'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      TabOrder = 2
+    end
+  end
+end

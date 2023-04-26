@@ -249,7 +249,11 @@ begin
 end;
 
 procedure TfrmConsulta.FormCreate(Sender: TObject);
+var
+  hoje: TDate;
 begin
+  hoje := now;
+  edtDataConsulta.date := hoje;
   dm.tbcons.active := true;
   carregarCampos;
   carregarConvenios;

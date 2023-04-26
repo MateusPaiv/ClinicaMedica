@@ -174,7 +174,7 @@ end;
 
 procedure TfrmProntuario.btnIniciarConsultaClick(Sender: TObject);
 begin
-  if messageDlg('Deseja iniciar a consulta', MtInformation, [MbOK], 0) = mrYes
+  if messageDlg('Deseja iniciar a consulta', MtInformation, [MbYes , MbNo], 0) = mrYes
   then
   begin
     frmProntuario.BorderStyle := bsNone;
@@ -185,7 +185,7 @@ begin
     dm.qryCons.execSQL;
     Timer1.Enabled := true;
     btnIniciarConsulta.Enabled := false;
-    btnFinalizarConsulta.Enabled := false;
+    btnFinalizarConsulta.Enabled := true;
   end;
 
 end;

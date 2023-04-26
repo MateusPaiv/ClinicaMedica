@@ -3,8 +3,8 @@ object frmMovimentos: TfrmMovimentos
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Movimentos'
-  ClientHeight = 604
-  ClientWidth = 882
+  ClientHeight = 645
+  ClientWidth = 884
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,22 +20,24 @@ object frmMovimentos: TfrmMovimentos
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 882
-    Height = 604
+    Width = 884
+    Height = 645
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitWidth = 882
+    ExplicitHeight = 604
     object Panel2: TPanel
       Left = 0
       Top = 0
-      Width = 882
+      Width = 884
       Height = 73
       Align = alTop
       BevelOuter = bvNone
       Color = clSkyBlue
       ParentBackground = False
       TabOrder = 0
-      ExplicitTop = -6
+      ExplicitWidth = 882
       object Label1: TLabel
         Left = 376
         Top = 12
@@ -53,13 +55,14 @@ object frmMovimentos: TfrmMovimentos
     object Panel3: TPanel
       Left = 0
       Top = 73
-      Width = 882
-      Height = 531
+      Width = 884
+      Height = 572
       Align = alClient
       BevelOuter = bvNone
       Color = clMenu
       ParentBackground = False
       TabOrder = 1
+      ExplicitTop = 79
       object btnEntrada: TSpeedButton
         Left = 176
         Top = 24
@@ -96,11 +99,12 @@ object frmMovimentos: TfrmMovimentos
       end
       object btnLancar: TSpeedButton
         Left = 384
-        Top = 184
+        Top = 244
         Width = 137
         Height = 49
         Caption = 'Enviar'
         ImageIndex = 2
+        ImageName = 'Send Message_44px'
         Images = PngImageList1
         Enabled = False
         Font.Charset = DEFAULT_CHARSET
@@ -113,7 +117,7 @@ object frmMovimentos: TfrmMovimentos
       end
       object btnEditar: TSpeedButton
         Left = 384
-        Top = 184
+        Top = 244
         Width = 137
         Height = 49
         Caption = 'Editar'
@@ -128,6 +132,19 @@ object frmMovimentos: TfrmMovimentos
         ParentFont = False
         Visible = False
         OnClick = btnEditarClick
+      end
+      object Label4: TLabel
+        Left = 384
+        Top = 158
+        Width = 137
+        Height = 20
+        Caption = 'Data do movimento:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = -1
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
       end
       object edtValorEntrada: TLabeledEdit
         Left = 502
@@ -153,14 +170,16 @@ object frmMovimentos: TfrmMovimentos
       end
       object Panel4: TPanel
         Left = 0
-        Top = 282
-        Width = 882
+        Top = 323
+        Width = 884
         Height = 249
         Align = alBottom
         BevelOuter = bvNone
         TabOrder = 1
+        ExplicitTop = 282
+        ExplicitWidth = 882
         object Label2: TLabel
-          Left = 520
+          Left = 576
           Top = 112
           Width = 135
           Height = 28
@@ -173,7 +192,7 @@ object frmMovimentos: TfrmMovimentos
           ParentFont = False
         end
         object Label3: TLabel
-          Left = 451
+          Left = 507
           Top = 16
           Width = 204
           Height = 28
@@ -186,7 +205,7 @@ object frmMovimentos: TfrmMovimentos
           ParentFont = False
         end
         object lbEntrada: TLabel
-          Left = 683
+          Left = 739
           Top = 61
           Width = 84
           Height = 28
@@ -199,7 +218,7 @@ object frmMovimentos: TfrmMovimentos
           ParentFont = False
         end
         object lbSaida: TLabel
-          Left = 683
+          Left = 739
           Top = 112
           Width = 65
           Height = 28
@@ -212,7 +231,7 @@ object frmMovimentos: TfrmMovimentos
           ParentFont = False
         end
         object lbtotal: TLabel
-          Left = 683
+          Left = 739
           Top = 160
           Width = 59
           Height = 28
@@ -225,7 +244,7 @@ object frmMovimentos: TfrmMovimentos
           ParentFont = False
         end
         object Label9: TLabel
-          Left = 601
+          Left = 657
           Top = 160
           Width = 54
           Height = 28
@@ -238,7 +257,7 @@ object frmMovimentos: TfrmMovimentos
           ParentFont = False
         end
         object lbTotalConsultas: TLabel
-          Left = 683
+          Left = 739
           Top = 18
           Width = 101
           Height = 28
@@ -251,7 +270,7 @@ object frmMovimentos: TfrmMovimentos
           ParentFont = False
         end
         object Label5: TLabel
-          Left = 499
+          Left = 555
           Top = 61
           Width = 156
           Height = 28
@@ -266,7 +285,7 @@ object frmMovimentos: TfrmMovimentos
         object DBFinan: TDBGrid
           Left = 0
           Top = 0
-          Width = 433
+          Width = 501
           Height = 249
           Align = alLeft
           DataSource = dm.dsFinanceiro
@@ -301,7 +320,7 @@ object frmMovimentos: TfrmMovimentos
               Title.Font.Height = -15
               Title.Font.Name = 'Segoe UI'
               Title.Font.Style = [fsBold]
-              Width = 150
+              Width = 100
               Visible = True
             end
             item
@@ -314,6 +333,18 @@ object frmMovimentos: TfrmMovimentos
               Title.Font.Name = 'Segoe UI'
               Title.Font.Style = [fsBold]
               Width = 110
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'datamov'
+              Title.Caption = 'Data Mov.'
+              Title.Font.Charset = DEFAULT_CHARSET
+              Title.Font.Color = clWindowText
+              Title.Font.Height = -15
+              Title.Font.Name = 'Segoe UI'
+              Title.Font.Style = [fsBold]
+              Width = 130
               Visible = True
             end>
         end
@@ -339,6 +370,21 @@ object frmMovimentos: TfrmMovimentos
         EditLabel.Caption = 'Descri'#231#227'o da sa'#237'da:'
         TabOrder = 3
         Visible = False
+      end
+      object edtDataMov: TDatePicker
+        Left = 376
+        Top = 184
+        Width = 161
+        Height = 33
+        Date = 45042.000000000000000000
+        DateFormat = 'dd/MM/yyyy'
+        Enabled = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        TabOrder = 5
       end
     end
   end

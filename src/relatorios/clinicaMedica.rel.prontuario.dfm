@@ -3,7 +3,7 @@ object frmRelPront: TfrmRelPront
   Top = 0
   Caption = 'Relat'#243'rio de pontu'#225'rios'
   ClientHeight = 194
-  ClientWidth = 508
+  ClientWidth = 490
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,15 +18,14 @@ object frmRelPront: TfrmRelPront
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 508
+    Width = 490
     Height = 194
     Align = alClient
     BevelOuter = bvNone
     Color = clWhite
     ParentBackground = False
     TabOrder = 0
-    ExplicitLeft = -8
-    ExplicitTop = -8
+    ExplicitWidth = 508
     object btnRelatorio: TSpeedButton
       Left = 181
       Top = 112

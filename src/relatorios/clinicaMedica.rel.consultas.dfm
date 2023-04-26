@@ -27,8 +27,6 @@ object frmRelatorioCons: TfrmRelatorioCons
     Color = clWhite
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 656
-    ExplicitHeight = 337
     object Label1: TLabel
       Left = 25
       Top = 48

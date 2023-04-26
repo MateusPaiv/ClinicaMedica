@@ -8,7 +8,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Buttons,
   Data.DB, Vcl.Grids, Vcl.DBGrids, clinicaMedica.conn.Conexao,
   clinicaMedica.funcao.validaCampos, System.ImageList, Vcl.ImgList,
-  PngImageList;
+  PngImageList, Vcl.WinXPickers;
 
 type
   TfrmMovimentos = class(TForm)
@@ -35,6 +35,8 @@ type
     lbTotalConsultas: TLabel;
     Label5: TLabel;
     PngImageList1: TPngImageList;
+    edtDataMov: TDatePicker;
+    Label4: TLabel;
     procedure btnEntradaClick(Sender: TObject);
     procedure DBFinanDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
@@ -71,6 +73,7 @@ begin
   dm.tbfinanceiro.fieldbyname('valor_mov').value := valor;
   dm.tbfinanceiro.fieldbyname('desc_mov').value := mov;
   dm.tbfinanceiro.fieldbyname('status').value := status;
+  dm.tbfinanceiro.fieldbyname('datamov').value := edtDataMov.Date;
 end;
 
 procedure TfrmMovimentos.btnEditarClick(Sender: TObject);
@@ -88,9 +91,10 @@ begin
   dm.qryFinanceiro.close;
   dm.qryFinanceiro.SQL.clear;
   dm.qryFinanceiro.SQL.add
-    ('UPDATE movimentos SET valor_mov = :valor , desc_mov = :desc where id_mov = :id AND status = :status');
+    ('UPDATE movimentos SET valor_mov = :valor , desc_mov = :desc, datamov = :data where id_mov = :id AND status = :status');
   dm.qryFinanceiro.ParamByName('valor').value := valor;
   dm.qryFinanceiro.ParamByName('desc').value := mov;
+  dm.qryFinanceiro.ParamByName('datamov').value := edtDataMov.Date;
   dm.qryFinanceiro.ParamByName('id').value := id;
   dm.qryFinanceiro.ParamByName('status').value := status;
   dm.qryFinanceiro.ExecSQL;
@@ -109,6 +113,7 @@ procedure TfrmMovimentos.btnEntradaClick(Sender: TObject);
 begin
   edtValorEntrada.Visible := true;
   edtMovimentoEntrada.Visible := true;
+  edtDataMov.Enabled := true;
   edtValorEntrada.Text := '';
   edtMovimentoEntrada.Text := '';
   edtValorSaida.Visible := false;
@@ -175,6 +180,7 @@ begin
   end;
 
   associarCampos;
+
   if status = 0 then
   begin
     edtValorSaida.Text := '';
@@ -182,6 +188,7 @@ begin
     edtValorSaida.Visible := false;
     edtMovimentoSaida.Visible := false;
     btnLancar.Enabled := false;
+    edtDataMov.Enabled := false;
   end
   else
   begin
@@ -190,6 +197,7 @@ begin
     edtValorEntrada.Visible := false;
     edtMovimentoEntrada.Visible := false;
     btnLancar.Enabled := false;
+    edtDataMov.Enabled := false;
   end;
 
   dm.tbfinanceiro.post;
@@ -207,6 +215,7 @@ procedure TfrmMovimentos.btnSaidaClick(Sender: TObject);
 begin
   edtValorSaida.Visible := true;
   edtMovimentoSaida.Visible := true;
+  edtDataMov.Enabled := true;
   edtValorSaida.Text := '';
   edtMovimentoSaida.Text := '';
   edtValorEntrada.Visible := false;
@@ -242,6 +251,7 @@ begin
     status := dm.qryFinanceiro.fieldbyname('status').value;
     id := dm.qryFinanceiro.fieldbyname('id_mov').value;
   end;
+  edtDataMov.Enabled := true;
   btnEditar.Visible := true;
 
 end;
@@ -278,7 +288,12 @@ begin
 end;
 
 procedure TfrmMovimentos.FormShow(Sender: TObject);
+var
+  hoje: TDate;
 begin
+  hoje := now;
+
+  edtDataMov.Date := hoje;
   dm.tbfinanceiro.active := true;
   valorEntrada;
   valorSaida;
@@ -292,7 +307,8 @@ procedure TfrmMovimentos.listar;
 begin
   dm.qryFinanceiro.close;
   dm.qryFinanceiro.SQL.clear;
-  dm.qryFinanceiro.SQL.add('SELECT * FROM movimentos');
+  dm.qryFinanceiro.SQL.add
+    ('SELECT * FROM movimentos WHERE EXTRACT(MONTH FROM datamov) = EXTRACT(MONTH FROM CURRENT_DATE)');
   dm.qryFinanceiro.open;
 end;
 
@@ -306,11 +322,18 @@ begin
   dm.qryCons.close;
   dm.qryCons.SQL.clear;
   dm.qryCons.SQL.add
-    ('SELECT sum(valor) FROM consultas where status = 2 and dataconsulta = :data');
+    ('SELECT sum(valor) FROM consultas where status = 2 and dataconsulta = :data AND EXTRACT(MONTH FROM dataconsulta) = EXTRACT(MONTH FROM CURRENT_DATE)');
   dm.qryCons.ParamByName('data').AsDate := hoje;
   dm.qryCons.open;
-  lbTotalConsultas.Caption := 'R$ ' + dm.qryCons.fieldbyname('sum')
-    .AsString + ',00';
+  if dm.qryCons.fieldbyname('sum').AsInteger = 0 then
+  begin
+    lbTotalConsultas.Caption := 'R$ 0,00';
+  end
+  else
+  begin
+    lbTotalConsultas.Caption := 'R$ ' + dm.qryCons.fieldbyname('sum')
+      .AsString + ',00';
+  end;
 
   totalCons := dm.qryCons.fieldbyname('sum').AsInteger;
 
@@ -321,7 +344,7 @@ begin
   dm.qryFinanceiro.close;
   dm.qryFinanceiro.SQL.clear;
   dm.qryFinanceiro.SQL.add
-    ('SELECT sum(valor_mov) FROM movimentos where status = 1');
+    ('SELECT sum(valor_mov) FROM movimentos where status = 1 AND EXTRACT(MONTH FROM datamov) = EXTRACT(MONTH FROM CURRENT_DATE)');
   dm.qryFinanceiro.open;
 
   lbEntrada.Caption := 'R$ ' + dm.qryFinanceiro.fieldbyname('sum')
@@ -335,7 +358,7 @@ begin
   dm.qryFinanceiro.close;
   dm.qryFinanceiro.SQL.clear;
   dm.qryFinanceiro.SQL.add
-    ('SELECT sum(valor_mov) FROM movimentos where status = 0');
+    ('SELECT sum(valor_mov) FROM movimentos where status = 0 AND EXTRACT(MONTH FROM datamov) = EXTRACT(MONTH FROM CURRENT_DATE)');
   dm.qryFinanceiro.open;
 
   lbSaida.Caption := 'R$ ' + dm.qryFinanceiro.fieldbyname('sum')
