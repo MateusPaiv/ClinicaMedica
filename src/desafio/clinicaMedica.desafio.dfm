@@ -15,34 +15,34 @@ object frmDesafio: TfrmDesafio
   PixelsPerInch = 96
   TextHeight = 13
   object Button1: TButton
-    Left = 376
-    Top = 216
+    Left = 392
+    Top = 176
     Width = 75
     Height = 25
     Caption = 'Button1'
     TabOrder = 0
     OnClick = Button1Click
   end
+  object RESTClient1: TRESTClient
+    Accept = 'application/json, text/plain; q=0.9, text/html;q=0.8,'
+    AcceptCharset = 'utf-8, *;q=0.8'
+    BaseURL = 'http://192.168.10.220:8080/v2/api-docs?group=Doc - v1'
+    ContentType = 'application/x-www-form-urlencoded'
+    Params = <>
+    Left = 544
+    Top = 104
+  end
   object RESTRequest1: TRESTRequest
     Client = RESTClient1
     Method = rmPOST
-    Params = <
-      item
-        Name = 'aluno-hash'
-        Value = '66e2ec44-623e-42f5-a35d-7ffd1844d5d3'
-        ContentType = ctAPPLICATION_JSON
-      end>
-    Left = 632
-    Top = 176
-  end
-  object RESTClient1: TRESTClient
     Params = <>
+    Resource = 'api/medico'
+    Response = RESTResponse1
     Left = 544
-    Top = 176
+    Top = 240
   end
   object RESTResponse1: TRESTResponse
-    ContentType = 'ctJSON'
-    Left = 576
-    Top = 248
+    Left = 544
+    Top = 176
   end
 end

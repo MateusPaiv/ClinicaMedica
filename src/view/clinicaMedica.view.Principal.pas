@@ -19,7 +19,7 @@ uses
   FireDAC.Comp.Client, clinicaMedica.rel.consultas, clinicaMedica.rel.pacientes,
   clinicaMedica.rel.funcionários, clinicaMedica.rel.Prontuario,
   clinicaMedica.desafio, clinicaMedica.view.financeiro,
-  clinicaMedica.rel.financeiro;
+  clinicaMedica.rel.financeiro, clinicaMedica.view.pacientes;
 
 type
   TfrmPrincipal = class(TForm)
@@ -41,25 +41,13 @@ type
     cards: TCardPanel;
     cardPacientes: TCard;
     dbPacientes: TDBGrid;
-    edtNomePaci: TLabeledEdit;
-    edtCelular: TMaskEdit;
-    Label2: TLabel;
-    btnSalvar: TSpeedButton;
-    btnEdit: TSpeedButton;
     PngButtons: TPngImageList;
-    edtCpf: TMaskEdit;
-    Label3: TLabel;
     edtBuscaCPF: TMaskEdit;
     edtBuscaNome: TEdit;
     Label15: TLabel;
     lblBusca: TLabel;
     rdCPF: TRadioButton;
     rdNome: TRadioButton;
-    btnCadastrar: TSpeedButton;
-    Label1: TLabel;
-    edtCelRecado: TMaskEdit;
-    edtNomeRecado: TLabeledEdit;
-    Label4: TLabel;
     dbConsultas: TDBGrid;
     Label5: TLabel;
     Label6: TLabel;
@@ -74,21 +62,9 @@ type
     cardMedico: TCard;
     dbVerConsultas: TDBGrid;
     lblNomeMedico: TLabel;
-    cmbConvenio: TComboBox;
     Label8: TLabel;
     btnAtualizarConsultaMedico: TSpeedButton;
     Label9: TLabel;
-    edtCep: TMaskEdit;
-    Label10: TLabel;
-    btnBuscaCEP: TImage;
-    edtEndereco: TEdit;
-    Label11: TLabel;
-    edtNumero: TEdit;
-    Label12: TLabel;
-    edtBairro: TEdit;
-    Label13: TLabel;
-    edtMunicipio: TEdit;
-    Label14: TLabel;
     MemTable: TFDMemTable;
     RESTResponseDataSetAdapter1: TRESTResponseDataSetAdapter;
     RESTClient1: TRESTClient;
@@ -99,7 +75,6 @@ type
     btnRelConsultas: TSpeedButton;
     btnUser: TSpeedButton;
     btnPacientes: TSpeedButton;
-    Label16: TLabel;
     btnRelFunc: TSpeedButton;
     Label17: TLabel;
     Label18: TLabel;
@@ -116,6 +91,7 @@ type
     Label21: TLabel;
     lbConsultasRealizadas: TLabel;
     Image2: TImage;
+    btnCadPaci: TSpeedButton;
     procedure imgFecharClick(Sender: TObject);
     procedure Timage2Click(Sender: TObject);
     procedure btnFuncionariosClick(Sender: TObject);
@@ -124,16 +100,10 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnUserClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure btnCadastrarClick(Sender: TObject);
-    procedure btnSalvarClick(Sender: TObject);
-    procedure dbPacientesCellClick(Column: TColumn);
-    procedure btnEditClick(Sender: TObject);
     procedure rdNomeClick(Sender: TObject);
     procedure rdCPFClick(Sender: TObject);
-    procedure edtBuscaCPFChange(Sender: TObject);
     procedure edtBuscaNomeChange(Sender: TObject);
     procedure dbPacientesDblClick(Sender: TObject);
-    procedure edtCpfExit(Sender: TObject);
     procedure btnConveniosClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure btnAtualizarClick(Sender: TObject);
@@ -145,7 +115,6 @@ type
     procedure dbConsultasCellClick(Column: TColumn);
     procedure dbVerConsultasCellClick(Column: TColumn);
     procedure btnAtualizarConsultaMedicoClick(Sender: TObject);
-    procedure btnBuscaCEPClick(Sender: TObject);
     procedure btnRelatoriosClick(Sender: TObject);
     procedure btnRelConsultasClick(Sender: TObject);
     procedure btnPacientesClick(Sender: TObject);
@@ -156,6 +125,7 @@ type
     procedure btnDesafioClick(Sender: TObject);
     procedure btnMovimentosClick(Sender: TObject);
     procedure btnRelFinanClick(Sender: TObject);
+    procedure btnCadPaciClick(Sender: TObject);
   private
     { Private declarations }
     procedure CloseForm;
@@ -353,38 +323,13 @@ end;
 
 procedure TfrmPrincipal.carregarComboBox;
 begin
-  dm.qryConv.Close;
-  dm.qryConv.SQL.Clear;
-  dm.qryConv.SQL.add('SELECT nome_conv FROM convenios');
-  dm.qryConv.Open;
 
-  if not dm.qryConv.IsEmpty then
-  begin
-    while not dm.qryConv.Eof do
-    begin
-      cmbConvenio.Items.add(dm.qryConv.fieldbyname('nome_conv').AsString);
-      dm.qryConv.Next;
-    end;
-  end;
 end;
 
 procedure TfrmPrincipal.associarCampos;
-var
-  Data: TDate;
+
 begin
-  Data := Now;
-  dm.tbPaci.fieldbyname('nome_paci').Value := edtNomePaci.Text;
-  dm.tbPaci.fieldbyname('cpf_paci').Value := cpfLimpo;
-  dm.tbPaci.fieldbyname('numero_paci').Value := numeroLimpo;
-  dm.tbPaci.fieldbyname('nome_recado_paci').Value := edtNomeRecado.Text;
-  dm.tbPaci.fieldbyname('numero_recado_paci').Value := numeroLimpoRecado;
-  dm.tbPaci.fieldbyname('convenio_paci').Value := idConv;
-  dm.tbPaci.fieldbyname('cep_paci').Value := edtCep.Text;
-  dm.tbPaci.fieldbyname('endereco').Value := edtEndereco.Text;
-  dm.tbPaci.fieldbyname('numerocasa_paci').Value := edtNumero.Text;
-  dm.tbPaci.fieldbyname('bairro_paci').Value := edtBairro.Text;
-  dm.tbPaci.fieldbyname('cidade_paci').Value := edtMunicipio.Text;
-  dm.tbPaci.fieldbyname('datacadastro').Value := Data;
+
 
 end;
 
@@ -405,26 +350,15 @@ begin
   ListarConsultasMedico;
 end;
 
-procedure TfrmPrincipal.btnBuscaCEPClick(Sender: TObject);
-begin
-  ConsultarCEP(RemoveCaracteres(edtCep.Text));
-end;
-
-procedure TfrmPrincipal.btnCadastrarClick(Sender: TObject);
-begin
-  limpacampos(self);
-  carregarComboBox;
-  btnEdit.Enabled := false;
-  edtNomePaci.Clear;
-  habilitarCampos;
-  edtNomePaci.SetFocus;
-  btnSalvar.Enabled := true;
-  dm.tbPaci.Insert;
-end;
-
 procedure TfrmPrincipal.btnCadastrosClick(Sender: TObject);
 begin
   pnlOpcoesUsuarios.Visible := not pnlOpcoesUsuarios.Visible;
+end;
+
+procedure TfrmPrincipal.btnCadPaciClick(Sender: TObject);
+begin
+  frmPacientes := TfrmPacientes.Create(nil);
+  frmPacientes.showmodal;
 end;
 
 procedure TfrmPrincipal.btnConveniosClick(Sender: TObject);
@@ -437,79 +371,6 @@ procedure TfrmPrincipal.btnDesafioClick(Sender: TObject);
 begin
   frmDesafio := TfrmDesafio.Create(nil);
   frmDesafio.showmodal;
-end;
-
-procedure TfrmPrincipal.btnEditClick(Sender: TObject);
-var
-  i: Integer;
-begin
-  validaCamposObrigatorios(self);
-
-  // BuscaIdConv
-  dm.qryConv.Close;
-  dm.qryConv.SQL.Clear;
-  dm.qryConv.SQL.add('select id_conv from convenios where nome_conv = :conv');
-  dm.qryConv.ParamByName('conv').Value := Trim(cmbConvenio.Text);
-  dm.qryConv.Open;
-  idConv := dm.qryConv.fieldbyname('id_conv').Value;
-
-  // REMOVE NOVAMENTE OS CARACTERES DO CPF
-  cpfLimpo := '';
-  for i := 1 to Length(edtCpf.Text) do
-  begin
-    if pos(Copy(edtCpf.Text, i, 1), '"!%$#@&*().,:;/<>[]{}=+-_\|') = 0 then
-    begin
-      cpfLimpo := cpfLimpo + Copy(edtCpf.Text, i, 1);
-
-    end;
-  end;
-
-  // REMOVE NOVAMENTE OS CARACTERES DO TELEFONE
-  nmrLimpo := '';
-  for i := 1 to Length(edtCelular.Text) do
-  begin
-    if pos(Copy(edtCelular.Text, i, 1), '"!%$#@&*().,:;/<>[]{}=+-_\|') = 0 then
-    begin
-      nmrLimpo := nmrLimpo + Copy(edtCelular.Text, i, 1);
-
-    end;
-  end;
-
-  numeroLimpoRecado := '';
-  for i := 1 to Length(edtCelRecado.Text) do
-  begin
-    if pos(Copy(edtCelRecado.Text, i, 1), '"!%$#@&*().,:;/<>[]{}=+-_\|') = 0
-    then
-    begin
-      numeroLimpoRecado := numeroLimpoRecado + Copy(edtCelRecado.Text, i, 1);
-
-    end;
-  end;
-
-  dm.qryPaci.Close;
-  dm.qryPaci.SQL.Clear;
-  dm.qryPaci.SQL.add
-    ('UPDATE pacientes SET nome_paci = :nome , numero_paci = :numero, nome_recado_paci = :nomeRecado , numero_recado_paci = :numeroRecado, convenio_paci = :conv, cep_paci = :cep , endereco = :end , numerocasa_paci = :numerocasa,');
-  dm.qryPaci.SQL.add
-    ('bairro_paci = :bairro , cidade_paci = :cidade WHERE id_paci = :id ');
-  dm.qryPaci.ParamByName('nome').Value := edtNomePaci.Text;
-  dm.qryPaci.ParamByName('numero').Value := nmrLimpo;
-  dm.qryPaci.ParamByName('nomeRecado').Value := edtNomeRecado.Text;
-  dm.qryPaci.ParamByName('numeroRecado').Value := numeroLimpoRecado;
-  dm.qryPaci.ParamByName('conv').Value := idConv;
-  dm.qryPaci.ParamByName('cep').Value := edtCep.Text;
-  dm.qryPaci.ParamByName('numerocasa').Value := edtNumero.Text;
-  dm.qryPaci.ParamByName('end').Value := edtEndereco.Text;
-  dm.qryPaci.ParamByName('bairro').Value := edtBairro.Text;
-  dm.qryPaci.ParamByName('cidade').Value := edtMunicipio.Text;
-  dm.qryPaci.ParamByName('id').Value := id;
-  dm.qryPaci.ExecSQL;
-  listar;
-  MessageDlg('Editado com sucesso', mtinformation, [mbOK], 0);
-  limpacampos(self);
-  desabilitarCampos;
-  btnEdit.Enabled := false;
-
 end;
 
 procedure TfrmPrincipal.btnFuncionariosClick(Sender: TObject);
@@ -545,59 +406,6 @@ begin
   pnlOpcoesRelatorios.Visible := not pnlOpcoesRelatorios.Visible;
 end;
 
-procedure TfrmPrincipal.btnSalvarClick(Sender: TObject);
-var
-  i: Integer;
-begin
-  validaCamposObrigatorios(self);
-  if edtNomePaci.Text = '' then
-  begin
-    MessageDlg('Falta Preencher o campo do nome do paciente!', mtinformation,
-      [mbOK], 0);
-    edtNomePaci.SetFocus;
-    exit;
-  end;
-
-  if edtNomeRecado.Text = '' then
-  begin
-    MessageDlg('Falta Preencher o nome de recado!', mtinformation, [mbOK], 0);
-    edtNomeRecado.SetFocus;
-    exit;
-  end;
-
-  dm.qryConv.Close;
-  dm.qryConv.SQL.Clear;
-  dm.qryConv.SQL.add('select id_conv from convenios where nome_conv = :conv');
-  dm.qryConv.ParamByName('conv').Value := Trim(cmbConvenio.Text);
-  dm.qryConv.Open;
-  idConv := dm.qryConv.fieldbyname('id_conv').Value;
-
-  numeroLimpo := verificaNumero(edtCelular.Text);
-  if numeroLimpo = '' then
-  begin
-    MessageDlg('Falta Preencher o número do paciente!', mtinformation,
-      [mbOK], 0);
-    edtCelular.SetFocus;
-    exit;
-  end;
-
-  numeroLimpoRecado := verificaNumero(edtCelRecado.Text);
-
-  if numeroLimpoRecado = '' then
-  begin
-    MessageDlg('Falta Preencher o nome de recado!', mtinformation, [mbOK], 0);
-    edtCelRecado.SetFocus;
-    exit;
-  end;
-
-  associarCampos;
-  dm.tbPaci.Post;
-  MessageDlg('Paciente cadastrado com sucesso!', mtinformation, [mbOK], 0);
-  limpacampos(self);
-  listar;
-  btnSalvar.Enabled := false;
-end;
-
 procedure TfrmPrincipal.btnTelaRecpClick(Sender: TObject);
 begin
   cards.ActiveCard := cardPacientes;
@@ -618,34 +426,7 @@ end;
 
 procedure TfrmPrincipal.ConsultarCEP(cep: string);
 begin
-  if cep.Length <> 8 then
-  begin
-    MessageDlg('CEP inválido', mterror, [mbOK], 1);
-    exit;
-  end;
 
-  RESTRequest1.Resource := cep + '/json';
-  RESTRequest1.Execute;
-
-  if RESTRequest1.Response.StatusCode = 200 then
-  begin
-    if RESTRequest1.Response.Content.IndexOf('erro') > 0 then
-    begin
-      MessageDlg('CEP não encontrado', mterror, [mbOK], 1);
-    end
-    else
-    begin
-      with MemTable do
-      begin
-        edtEndereco.Text := fieldbyname('logradouro').AsString;
-        edtMunicipio.Text := fieldbyname('localidade').AsString;
-        edtBairro.Text := fieldbyname('bairro').AsString;
-
-        edtNumero.SetFocus;
-
-      end;
-    end;
-  end;
 end;
 
 procedure TfrmPrincipal.dbConsultasCellClick(Column: TColumn);
@@ -706,109 +487,6 @@ begin
     end;
 
   end;
-end;
-
-procedure TfrmPrincipal.dbPacientesCellClick(Column: TColumn);
-var
-  i: Integer;
-begin
-  habilitarCampos;
-  carregarComboBox;
-  btnEdit.Enabled := true;
-  btnSalvar.Enabled := false;
-
-  dm.qryConv.Close;
-  dm.qryConv.SQL.Clear;
-  dm.qryConv.SQL.add('select nome_conv from convenios where id_conv = :conv');
-  dm.qryConv.ParamByName('conv').Value :=
-    dm.qryPaci.fieldbyname('convenio_paci').Value;
-  dm.qryConv.Open;
-
-  cmbConvenio.Text := dm.qryConv.fieldbyname('nome_conv').Value;
-  edtNomePaci.Text := dm.qryPaci.fieldbyname('nome_paci').Value;
-  // PREENCHE OS CAMPO DE CPF
-  cpfLimpo := '';
-  for i := 1 to Length(dm.qryPaci.fieldbyname('cpf_paci').Value) do
-  begin
-    if pos(Copy(dm.qryPaci.fieldbyname('cpf_paci').Value, i, 1),
-      '"!%$#@&*().,:;/<>[]{}=+-_\|') = 0 then
-    begin
-      cpfLimpo := cpfLimpo + Copy(dm.qryPaci.fieldbyname('cpf_paci')
-        .Value, i, 1);
-      case i of
-        3:
-          cpfLimpo := cpfLimpo + '.';
-        6:
-          cpfLimpo := cpfLimpo + '.';
-        9:
-          cpfLimpo := cpfLimpo + '-';
-      end;
-
-    end;
-  end;
-
-  // PREENCHE OS CAMPOS DE TELFONE
-  if dm.qryPaci.fieldbyname('numero_paci').Value <> null then
-  begin
-    nmrLimpo := '';
-    for i := 0 to Length(dm.qryPaci.fieldbyname('numero_paci').Value) do
-    begin
-      if pos(Copy(dm.qryPaci.fieldbyname('numero_paci').Value, i, 1),
-        '"!%$#@&*().,:;/<>[]{}=+-_\|') = 0 then
-      begin
-
-        nmrLimpo := nmrLimpo + Copy(dm.qryPaci.fieldbyname('numero_paci')
-          .Value, i, 1);
-        case i of
-          0:
-            nmrLimpo := nmrLimpo + '(';
-          2:
-            nmrLimpo := nmrLimpo + ')';
-          7:
-            nmrLimpo := nmrLimpo + '-';
-        end;
-
-      end;
-    end;
-
-  end;
-  if dm.qryPaci.fieldbyname('numero_recado_paci').Value <> null then
-  begin
-    numeroLimpoRecado := '';
-    for i := 0 to Length(dm.qryPaci.fieldbyname('numero_recado_paci').Value) do
-    begin
-      if pos(Copy(dm.qryPaci.fieldbyname('numero_recado_paci').Value, i, 1),
-        '"!%$#@&*().,:;/<>[]{}=+-_\|') = 0 then
-      begin
-
-        numeroLimpoRecado := numeroLimpoRecado +
-          Copy(dm.qryPaci.fieldbyname('numero_recado_paci').Value, i, 1);
-        case i of
-          0:
-            numeroLimpoRecado := numeroLimpoRecado + '(';
-          2:
-            numeroLimpoRecado := numeroLimpoRecado + ')';
-          7:
-            numeroLimpoRecado := numeroLimpoRecado + '-';
-        end;
-
-      end;
-    end;
-
-  end;
-  edtCelRecado.Text := numeroLimpoRecado;
-  edtCelular.Text := nmrLimpo;
-  edtCpf.Text := cpfLimpo;
-  edtNomeRecado.Text := dm.qryPaci.fieldbyname('nome_recado_paci').Value;
-  edtCep.Text := dm.qryPaci.fieldbyname('cep_paci').Value;
-  edtEndereco.Text := dm.qryPaci.fieldbyname('endereco').Value;
-  edtNumero.Text := dm.qryPaci.fieldbyname('numerocasa_paci').Value;
-  edtBairro.Text := dm.qryPaci.fieldbyname('bairro_paci').Value;
-  edtMunicipio.Text := dm.qryPaci.fieldbyname('cidade_paci').Value;
-
-  id := dm.qryPaci.fieldbyname('id_paci').Value;
-  edtCpf.Enabled := false;
-
 end;
 
 procedure TfrmPrincipal.dbPacientesDblClick(Sender: TObject);
@@ -882,37 +560,7 @@ end;
 
 procedure TfrmPrincipal.desabilitarCampos;
 begin
-  edtNomePaci.Enabled := false;
-  edtCelular.Enabled := false;
-  edtCpf.Enabled := false;
-  cmbConvenio.Enabled := false;
-  edtNomeRecado.Enabled := false;
-  edtCelRecado.Enabled := false;
-  edtCep.Enabled := false;
-  edtEndereco.Enabled := false;
-  edtNumero.Enabled := false;
-  edtBairro.Enabled := false;
-  edtMunicipio.Enabled := false;
-end;
 
-procedure TfrmPrincipal.edtBuscaCPFChange(Sender: TObject);
-var
-  cpf: string;
-  i: Integer;
-begin
-  cpf := '';
-  for i := 1 to Length(edtCpf.Text) do
-  begin
-    if pos(Copy(edtBuscaCPF.Text, i, 1), '"!%$#@&*().,:;/<>[]{}=+-_\|') = 0 then
-    begin
-      cpf := cpf + Copy(edtBuscaCPF.Text, i, 1);
-    end;
-  end;
-  dm.qryPaci.Close;
-  dm.qryPaci.SQL.Clear;
-  dm.qryPaci.SQL.add('SELECT * FROM pacientes WHERE cpf_paci LIKE :cpf ');
-  dm.qryPaci.ParamByName('cpf').AsString := cpf + '%';
-  dm.qryPaci.Open;
 end;
 
 procedure TfrmPrincipal.edtBuscaNomeChange(Sender: TObject);
@@ -923,25 +571,6 @@ begin
     ('SELECT * FROM pacientes WHERE nome_paci LIKE :nome ORDER BY nome_paci asc');
   dm.qryPaci.ParamByName('nome').AsString := edtBuscaNome.Text + '%';
   dm.qryPaci.Open;
-end;
-
-procedure TfrmPrincipal.edtCpfExit(Sender: TObject);
-var
-  i: Integer;
-begin
-  cpfLimpo := '';
-  for i := 1 to Length(edtCpf.Text) do
-  begin
-    if pos(Copy(edtCpf.Text, i, 1), '"!%$#@&*().,:;/<>[]{}=+-_\|') = 0 then
-    begin
-      cpfLimpo := cpfLimpo + Copy(edtCpf.Text, i, 1);
-    end;
-  end;
-
-  if validaCPf(cpfLimpo) = false then
-  begin
-    exit;
-  end;
 end;
 
 procedure TfrmPrincipal.FormActivate(Sender: TObject);
@@ -1061,17 +690,8 @@ end;
 
 procedure TfrmPrincipal.habilitarCampos;
 begin
-  edtNomePaci.Enabled := true;
-  edtCelular.Enabled := true;
-  edtCpf.Enabled := true;
-  cmbConvenio.Enabled := true;
-  edtNomeRecado.Enabled := true;
-  edtCelRecado.Enabled := true;
-  edtCep.Enabled := true;
-  edtEndereco.Enabled := true;
-  edtNumero.Enabled := true;
-  edtBairro.Enabled := true;
-  edtMunicipio.Enabled := true;
+
+
 end;
 
 procedure TfrmPrincipal.Timage2Click(Sender: TObject);

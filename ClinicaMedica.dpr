@@ -22,7 +22,8 @@ uses
   clinicaMedica.rel.prontuario in 'src\relatorios\clinicaMedica.rel.prontuario.pas' {frmRelPront},
   clinicaMedica.desafio in 'src\desafio\clinicaMedica.desafio.pas' {frmDesafio},
   clinicaMedica.view.financeiro in 'src\view\clinicaMedica.view.financeiro.pas' {frmMovimentos},
-  clinicaMedica.rel.financeiro in 'src\relatorios\clinicaMedica.rel.financeiro.pas' {frmRelFinanceiro};
+  clinicaMedica.rel.financeiro in 'src\relatorios\clinicaMedica.rel.financeiro.pas' {frmRelFinanceiro},
+  clinicaMedica.view.Pacientes in 'src\view\clinicaMedica.view.Pacientes.pas' {frmPacientes};
 
 {$R *.res}
 
@@ -33,6 +34,7 @@ begin
   Application.CreateForm(Tdm, dm);
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
   Application.CreateForm(TfrmLogin, frmLogin);
+  Application.CreateForm(TfrmPacientes, frmPacientes);
   frmLogin := TfrmLogin.Create(nil);
   frmLogin.ShowModal;
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
