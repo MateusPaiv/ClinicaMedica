@@ -1,0 +1,43 @@
+object frmDesafio: TfrmDesafio
+  Left = 0
+  Top = 0
+  Caption = 'Envio para servidor API'
+  ClientHeight = 229
+  ClientWidth = 448
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -15
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poMainFormCenter
+  OnClose = FormClose
+  PixelsPerInch = 96
+  TextHeight = 20
+  object Button1: TButton
+    Left = 160
+    Top = 136
+    Width = 121
+    Height = 33
+    Caption = 'Executar Desafio'
+    TabOrder = 0
+    OnClick = Button1Click
+  end
+  object RESTClient1: TRESTClient
+    Params = <>
+    Left = 32
+    Top = 120
+  end
+  object RESTRequest1: TRESTRequest
+    Client = RESTClient1
+    Params = <>
+    Response = RESTResponse1
+    Left = 32
+    Top = 64
+  end
+  object RESTResponse1: TRESTResponse
+    Left = 32
+    Top = 16
+  end
+end

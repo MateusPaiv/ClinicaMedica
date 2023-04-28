@@ -1,48 +1,66 @@
 object frmDesafio: TfrmDesafio
   Left = 0
   Top = 0
-  Caption = 'frmDesafio'
-  ClientHeight = 401
-  ClientWidth = 920
+  BorderStyle = bsDialog
+  Caption = 'Envio para servidor API'
+  ClientHeight = 239
+  ClientWidth = 458
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'Tahoma'
+  Font.Height = -15
+  Font.Name = 'Segoe UI'
   Font.Style = []
   OldCreateOrder = False
+  Position = poMainFormCenter
   OnClose = FormClose
   PixelsPerInch = 96
-  TextHeight = 13
-  object Button1: TButton
-    Left = 392
-    Top = 176
-    Width = 75
-    Height = 25
-    Caption = 'Button1'
+  TextHeight = 20
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 458
+    Height = 239
+    Align = alClient
+    BevelOuter = bvNone
+    Color = clMenu
+    ParentBackground = False
     TabOrder = 0
-    OnClick = Button1Click
+    ExplicitLeft = 144
+    ExplicitTop = 112
+    ExplicitWidth = 185
+    ExplicitHeight = 41
+    object Label1: TLabel
+      Left = 96
+      Top = 78
+      Width = 257
+      Height = 20
+      Caption = 'Executar envio de dados para servidor '
+    end
+    object Button1: TButton
+      Left = 160
+      Top = 120
+      Width = 121
+      Height = 33
+      Caption = 'Executar Desafio'
+      TabOrder = 0
+      OnClick = Button1Click
+    end
   end
   object RESTClient1: TRESTClient
-    Accept = 'application/json, text/plain; q=0.9, text/html;q=0.8,'
-    AcceptCharset = 'utf-8, *;q=0.8'
-    BaseURL = 'http://192.168.10.220:8080/v2/api-docs?group=Doc - v1'
-    ContentType = 'application/x-www-form-urlencoded'
     Params = <>
-    Left = 544
-    Top = 104
+    Left = 32
+    Top = 120
   end
   object RESTRequest1: TRESTRequest
     Client = RESTClient1
-    Method = rmPOST
     Params = <>
-    Resource = 'api/medico'
     Response = RESTResponse1
-    Left = 544
-    Top = 240
+    Left = 32
+    Top = 64
   end
   object RESTResponse1: TRESTResponse
-    Left = 544
-    Top = 176
+    Left = 32
+    Top = 16
   end
 end

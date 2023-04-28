@@ -15,6 +15,8 @@ type
     RESTClient1: TRESTClient;
     RESTRequest1: TRESTRequest;
     RESTResponse1: TRESTResponse;
+    Label1: TLabel;
+    Panel1: TPanel;
     procedure Button1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
@@ -22,6 +24,7 @@ type
     procedure desafioM;
     procedure desafioP;
     procedure desafioC;
+    function executarEnvioDadoServidor(resource, JSON: string): boolean;
   public
     { Public declarations }
   end;
@@ -36,11 +39,12 @@ implementation
 procedure TfrmDesafio.Button1Click(Sender: TObject);
 begin
   desafioM;
-  // desafioP;
-  // desafioC;
+  desafioP;
+  desafioC;
 
-  MessageDlg('Integração com API feita com sucesso!', mtconfirmation,
-    [mbOK], 0);
+  MessageDlg
+    ('Integração com API feita com sucesso de Médico, Paciente e Consulta!',
+    mtconfirmation, [mbOK], 0);
 end;
 
 procedure TfrmDesafio.desafioC;
@@ -48,7 +52,7 @@ var
   dataCons, DataCad: TDate;
   horaCons: TTime;
   idPaci, idMed, idCons: integer;
-  descPront: string;
+  descPront, JSON: string;
 begin
   dm.qryPront.close;
   dm.qryPront.SQL.clear;
@@ -57,13 +61,6 @@ begin
   dm.qryPront.SQL.Add
     (', p.hipotese_diagnostica , p.queixa_principal from consultas as c inner join prontuarios as p on c.id_cons = p.id_pront_cons');
   dm.qryPront.open;
-
-  dm.qryDesafioC.close;
-  dm.qryDesafioC.SQL.clear;
-  dm.qryDesafioC.SQL.Add
-    ('INSERT INTO desafio_c( id_tipo,dataconsulta, datacadastro, hora, id_paci, id_med, desc_pront, id_cons)');
-  dm.qryDesafioC.SQL.Add
-    ('VALUES(''C'',:datacons, :datacad, :hora, :id_paci , :id_med, :hip, :id_cons);');
 
   while not dm.qryPront.Eof do
   begin
@@ -75,17 +72,36 @@ begin
     idPaci := dm.qryPront.fieldbyname('id_cons_paciente').value;
     idMed := dm.qryPront.fieldbyname('id_cons_medico').value;
     descPront := dm.qryPront.fieldbyname('hipotese_diagnostica').value;
+    JSON := '{"dataConsulta" : "' + FormatDateTime('ddmmyyyy', DataCad) +
+      '", "dataLancamentoConsulta" : "' + FormatDateTime('ddmmyyyy', dataCons) +
+      '", "descricaoProntuario" : "' + descPront + '", "horaConsulta" : "' +
+      TimeToStr(horaCons) + '","identificador" : "C" , "medicoId" : "' +
+      IntToStr(idMed) + '", "pacienteId" :"' + IntToStr(idPaci) + '"}';
+    executarEnvioDadoServidor('api/consulta', JSON);
+    // RESTClient1.BaseURL := 'http://192.168.10.220:8080';
+    // RESTRequest1.ResourceSuffix := '';
+    // RESTRequest1.resource := 'api/consulta';
+    // RESTRequest1.Method := TRESTRequestMethod.rmPOST;
+    // RESTRequest1.Params.clear;
+    // RESTRequest1.ClearBody;
+    // RESTRequest1.AddBody(JSON, ContentTypeFromString('application/json'));
+    // RESTRequest1.Params.AddItem('aluno-hash',
+    // '66e2ec44-623e-42f5-a35d-7ffd1844d5d3', pkHTTPHEADER, [poDoNotEncode]);
+    // RESTRequest1.Execute;
 
-    dm.qryDesafioC.parambyname('datacons').AsDate := dataCons;
-    dm.qryDesafioC.parambyname('datacad').AsDate := DataCad;
-    dm.qryDesafioC.parambyname('hora').AsTime := horaCons;
-    dm.qryDesafioC.parambyname('id_paci').value := idPaci;
-    dm.qryDesafioC.parambyname('id_med').value := idMed;
-    dm.qryDesafioC.parambyname('hip').value := descPront;
-    dm.qryDesafioC.parambyname('id_cons').value := idCons;
-    dm.qryDesafioC.execSQL;
     dm.qryPront.Next;
 
+  end;
+
+  if RESTResponse1.StatusCode = 201 then
+  begin
+    MessageDlg('Integração com API de Consultas feita com sucesso!',
+      mtconfirmation, [mbOK], 0);
+  end
+  else
+  begin
+    MessageDlg('Erro integração de consulta!', mtError, [mbOK], 0);
+    ShowMessage(RESTResponse1.Content);
   end;
 end;
 
@@ -101,11 +117,6 @@ begin
     ('select u.crm, f.* from funcionarios as f left join usuarios as u on u.id_func_user = f.id_func where nivel_acesso_user = 4');
   dm.qryUser.open;
 
-  // dm.qryDesafioM.close;
-  // dm.qryDesafioM.SQL.clear;
-  // dm.qryDesafioM.SQL.Add
-  // ('INSERT INTO desafio_m( id_tipo, id_medico, nome, datacadastro, cpf, crm)VALUES(''M'', :id , :nome, :datacad , :cpf , :crm )');
-
   while not dm.qryUser.Eof do
   begin
 
@@ -114,30 +125,30 @@ begin
     Data := dm.qryUser.fieldbyname('datacadastro').value;
     cpf := dm.qryUser.fieldbyname('cpf_func').value;
     crm := dm.qryUser.fieldbyname('crm').value;
-    JSON := '{"identificador" : "M", "cpf" : "' + cpf + '", "crm" : "' +crm+'", "dataCadatro" : "' + DateToStr(Data) + '","nome" : "' + nome + '" }';
-    // dm.qryDesafioM.parambyname('id').value := id;
-    // dm.qryDesafioM.parambyname('nome').value := nome;
-    // dm.qryDesafioM.parambyname('datacad').AsDate := Data;
-    // dm.qryDesafioM.parambyname('cpf').value := cpf;
-    // dm.qryDesafioM.parambyname('crm').value := crm;
-    // dm.qryDesafioM.execSQL;
-    RESTClient1.ContentType := 'application/json';
-    RESTRequest1.Method := rmPOST;
-    RESTRequest1.AddBody(JSON, ctAPPLICATION_JSON);
-    RESTRequest1.AddParameter('aluno_hash','66e2ec44-623e-42f5-a35d-7ffd1844d5d3', pkHTTPHEADER);
-    RESTRequest1.Resource := 'api/medico';
-    RESTRequest1.Execute;
+    JSON := '{"identificador" : "M", "cpf" : "' + cpf + '", "crm" : "' + crm +
+      '", "dataCadastro" : "' + FormatDateTime('ddmmyyyy', Data) +
+      '","nome" : "' + nome + '" }';
+    executarEnvioDadoServidor('api/medico', JSON);
 
     dm.qryUser.Next;
 
   end;
-
+  if RESTResponse1.StatusCode = 201 then
+  begin
+    MessageDlg('Integração com API feita com sucesso de médico!',
+      mtconfirmation, [mbOK], 0);
+  end
+  else
+  begin
+    MessageDlg('Erro integração médica!', mtError, [mbOK], 0);
+    ShowMessage(RESTResponse1.Content);
+  end;
 end;
 
 procedure TfrmDesafio.desafioP;
 var
 
-  nome, cpf, cidade: string;
+  nome, cpf, cidade, JSON: string;
   Data: TDate;
   id: integer;
 begin
@@ -147,27 +158,48 @@ begin
     ('select id_paci,nome_paci , datacadastro, cpf_paci, cidade_paci from pacientes ');
   dm.qryPaci.open;
 
-  dm.qryDesafioP.close;
-  dm.qryDesafioP.SQL.clear;
-  dm.qryDesafioP.SQL.Add
-    ('INSERT INTO public.desafio_p( id_tipo, id_paciente, nome, datacadastro, cpf, cidade)VALUES(''P'',:id ,:nome , :datacad, :cpf, :cidade)');
   while not dm.qryPaci.Eof do
   begin
-
-    id := dm.qryPaci.fieldbyname('id_paci').value;
     nome := dm.qryPaci.fieldbyname('nome_paci').value;
     Data := dm.qryPaci.fieldbyname('datacadastro').value;
     cpf := dm.qryPaci.fieldbyname('cpf_paci').value;
     cidade := dm.qryPaci.fieldbyname('cidade_paci').value;
-    dm.qryDesafioP.parambyname('id').value := id;
-    dm.qryDesafioP.parambyname('nome').value := nome;
-    dm.qryDesafioP.parambyname('datacad').AsDate := Data;
-    dm.qryDesafioP.parambyname('cpf').value := cpf;
-    dm.qryDesafioP.parambyname('cidade').value := cidade;
-    dm.qryDesafioP.execSQL;
+    JSON := '{"dataCadastro" : "' + FormatDateTime('ddmmyyyy', Data) +
+      '", "cpf" : "' + cpf + '", "identificador" : "P", "municipio" : "' +
+      cidade + '","identificador" : "C" , "nome" : "' + nome + '"}';
+    executarEnvioDadoServidor('api/paciente', JSON);
     dm.qryPaci.Next;
 
   end;
+
+  if RESTResponse1.StatusCode = 201 then
+  begin
+    MessageDlg('Integração com API de paciente feita com sucesso!',
+      mtconfirmation, [mbOK], 0);
+    dm.qryPaci.close;
+    dm.qryPaci.SQL.clear;
+    dm.qryPaci.SQL.Add('select * from pacientes ');
+    dm.qryPaci.open;
+  end
+  else
+  begin
+    MessageDlg('Erro integração de pacientes!', mtError, [mbOK], 0);
+    ShowMessage(RESTResponse1.Content);
+  end;
+end;
+
+function TfrmDesafio.executarEnvioDadoServidor(resource, JSON: string): boolean;
+begin
+  RESTClient1.BaseURL := 'http://192.168.10.220:8080';
+  RESTRequest1.ResourceSuffix := '';
+  RESTRequest1.resource := resource;
+  RESTRequest1.Method := TRESTRequestMethod.rmPOST;
+  RESTRequest1.Params.clear;
+  RESTRequest1.ClearBody;
+  RESTRequest1.AddBody(JSON, ContentTypeFromString('application/json'));
+  RESTRequest1.Params.AddItem('aluno-hash',
+    '66e2ec44-623e-42f5-a35d-7ffd1844d5d3', pkHTTPHEADER, [poDoNotEncode]);
+  RESTRequest1.Execute;
 end;
 
 procedure TfrmDesafio.FormClose(Sender: TObject; var Action: TCloseAction);

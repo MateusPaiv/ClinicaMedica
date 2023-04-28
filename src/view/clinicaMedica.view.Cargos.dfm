@@ -12,9 +12,10 @@ object frmCargos: TfrmCargos
   Font.Name = 'Segoe UI'
   Font.Style = [fsBold]
   OldCreateOrder = False
-  Position = poScreenCenter
+  Position = poMainFormCenter
   OnActivate = FormActivate
   OnClose = FormClose
+  OnKeyDown = FormKeyDown
   PixelsPerInch = 96
   TextHeight = 20
   object pnlPrincipal: TPanel

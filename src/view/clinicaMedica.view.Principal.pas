@@ -126,6 +126,7 @@ type
     procedure btnMovimentosClick(Sender: TObject);
     procedure btnRelFinanClick(Sender: TObject);
     procedure btnCadPaciClick(Sender: TObject);
+    procedure edtBuscaCPFChange(Sender: TObject);
   private
     { Private declarations }
     procedure CloseForm;
@@ -329,7 +330,6 @@ end;
 procedure TfrmPrincipal.associarCampos;
 
 begin
-
 
 end;
 
@@ -563,6 +563,27 @@ begin
 
 end;
 
+procedure TfrmPrincipal.edtBuscaCPFChange(Sender: TObject);
+var
+  cpf: string;
+  i: Integer;
+begin
+  cpf := '';
+  for i := 1 to Length(edtBuscaCPF.Text) do
+  begin
+    if pos(Copy(edtBuscaCPF.Text, i, 1), '"!%$#@&*().,:;/<>[]{}=+-_\|') = 0 then
+    begin
+      cpf := cpf + Copy(edtBuscaCPF.Text, i, 1);
+    end;
+  end;
+  dm.qryPaci.Close;
+  dm.qryPaci.SQL.Clear;
+  dm.qryPaci.SQL.add
+    ('SELECT * FROM pacientes WHERE cpf_paci = :cpf ORDER BY nome_paci asc');
+  dm.qryPaci.ParamByName('cpf').AsString := cpf;
+  dm.qryPaci.Open;
+end;
+
 procedure TfrmPrincipal.edtBuscaNomeChange(Sender: TObject);
 begin
   dm.qryPaci.Close;
@@ -586,6 +607,15 @@ procedure TfrmPrincipal.FormKeyDown(Sender: TObject;
 
   var Key: Word; Shift: TShiftState);
 begin
+  if Key = VK_ESCAPE then
+  begin
+    if MessageDlg('Deseja terminar a execução do sistema?', mtinformation,
+      [mbNo, mbYes], 0) = mrYes then
+    begin
+      Application.Terminate;
+    end;
+  end;
+
   if Key = VK_F1 then
   begin
     if cargoUsuario = 3 then
@@ -647,6 +677,14 @@ begin
     end;
     btnRelFinanClick(Sender);
   end;
+  if Key = VK_F8 then
+  begin
+    if (cargoUsuario = 4) then
+    begin
+      exit;
+    end;
+    btnCadPaciClick(Sender);
+  end;
 
 end;
 
@@ -690,7 +728,6 @@ end;
 
 procedure TfrmPrincipal.habilitarCampos;
 begin
-
 
 end;
 

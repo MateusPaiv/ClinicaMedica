@@ -14,6 +14,7 @@ object frmConv: TfrmConv
   OldCreateOrder = False
   Position = poMainFormCenter
   OnClose = FormClose
+  OnKeyDown = FormKeyDown
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -27,9 +28,6 @@ object frmConv: TfrmConv
     Color = clMenu
     ParentBackground = False
     TabOrder = 0
-    ExplicitTop = -34
-    ExplicitWidth = 506
-    ExplicitHeight = 372
     object Label1: TLabel
       Left = 24
       Top = 9

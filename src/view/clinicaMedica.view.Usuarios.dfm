@@ -15,6 +15,7 @@ object frmUsuarios: TfrmUsuarios
   Position = poMainFormCenter
   OnClose = FormClose
   OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
   PixelsPerInch = 96
   TextHeight = 20
   object Panel1: TPanel

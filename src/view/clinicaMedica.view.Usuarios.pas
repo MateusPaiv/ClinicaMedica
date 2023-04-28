@@ -44,6 +44,7 @@ type
     procedure btnEditClick(Sender: TObject);
     procedure edtBuscaUserChange(Sender: TObject);
     procedure cmbNvlAcessoExit(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
   public
@@ -237,6 +238,15 @@ begin
   desabilitarCampos;
   listar;
   dm.tbUser.Active := true;
+end;
+
+procedure TfrmUsuarios.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_ESCAPE then
+  begin
+    close;
+  end;
 end;
 
 procedure TfrmUsuarios.habilitarCampos;

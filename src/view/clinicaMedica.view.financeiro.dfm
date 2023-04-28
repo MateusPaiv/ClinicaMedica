@@ -14,6 +14,7 @@ object frmMovimentos: TfrmMovimentos
   OldCreateOrder = False
   Position = poMainFormCenter
   OnClose = FormClose
+  OnKeyDown = FormKeyDown
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 20
@@ -25,8 +26,6 @@ object frmMovimentos: TfrmMovimentos
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitWidth = 882
-    ExplicitHeight = 604
     object Panel2: TPanel
       Left = 0
       Top = 0
@@ -37,7 +36,6 @@ object frmMovimentos: TfrmMovimentos
       Color = clSkyBlue
       ParentBackground = False
       TabOrder = 0
-      ExplicitWidth = 882
       object Label1: TLabel
         Left = 376
         Top = 12
@@ -62,7 +60,6 @@ object frmMovimentos: TfrmMovimentos
       Color = clMenu
       ParentBackground = False
       TabOrder = 1
-      ExplicitTop = 79
       object btnEntrada: TSpeedButton
         Left = 176
         Top = 24
@@ -176,8 +173,6 @@ object frmMovimentos: TfrmMovimentos
         Align = alBottom
         BevelOuter = bvNone
         TabOrder = 1
-        ExplicitTop = 282
-        ExplicitWidth = 882
         object Label2: TLabel
           Left = 576
           Top = 112

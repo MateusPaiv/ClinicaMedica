@@ -37,6 +37,7 @@ type
     procedure btnSalvarClick(Sender: TObject);
     procedure btnEditarClick(Sender: TObject);
     procedure btnFinalizarConsultaClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
   public
@@ -258,6 +259,15 @@ begin
   carregarCampos;
   carregarConvenios;
   carregarHora;
+end;
+
+procedure TfrmConsulta.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_ESCAPE then
+  begin
+    Close;
+  end;
 end;
 
 procedure TfrmConsulta.habilitarCampos;

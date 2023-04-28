@@ -62,6 +62,7 @@ type
     procedure btnCadastrarClick(Sender: TObject);
     procedure btnBuscaCEPClick(Sender: TObject);
     procedure dbPacientesCellClick(Column: TColumn);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
   public
@@ -239,6 +240,19 @@ begin
     MessageDlg('Falta Preencher o número do paciente!', mtinformation,
       [mbOK], 0);
     edtCelular.SetFocus;
+    exit;
+  end;
+  cpfLimpo := '';
+  for i := 1 to Length(edtCpf.Text) do
+  begin
+    if pos(Copy(edtCpf.Text, i, 1), '"!%$#@&*().,:;/<>[]{}=+-_\|') = 0 then
+    begin
+      cpfLimpo := cpfLimpo + Copy(edtCpf.Text, i, 1);
+    end;
+  end;
+
+  if validaCPf(cpfLimpo) = false then
+  begin
     exit;
   end;
 
@@ -428,6 +442,15 @@ end;
 procedure TfrmPacientes.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Action := cafree;
+end;
+
+procedure TfrmPacientes.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_ESCAPE then
+  begin
+    Close;
+  end;
 end;
 
 procedure TfrmPacientes.FormShow(Sender: TObject);

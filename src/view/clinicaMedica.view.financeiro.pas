@@ -46,6 +46,7 @@ type
     procedure btnSaidaClick(Sender: TObject);
     procedure DBFinanCellClick(Column: TColumn);
     procedure btnEditarClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
     procedure associarCampos;
@@ -285,6 +286,15 @@ end;
 procedure TfrmMovimentos.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Action := cafree;
+end;
+
+procedure TfrmMovimentos.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_ESCAPE then
+  begin
+    close;
+  end;
 end;
 
 procedure TfrmMovimentos.FormShow(Sender: TObject);
