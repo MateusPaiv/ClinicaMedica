@@ -159,27 +159,6 @@ type
     tbConshorariofimconsulta: TTimeField;
     tbConsdatacadastro: TDateField;
     tbUserdatacadastro: TDateField;
-    qryDesafioM: TFDQuery;
-    qryDesafioP: TFDQuery;
-    qryDesafioC: TFDQuery;
-    qryDesafioMcrm: TWideStringField;
-    qryDesafioMid_func: TIntegerField;
-    qryDesafioMnome_func: TWideStringField;
-    qryDesafioMemail_func: TWideStringField;
-    qryDesafioMcpf_func: TWideStringField;
-    qryDesafioMdatadeadmissao_func: TDateField;
-    qryDesafioMtelefone_func: TWideStringField;
-    qryDesafioMremuneracao_func: TBCDField;
-    qryDesafioMcep_func: TWideStringField;
-    qryDesafioMendereco_func: TWideStringField;
-    qryDesafioMcomplemento_func: TWideStringField;
-    qryDesafioMbairro_func: TWideStringField;
-    qryDesafioMcidade_func: TWideStringField;
-    qryDesafioMuf_func: TWideStringField;
-    qryDesafioMstatus: TWideStringField;
-    qryDesafioMnumerocasa_func: TWideStringField;
-    qryDesafioMcargo_func: TIntegerField;
-    qryDesafioMdatacadastro: TDateField;
     qryFinanceiro: TFDQuery;
     tbFinanceiro: TFDTable;
     dsFinanceiro: TDataSource;
@@ -193,6 +172,17 @@ type
     relDsFinanceiro: TfrxDBDataset;
     qryVerificaConsulta: TFDQuery;
     relPrescricao: TfrxReport;
+    qryExames: TFDQuery;
+    tbExames: TFDTable;
+    dsExames: TDataSource;
+    tbExamesid_exam: TIntegerField;
+    tbExamesdata_exam: TDateField;
+    tbExameshorario_exam: TTimeField;
+    tbExamesdesc_exam: TWideStringField;
+    tbExamesvalor_exam: TBCDField;
+    tbExamesid_med: TIntegerField;
+    tbExamesid_conv: TIntegerField;
+    tbExamesid_paci: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private
@@ -251,8 +241,6 @@ begin
   Connection.Params.Add('Port=' + porta);
   Connection.Params.Add('DataBase=' + base);
   Connection.Params.Add('DriverID=' + 'PG');
-  PgDriverLink.VendorHome := ExtractFilePath(ParamStr(0)) + 'lib';
-
 
   try
     Connection.Open;

@@ -19,7 +19,8 @@ uses
   FireDAC.Comp.Client, clinicaMedica.rel.consultas, clinicaMedica.rel.pacientes,
   clinicaMedica.rel.funcionários, clinicaMedica.rel.Prontuario,
   clinicaMedica.desafio, clinicaMedica.view.financeiro,
-  clinicaMedica.rel.financeiro, clinicaMedica.view.pacientes;
+  clinicaMedica.rel.financeiro, clinicaMedica.view.pacientes,
+  clinicaMedica.view.Exames;
 
 type
   TfrmPrincipal = class(TForm)
@@ -91,6 +92,8 @@ type
     lbConsultasRealizadas: TLabel;
     Image2: TImage;
     btnCadPaci: TSpeedButton;
+    btnExames: TSpeedButton;
+    Label1: TLabel;
     procedure imgFecharClick(Sender: TObject);
     procedure Timage2Click(Sender: TObject);
     procedure btnFuncionariosClick(Sender: TObject);
@@ -126,10 +129,12 @@ type
     procedure btnRelFinanClick(Sender: TObject);
     procedure btnCadPaciClick(Sender: TObject);
     procedure edtBuscaCPFChange(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure btnExamesClick(Sender: TObject);
   private
     { Private declarations }
     procedure CloseForm;
-    procedure associarCampos;
+
     function validaCPf(cpf: string): boolean;
     procedure habilitarCampos;
     procedure desabilitarCampos;
@@ -137,7 +142,7 @@ type
     procedure listarConsultas;
     procedure listarConsultasRealizadas;
     procedure ListarConsultasMedico;
-    procedure carregarComboBox;
+
     procedure verificaConsHoje;
     procedure ConsultarCEP(cep: string);
 
@@ -321,17 +326,6 @@ begin
   frmUsuarios.showmodal;
 end;
 
-procedure TfrmPrincipal.carregarComboBox;
-begin
-
-end;
-
-procedure TfrmPrincipal.associarCampos;
-
-begin
-
-end;
-
 procedure TfrmPrincipal.btnAdmClick(Sender: TObject);
 begin
   cards.ActiveCard := cardMedico;
@@ -370,6 +364,12 @@ procedure TfrmPrincipal.btnDesafioClick(Sender: TObject);
 begin
   frmDesafio := TfrmDesafio.Create(nil);
   frmDesafio.showmodal;
+end;
+
+procedure TfrmPrincipal.btnExamesClick(Sender: TObject);
+begin
+  frmExames := TfrmExames.Create(nil);
+  frmExames.showmodal;
 end;
 
 procedure TfrmPrincipal.btnFuncionariosClick(Sender: TObject);
@@ -602,6 +602,11 @@ begin
 
 end;
 
+procedure TfrmPrincipal.FormCreate(Sender: TObject);
+begin
+  listar;
+end;
+
 procedure TfrmPrincipal.FormKeyDown(Sender: TObject;
 
   var Key: Word; Shift: TShiftState);
@@ -696,6 +701,7 @@ begin
   cards.ActiveCard := cardPacientes;
   dm.tbPaci.Active := true;
   dataCons.Date := dataDeHoje;
+
   case cargoUsuario of
     2:
       begin
@@ -726,8 +732,7 @@ begin
   end;
 
   desabilitarCampos;
-  carregarComboBox;
-
+  listar;
 end;
 
 procedure TfrmPrincipal.habilitarCampos;

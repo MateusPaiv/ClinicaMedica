@@ -17,7 +17,9 @@ object dm: Tdm
     Top = 8
   end
   object PgDriverLink: TFDPhysPgDriverLink
-    VendorLib = 'C:\Users\User\Desktop\ClinicaMedica\Win32\Debug\lib\libpq.dll'
+    VendorLib = 
+      'C:\Users\mateus.5937\Desktop\ClinicaMedica\Win32\Debug\lib\libpq' +
+      '.dll'
     Left = 96
     Top = 8
   end
@@ -1738,7 +1740,6 @@ object dm: Tdm
     Top = 248
   end
   object qryAtestado: TFDQuery
-    Active = True
     Connection = Connection
     SQL.Strings = (
       
@@ -2399,6 +2400,7 @@ object dm: Tdm
     end
   end
   object qryRelConsultas: TFDQuery
+    Active = True
     Connection = Connection
     SQL.Strings = (
       
@@ -2616,7 +2618,6 @@ object dm: Tdm
           Top = 37.795300000000000000
           Width = 482.000000000000000000
           Height = 18.897650000000000000
-          DataField = 'valor'
           DataSet = relDsConsultas
           DataSetName = 'dsConsultas'
           Font.Charset = DEFAULT_CHARSET
@@ -2626,7 +2627,7 @@ object dm: Tdm
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[dsConsultas."valor"]')
+            'R$ [dsConsultas."valor"] ,00')
           ParentFont = False
           Style = 'Data'
         end
@@ -2886,14 +2887,24 @@ object dm: Tdm
             'Pagin'#225' [Page#]')
         end
         object Memo23: TfrxMemoView
-          Align = baCenter
           AllowVectorExport = True
-          Left = 266.456865000000000000
+          Left = 137.952845000000000000
           Width = 185.196970000000000000
           Height = 18.897650000000000000
           Frame.Typ = []
           Memo.UTF8W = (
             'N'#250'mero de consultas: [COUNT(MasterData1)]')
+        end
+        object Memo24: TfrxMemoView
+          AllowVectorExport = True
+          Left = 377.953000000000000000
+          Width = 241.889920000000000000
+          Height = 18.897650000000000000
+          Frame.Typ = []
+          Memo.UTF8W = (
+            
+              'Valor total das consultas: R$ [SUM(<dsConsultas."valor">,MasterD' +
+              'ata1)]')
         end
       end
       object PageHeader1: TfrxPageHeader
@@ -6456,131 +6467,6 @@ object dm: Tdm
     Left = 1336
     Top = 56
   end
-  object qryDesafioM: TFDQuery
-    Connection = Connection
-    SQL.Strings = (
-      'select * from desafio_m')
-    Left = 416
-    Top = 472
-    object qryDesafioMcrm: TWideStringField
-      FieldName = 'crm'
-      Origin = 'crm'
-      Size = 10
-    end
-    object qryDesafioMid_func: TIntegerField
-      AutoGenerateValue = arDefault
-      FieldName = 'id_func'
-      Origin = 'id_func'
-      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
-    end
-    object qryDesafioMnome_func: TWideStringField
-      AutoGenerateValue = arDefault
-      FieldName = 'nome_func'
-      Origin = 'nome_func'
-      Size = 150
-    end
-    object qryDesafioMemail_func: TWideStringField
-      AutoGenerateValue = arDefault
-      FieldName = 'email_func'
-      Origin = 'email_func'
-      Size = 130
-    end
-    object qryDesafioMcpf_func: TWideStringField
-      AutoGenerateValue = arDefault
-      FieldName = 'cpf_func'
-      Origin = 'cpf_func'
-      Size = 25
-    end
-    object qryDesafioMdatadeadmissao_func: TDateField
-      AutoGenerateValue = arDefault
-      FieldName = 'datadeadmissao_func'
-      Origin = 'datadeadmissao_func'
-    end
-    object qryDesafioMtelefone_func: TWideStringField
-      AutoGenerateValue = arDefault
-      FieldName = 'telefone_func'
-      Origin = 'telefone_func'
-      Size = 13
-    end
-    object qryDesafioMremuneracao_func: TBCDField
-      AutoGenerateValue = arDefault
-      FieldName = 'remuneracao_func'
-      Origin = 'remuneracao_func'
-      Precision = 12
-      Size = 2
-    end
-    object qryDesafioMcep_func: TWideStringField
-      AutoGenerateValue = arDefault
-      FieldName = 'cep_func'
-      Origin = 'cep_func'
-    end
-    object qryDesafioMendereco_func: TWideStringField
-      AutoGenerateValue = arDefault
-      FieldName = 'endereco_func'
-      Origin = 'endereco_func'
-      Size = 100
-    end
-    object qryDesafioMcomplemento_func: TWideStringField
-      AutoGenerateValue = arDefault
-      FieldName = 'complemento_func'
-      Origin = 'complemento_func'
-      Size = 80
-    end
-    object qryDesafioMbairro_func: TWideStringField
-      AutoGenerateValue = arDefault
-      FieldName = 'bairro_func'
-      Origin = 'bairro_func'
-      Size = 40
-    end
-    object qryDesafioMcidade_func: TWideStringField
-      AutoGenerateValue = arDefault
-      FieldName = 'cidade_func'
-      Origin = 'cidade_func'
-      Size = 50
-    end
-    object qryDesafioMuf_func: TWideStringField
-      AutoGenerateValue = arDefault
-      FieldName = 'uf_func'
-      Origin = 'uf_func'
-      Size = 5
-    end
-    object qryDesafioMstatus: TWideStringField
-      AutoGenerateValue = arDefault
-      FieldName = 'status'
-      Origin = 'status'
-      Size = 3
-    end
-    object qryDesafioMnumerocasa_func: TWideStringField
-      AutoGenerateValue = arDefault
-      FieldName = 'numerocasa_func'
-      Origin = 'numerocasa_func'
-      Size = 10
-    end
-    object qryDesafioMcargo_func: TIntegerField
-      AutoGenerateValue = arDefault
-      FieldName = 'cargo_func'
-      Origin = 'cargo_func'
-    end
-    object qryDesafioMdatacadastro: TDateField
-      AutoGenerateValue = arDefault
-      FieldName = 'datacadastro'
-      Origin = 'datacadastro'
-    end
-  end
-  object qryDesafioP: TFDQuery
-    Connection = Connection
-    SQL.Strings = (
-      
-        'select id_paci,nome_paci , datacadastro, cpf_paci, cidade_paci f' +
-        'rom pacientes ')
-    Left = 544
-    Top = 472
-  end
-  object qryDesafioC: TFDQuery
-    Connection = Connection
-    Left = 480
-    Top = 472
-  end
   object qryFinanceiro: TFDQuery
     Connection = Connection
     SQL.Strings = (
@@ -6625,6 +6511,7 @@ object dm: Tdm
     Top = 480
   end
   object qryRelFinan: TFDQuery
+    Active = True
     Connection = Connection
     SQL.Strings = (
       'select * from movimentos')
@@ -6919,6 +6806,17 @@ object dm: Tdm
           HAlign = haRight
           Memo.UTF8W = (
             'Page [Page#]')
+        end
+        object Memo10: TfrxMemoView
+          AllowVectorExport = True
+          Left = 241.889920000000000000
+          Width = 381.732530000000000000
+          Height = 18.897650000000000000
+          Frame.Typ = []
+          Memo.UTF8W = (
+            
+              'Valor total de movimentos: R$ [SUM(<DSFinanceiro."valor_mov">,Ma' +
+              'sterData1)],00')
         end
       end
       object PageHeader1: TfrxPageHeader
@@ -7836,5 +7734,65 @@ object dm: Tdm
         ParentFont = False
       end
     end
+  end
+  object qryExames: TFDQuery
+    Connection = Connection
+    SQL.Strings = (
+      
+        'select u.nome_user, u.crm, e.* , conv.nome_conv, p.nome_paci fro' +
+        'm exames as e inner join usuarios as u ON u.id_func_user = e.id_' +
+        'med inner join convenios as conv on e.id_conv = conv.id_conv inn' +
+        'er join'
+      'pacientes as p on e.id_paci = p.id_paci')
+    Left = 352
+    Top = 408
+  end
+  object tbExames: TFDTable
+    IndexFieldNames = 'id_exam'
+    Connection = Connection
+    TableName = 'exames'
+    Left = 408
+    Top = 408
+    object tbExamesid_exam: TIntegerField
+      FieldName = 'id_exam'
+      Origin = 'id_exam'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+    end
+    object tbExamesdata_exam: TDateField
+      FieldName = 'data_exam'
+      Origin = 'data_exam'
+    end
+    object tbExameshorario_exam: TTimeField
+      FieldName = 'horario_exam'
+      Origin = 'horario_exam'
+    end
+    object tbExamesdesc_exam: TWideStringField
+      FieldName = 'desc_exam'
+      Origin = 'desc_exam'
+      Size = 250
+    end
+    object tbExamesvalor_exam: TBCDField
+      FieldName = 'valor_exam'
+      Origin = 'valor_exam'
+      Precision = 15
+      Size = 2
+    end
+    object tbExamesid_med: TIntegerField
+      FieldName = 'id_med'
+      Origin = 'id_med'
+    end
+    object tbExamesid_conv: TIntegerField
+      FieldName = 'id_conv'
+      Origin = 'id_conv'
+    end
+    object tbExamesid_paci: TIntegerField
+      FieldName = 'id_paci'
+      Origin = 'id_paci'
+    end
+  end
+  object dsExames: TDataSource
+    DataSet = qryExames
+    Left = 376
+    Top = 472
   end
 end

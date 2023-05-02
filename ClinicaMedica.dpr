@@ -24,7 +24,8 @@ uses
   clinicaMedica.view.financeiro in 'src\view\clinicaMedica.view.financeiro.pas' {frmMovimentos},
   clinicaMedica.rel.financeiro in 'src\relatorios\clinicaMedica.rel.financeiro.pas' {frmRelFinanceiro},
   clinicaMedica.view.Pacientes in 'src\view\clinicaMedica.view.Pacientes.pas' {frmPacientes},
-  clinicaMedica.classe.paciente in 'src\classesDesafio\clinicaMedica.classe.paciente.pas';
+  clinicaMedica.classe.paciente in 'src\classesDesafio\clinicaMedica.classe.paciente.pas',
+  clinicaMedica.view.Exames in 'src\view\clinicaMedica.view.Exames.pas' {frmExames};
 
 {$R *.res}
 
@@ -35,7 +36,6 @@ begin
   Application.CreateForm(Tdm, dm);
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
   Application.CreateForm(TfrmLogin, frmLogin);
-  Application.CreateForm(TfrmPacientes, frmPacientes);
   frmLogin := TfrmLogin.Create(nil);
   frmLogin.ShowModal;
   Application.CreateForm(TfrmPrincipal, frmPrincipal);

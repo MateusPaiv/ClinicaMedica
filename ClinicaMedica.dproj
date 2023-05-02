@@ -179,6 +179,10 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="src\classesDesafio\clinicaMedica.classe.paciente.pas"/>
+        <DCCReference Include="src\view\clinicaMedica.view.Exames.pas">
+            <Form>frmExames</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

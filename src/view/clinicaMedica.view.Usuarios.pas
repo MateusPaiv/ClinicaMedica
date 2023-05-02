@@ -132,7 +132,9 @@ begin
     2:
       cargoFunc := 3;
     3:
-      cargoFunc := 4
+      cargoFunc := 4;
+    4:
+      cargoFunc := 5;
   end;
 
   dm.qryVerificaEmail.Connection := dm.Connection;

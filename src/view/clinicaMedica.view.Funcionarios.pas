@@ -494,7 +494,7 @@ procedure TfrmFuncionarios.listar;
 begin
   dm.qryFunc.Close;
   dm.qryFunc.SQL.Clear;
-  dm.qryFunc.SQL.Add('select * from funcionarios order by nome_func asc');
+  dm.qryFunc.SQL.Add('select funcionarios.*, cargos.cargo from funcionarios inner join cargos on funcionarios.cargo_func = cargos.id_carg');
   dm.qryFunc.Open;
 end;
 
