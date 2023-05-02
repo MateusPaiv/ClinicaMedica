@@ -37,6 +37,8 @@ type
     PngImageList1: TPngImageList;
     edtDataMov: TDatePicker;
     Label4: TLabel;
+    Label6: TLabel;
+    lbExames: TLabel;
     procedure btnEntradaClick(Sender: TObject);
     procedure DBFinanDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
@@ -55,6 +57,7 @@ type
     procedure valorSaida;
     procedure valorTotal;
     procedure valorConsultas;
+    procedure valorExames;
   public
     { Public declarations }
   end;
@@ -104,8 +107,10 @@ begin
 
   valorEntrada;
   valorSaida;
-  valorTotal;
   valorConsultas;
+  valorExames;
+  valorTotal;
+
   listar;
 
 end;
@@ -204,8 +209,10 @@ begin
   dm.tbfinanceiro.post;
   valorEntrada;
   valorSaida;
-  valorTotal;
   valorConsultas;
+  valorExames;
+  valorTotal;
+
   listar;
 
   MessageDlg('Movimento salvo com sucesso!', mtinformation, [mbok], 0);
@@ -307,6 +314,7 @@ begin
   dm.tbfinanceiro.active := true;
   valorEntrada;
   valorSaida;
+  valorExames;
   valorConsultas;
   valorTotal;
 
@@ -345,7 +353,7 @@ begin
       .AsString + ',00';
   end;
 
-  totalCons := dm.qryCons.fieldbyname('sum').AsInteger;
+  totalCons := totalCons + dm.qryCons.fieldbyname('sum').AsInteger;
 
 end;
 
@@ -361,6 +369,32 @@ begin
     .AsString + ',00';
 
   entrada := dm.qryFinanceiro.fieldbyname('sum').AsInteger;
+end;
+
+procedure TfrmMovimentos.valorExames;
+var
+  hoje: TDate;
+begin
+
+  hoje := now;
+
+  dm.qryExames.close;
+  dm.qryExames.SQL.clear;
+  dm.qryExames.SQL.add
+    ('SELECT sum(valor_exam) FROM exames where status = 1 AND EXTRACT(MONTH FROM data_exam) = EXTRACT(MONTH FROM CURRENT_DATE)');
+
+  dm.qryExames.open;
+  if dm.qryExames.fieldbyname('sum').AsInteger = 0 then
+  begin
+    lbExames.Caption := 'R$ 0,00';
+  end
+  else
+  begin
+    lbExames.Caption := 'R$ ' + dm.qryExames.fieldbyname('sum')
+      .AsString + ',00';
+  end;
+
+  totalCons := totalCons + dm.qryExames.fieldbyname('sum').AsInteger;
 end;
 
 procedure TfrmMovimentos.valorSaida;
@@ -381,6 +415,7 @@ procedure TfrmMovimentos.valorTotal;
 var
   soma: currency;
 begin
+  ShowMessage(CurrToStr(totalCons));
   soma := (totalCons + entrada) - saida;
   if soma > 0 then
   begin

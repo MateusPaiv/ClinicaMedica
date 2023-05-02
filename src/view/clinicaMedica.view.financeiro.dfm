@@ -175,7 +175,7 @@ object frmMovimentos: TfrmMovimentos
         TabOrder = 1
         object Label2: TLabel
           Left = 576
-          Top = 112
+          Top = 144
           Width = 135
           Height = 28
           Caption = 'Total de sa'#237'das:'
@@ -201,7 +201,7 @@ object frmMovimentos: TfrmMovimentos
         end
         object lbEntrada: TLabel
           Left = 739
-          Top = 61
+          Top = 102
           Width = 84
           Height = 28
           Caption = 'lbEntrada'
@@ -214,7 +214,7 @@ object frmMovimentos: TfrmMovimentos
         end
         object lbSaida: TLabel
           Left = 739
-          Top = 112
+          Top = 144
           Width = 65
           Height = 28
           Caption = 'lbSaida'
@@ -227,7 +227,7 @@ object frmMovimentos: TfrmMovimentos
         end
         object lbtotal: TLabel
           Left = 739
-          Top = 160
+          Top = 192
           Width = 59
           Height = 28
           Caption = 'lbTotal'
@@ -240,7 +240,7 @@ object frmMovimentos: TfrmMovimentos
         end
         object Label9: TLabel
           Left = 657
-          Top = 160
+          Top = 192
           Width = 54
           Height = 28
           Caption = 'Total :'
@@ -266,7 +266,7 @@ object frmMovimentos: TfrmMovimentos
         end
         object Label5: TLabel
           Left = 555
-          Top = 61
+          Top = 102
           Width = 156
           Height = 28
           Caption = 'Total de entradas:'
@@ -275,6 +275,32 @@ object frmMovimentos: TfrmMovimentos
           Font.Height = -20
           Font.Name = 'Segoe UI'
           Font.Style = [fsItalic, fsUnderline]
+          ParentFont = False
+        end
+        object Label6: TLabel
+          Left = 507
+          Top = 59
+          Width = 215
+          Height = 28
+          Caption = 'Total de exames do m'#234's:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -20
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsItalic, fsUnderline]
+          ParentFont = False
+        end
+        object lbExames: TLabel
+          Left = 739
+          Top = 59
+          Width = 81
+          Height = 28
+          Caption = 'lbExames'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clTeal
+          Font.Height = -20
+          Font.Name = 'Segoe UI'
+          Font.Style = []
           ParentFont = False
         end
         object DBFinan: TDBGrid
