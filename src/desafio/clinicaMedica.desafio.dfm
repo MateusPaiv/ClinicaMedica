@@ -26,10 +26,6 @@ object frmDesafio: TfrmDesafio
     Color = clMenu
     ParentBackground = False
     TabOrder = 0
-    ExplicitLeft = 144
-    ExplicitTop = 112
-    ExplicitWidth = 185
-    ExplicitHeight = 41
     object Label1: TLabel
       Left = 96
       Top = 78
@@ -45,6 +41,15 @@ object frmDesafio: TfrmDesafio
       Caption = 'Executar Desafio'
       TabOrder = 0
       OnClick = Button1Click
+    end
+    object Button2: TButton
+      Left = 160
+      Top = 176
+      Width = 121
+      Height = 41
+      Caption = 'Object'
+      TabOrder = 1
+      OnClick = Button2Click
     end
   end
   object RESTClient1: TRESTClient

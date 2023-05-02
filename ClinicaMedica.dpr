@@ -23,7 +23,8 @@ uses
   clinicaMedica.desafio in 'src\desafio\clinicaMedica.desafio.pas' {frmDesafio},
   clinicaMedica.view.financeiro in 'src\view\clinicaMedica.view.financeiro.pas' {frmMovimentos},
   clinicaMedica.rel.financeiro in 'src\relatorios\clinicaMedica.rel.financeiro.pas' {frmRelFinanceiro},
-  clinicaMedica.view.Pacientes in 'src\view\clinicaMedica.view.Pacientes.pas' {frmPacientes};
+  clinicaMedica.view.Pacientes in 'src\view\clinicaMedica.view.Pacientes.pas' {frmPacientes},
+  clinicaMedica.classe.paciente in 'src\classesDesafio\clinicaMedica.classe.paciente.pas';
 
 {$R *.res}
 

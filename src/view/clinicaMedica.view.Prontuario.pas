@@ -50,6 +50,7 @@ type
     btnAtestado: TSpeedButton;
     btnDeclaracao: TSpeedButton;
     btnRelatorio: TSpeedButton;
+    btnPrescricao: TSpeedButton;
     procedure Timer1Timer(Sender: TObject);
     procedure btnIniciarConsultaClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -58,6 +59,7 @@ type
     procedure btnAtestadoClick(Sender: TObject);
     procedure btnDeclaracaoClick(Sender: TObject);
     procedure btnRelatorioClick(Sender: TObject);
+    procedure btnPrescricaoClick(Sender: TObject);
   private
     { Private declarations }
     procedure asssociarCampos;
@@ -120,7 +122,7 @@ procedure TfrmProntuario.btnFinalizarConsultaClick(Sender: TObject);
 var
   horafinal: ttime;
 begin
-  if messageDlg('Tem certeza que deseja finalizar a consulta', MtInformation,
+  if messageDlg('Tem certeza que deseja finalizar a consulta?', MtInformation,
     [MbYes, MbNo], 0) = mrYes then
   begin
     if edtQueixa.Text = '' then
@@ -163,18 +165,20 @@ begin
     dm.qryCons.ParamByName('id').value := id;
     dm.qryCons.execSQL;
 
+
     asssociarCampos;
     dm.tbPront.Post;
     messageDlg('Prontuário salvo com sucesso!', MtInformation, [MbOK], 0);
     btnAtestado.Enabled := true;
     btnDeclaracao.Enabled := true;
+    btnPrescricao.Enabled := true;
     frmProntuario.BorderStyle := bsDialog;
   end;
 end;
 
 procedure TfrmProntuario.btnIniciarConsultaClick(Sender: TObject);
 begin
-  if messageDlg('Deseja iniciar a consulta', MtInformation, [MbYes, MbNo], 0) = mrYes
+  if messageDlg('Deseja iniciar a consulta?', MtInformation, [MbYes, MbNo], 0) = mrYes
   then
   begin
     frmProntuario.BorderStyle := bsNone;
@@ -222,6 +226,19 @@ end;
 procedure TfrmProntuario.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Action := caFree;
+end;
+
+procedure TfrmProntuario.btnPrescricaoClick(Sender: TObject);
+begin
+  dm.qryAtestado.Close;
+  dm.qryAtestado.SQL.Clear;
+  dm.qryAtestado.SQL.Add
+    ('select cons.* ,u.nome_user, u.crm from consultas as cons inner join usuarios as u on cons.id_cons_medico = u.id_func_user WHERE id_cons = :id');
+  dm.qryAtestado.ParamByName('id').value := id;
+  dm.qryAtestado.Open;
+
+  dm.relprescricao.Variables.Clear;
+  dm.relprescricao.ShowReport();
 end;
 
 procedure TfrmProntuario.Timer1Timer(Sender: TObject);

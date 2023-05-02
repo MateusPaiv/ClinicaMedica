@@ -7,7 +7,7 @@ uses
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, REST.Types, Vcl.StdCtrls, REST.Client,
   Data.Bind.Components, Data.Bind.ObjectScope, clinicaMedica.conn.Conexao,
-  Vcl.ExtCtrls, System.JSON;
+  Vcl.ExtCtrls, System.JSON, clinicaMedica.classe.paciente;
 
 type
   TfrmDesafio = class(TForm)
@@ -17,16 +17,19 @@ type
     RESTResponse1: TRESTResponse;
     Label1: TLabel;
     Panel1: TPanel;
+    Button2: TButton;
     procedure Button1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure Button2Click(Sender: TObject);
   private
     { Private declarations }
     procedure desafioM;
     procedure desafioP;
     procedure desafioC;
-    function executarEnvioDadoServidor(resource, JSON: string): boolean;
+
   public
     { Public declarations }
+    function executarEnvioDadoServidor(resource, JSON: string): boolean;
   end;
 
 var
@@ -37,7 +40,9 @@ implementation
 {$R *.dfm}
 
 procedure TfrmDesafio.Button1Click(Sender: TObject);
+
 begin
+
   desafioM;
   desafioP;
   desafioC;
@@ -45,6 +50,18 @@ begin
   MessageDlg
     ('Integração com API feita com sucesso de Médico, Paciente e Consulta!',
     mtconfirmation, [mbOK], 0);
+end;
+
+procedure TfrmDesafio.Button2Click(Sender: TObject);
+var
+  paciente: tpaciente;
+begin
+  paciente := tpaciente.create;
+  try
+    paciente.APIPacientes;
+  finally
+    paciente.free;
+  end;
 end;
 
 procedure TfrmDesafio.desafioC;

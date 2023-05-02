@@ -175,6 +175,13 @@ begin
   idConv := dm.qryConv.fieldbyname('id_conv').value;
 
   // VERIFICA SE JÁ TEM UMA CONSULTA CADASTRADA
+  if cmbMedico.Text = '' then
+  begin
+    MessageDlg('Médico não foi selecionado', mtinformation, [mbOK], 0);
+    cmbMedico.SetFocus;
+    cmbHora.Text := '';
+    exit;
+  end;
   dm.qryCons.Close;
   dm.qryCons.SQL.Clear;
   dm.qryCons.SQL.Add
@@ -187,6 +194,8 @@ begin
   if not dm.qryCons.IsEmpty then
   begin
     MessageDlg('Consulta já agendada nesse horário', mtinformation, [mbOK], 0);
+    cmbHora.Text := '';
+    cmbHora.SetFocus;
     exit;
   end;
 

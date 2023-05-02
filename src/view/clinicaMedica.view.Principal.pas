@@ -53,7 +53,6 @@ type
     Label6: TLabel;
     btnConvenios: TSpeedButton;
     btnAtualizar: TSpeedButton;
-    Label7: TLabel;
     dataCons: TDatePicker;
     rdData: TRadioButton;
     rdNomeMed: TRadioButton;
@@ -689,17 +688,21 @@ begin
 end;
 
 procedure TfrmPrincipal.FormShow(Sender: TObject);
+var
+  dataDeHoje: TDate;
 begin
 
+  dataDeHoje := Now;
   cards.ActiveCard := cardPacientes;
   dm.tbPaci.Active := true;
-
+  dataCons.Date := dataDeHoje;
   case cargoUsuario of
     2:
       begin
         btnAdm.Visible := false;
         btnTelaRecp.Visible := false;
         btnDesafio.Visible := false;
+
       end;
     3:
       begin
@@ -708,6 +711,7 @@ begin
         btnTelaRecp.Visible := false;
         btnDesafio.Visible := false;
         btnRelFinan.Visible := false;
+
       end;
     4:
       begin

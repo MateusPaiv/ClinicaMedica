@@ -3,7 +3,7 @@ object frmProntuario: TfrmProntuario
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Prontu'#225'rio'
-  ClientHeight = 798
+  ClientHeight = 816
   ClientWidth = 774
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -20,12 +20,13 @@ object frmProntuario: TfrmProntuario
     Left = 0
     Top = 0
     Width = 774
-    Height = 798
+    Height = 816
     Align = alClient
     BevelOuter = bvNone
     Color = clMenu
     ParentBackground = False
     TabOrder = 0
+    ExplicitHeight = 798
     object Label4: TLabel
       Left = 24
       Top = 26
@@ -248,7 +249,7 @@ object frmProntuario: TfrmProntuario
     end
     object btnDeclaracao: TSpeedButton
       Left = 76
-      Top = 700
+      Top = 756
       Width = 279
       Height = 47
       Caption = 'DECLARA'#199#195'O DE COMPARECIMENTO'
@@ -277,6 +278,24 @@ object frmProntuario: TfrmProntuario
       Font.Style = []
       ParentFont = False
       OnClick = btnRelatorioClick
+    end
+    object btnPrescricao: TSpeedButton
+      Left = 143
+      Top = 700
+      Width = 148
+      Height = 47
+      Caption = 'PRESCRI'#199#195'O '
+      ImageIndex = 3
+      ImageName = 'Document_44px'
+      Images = PngImageList1
+      Enabled = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      ParentFont = False
+      OnClick = btnPrescricaoClick
     end
     object edtNomePac: TEdit
       Left = 176

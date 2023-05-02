@@ -9,7 +9,7 @@ uses
   FireDAC.Phys.PGDef, FireDAC.VCLUI.Wait, FireDAC.Comp.UI, Data.DB,
   FireDAC.Comp.Client, ClinicaMedica.classe.Conexao, FireDAC.Stan.Param,
   FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet, frxClass,
-  frxDBSet, frxExportPDF, frxExportBaseDialog, frxExportXLSX;
+  frxDBSet, frxExportPDF, frxExportBaseDialog, frxExportXLSX, Vcl.Dialogs;
 
 type
   Tdm = class(TDataModule)
@@ -192,6 +192,7 @@ type
     relFinanceiro: TfrxReport;
     relDsFinanceiro: TfrxDBDataset;
     qryVerificaConsulta: TFDQuery;
+    relPrescricao: TfrxReport;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private
@@ -208,7 +209,7 @@ var
   chamada: string;
   nomeUsuario: string;
   cargoUsuario: integer;
-  idUser : integer;
+  idUser: integer;
 
 implementation
 
@@ -233,6 +234,8 @@ end;
 function Tdm.AbrirConexao: Boolean;
 var
   servidor, login, senha, porta, base: string;
+
+  appPath, libPath, vendorLibPath: string;
 begin
   servidor := 'bdteste.rpinfo.com.br';
   login := 'aprendiz';
@@ -248,6 +251,8 @@ begin
   Connection.Params.Add('Port=' + porta);
   Connection.Params.Add('DataBase=' + base);
   Connection.Params.Add('DriverID=' + 'PG');
+  PgDriverLink.VendorHome := ExtractFilePath(ParamStr(0)) + 'lib';
+
 
   try
     Connection.Open;
