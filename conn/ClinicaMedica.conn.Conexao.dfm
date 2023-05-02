@@ -17,9 +17,7 @@ object dm: Tdm
     Top = 8
   end
   object PgDriverLink: TFDPhysPgDriverLink
-    VendorLib = 
-      'C:\Users\mateus.5937\Desktop\ClinicaMedica\Win32\Debug\lib\libpq' +
-      '.dll'
+    VendorLib = 'C:\Users\User\Desktop\ClinicaMedica\Win32\Debug\lib\libpq.dll'
     Left = 96
     Top = 8
   end
@@ -2400,7 +2398,6 @@ object dm: Tdm
     end
   end
   object qryRelConsultas: TFDQuery
-    Active = True
     Connection = Connection
     SQL.Strings = (
       
@@ -6511,7 +6508,6 @@ object dm: Tdm
     Top = 480
   end
   object qryRelFinan: TFDQuery
-    Active = True
     Connection = Connection
     SQL.Strings = (
       'select * from movimentos')
@@ -7744,14 +7740,14 @@ object dm: Tdm
         'med inner join convenios as conv on e.id_conv = conv.id_conv inn' +
         'er join'
       'pacientes as p on e.id_paci = p.id_paci')
-    Left = 352
+    Left = 272
     Top = 408
   end
   object tbExames: TFDTable
     IndexFieldNames = 'id_exam'
     Connection = Connection
     TableName = 'exames'
-    Left = 408
+    Left = 328
     Top = 408
     object tbExamesid_exam: TIntegerField
       FieldName = 'id_exam'
@@ -7792,7 +7788,495 @@ object dm: Tdm
   end
   object dsExames: TDataSource
     DataSet = qryExames
-    Left = 376
+    Left = 296
     Top = 472
+  end
+  object qryCadExames: TFDQuery
+    Connection = Connection
+    SQL.Strings = (
+      'select * from cad_exames')
+    Left = 456
+    Top = 408
+  end
+  object tbCadExames: TFDTable
+    IndexFieldNames = 'id_cad_exam'
+    Connection = Connection
+    TableName = 'cad_exames'
+    Left = 528
+    Top = 408
+    object tbCadExamesid_cad_exam: TIntegerField
+      FieldName = 'id_cad_exam'
+      Origin = 'id_cad_exam'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+    end
+    object tbCadExamesexame: TWideStringField
+      FieldName = 'exame'
+      Origin = 'exame'
+      Size = 150
+    end
+    object tbCadExamesvalor: TBCDField
+      FieldName = 'valor'
+      Origin = 'valor'
+      Precision = 15
+      Size = 2
+    end
+  end
+  object dsCadExames: TDataSource
+    DataSet = qryCadExames
+    Left = 488
+    Top = 464
+  end
+  object qryProntExam: TFDQuery
+    Connection = Connection
+    Left = 136
+    Top = 552
+  end
+  object tbProntExam: TFDTable
+    IndexFieldNames = 'id_pront_exam'
+    Connection = Connection
+    TableName = 'prontuario_exames'
+    Left = 192
+    Top = 552
+    object tbProntExamid_pront_exam: TIntegerField
+      FieldName = 'id_pront_exam'
+      Origin = 'id_pront_exam'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+    end
+    object tbProntExamdesc_pront: TWideStringField
+      FieldName = 'desc_pront'
+      Origin = 'desc_pront'
+      Size = 500
+    end
+    object tbProntExamstatus: TIntegerField
+      FieldName = 'status'
+      Origin = 'status'
+    end
+    object tbProntExamid_exam: TIntegerField
+      FieldName = 'id_exam'
+      Origin = 'id_exam'
+    end
+  end
+  object dsProntExam: TDataSource
+    DataSet = qryProntExam
+    Left = 160
+    Top = 608
+  end
+  object qryRelExames: TFDQuery
+    Connection = Connection
+    SQL.Strings = (
+      
+        'select e.* , p.* from exames as e inner join prontuario_exames a' +
+        's p on e.id_exam = p.id_exam')
+    Left = 1280
+    Top = 328
+  end
+  object relExames: TfrxReport
+    Version = '2023.1.3'
+    DotMatrixReport = False
+    IniFile = '\Software\Fast Reports'
+    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick, pbCopy, pbSelection]
+    PreviewOptions.Zoom = 1.000000000000000000
+    PrintOptions.Printer = 'Default'
+    PrintOptions.PrintOnSheet = 0
+    ReportOptions.CreateDate = 45048.797650763900000000
+    ReportOptions.LastChange = 45048.799701018500000000
+    ScriptLanguage = 'PascalScript'
+    ScriptText.Strings = (
+      ''
+      'begin'
+      ''
+      'end.')
+    Left = 1344
+    Top = 296
+    Datasets = <
+      item
+        DataSet = relDsExames
+        DataSetName = 'DSExames'
+      end>
+    Variables = <>
+    Style = <
+      item
+        Name = 'Title'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        Frame.Typ = []
+        Fill.BackColor = 14211288
+      end
+      item
+        Name = 'Header'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        Frame.Typ = []
+        Fill.BackColor = 15790320
+      end
+      item
+        Name = 'Group header'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        Frame.Typ = []
+        Fill.BackColor = 15790320
+      end
+      item
+        Name = 'Data'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = []
+        Frame.Typ = []
+      end
+      item
+        Name = 'Group footer'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = []
+        Frame.Typ = [ftTop]
+      end
+      item
+        Name = 'Header line'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = []
+        Frame.Typ = []
+        Frame.Width = 2.000000000000000000
+      end>
+    object Data: TfrxDataPage
+      Height = 1000.000000000000000000
+      Width = 1000.000000000000000000
+    end
+    object Page1: TfrxReportPage
+      PaperWidth = 210.000000000000000000
+      PaperHeight = 297.000000000000000000
+      PaperSize = 9
+      LeftMargin = 2.000000000000000000
+      RightMargin = 2.000000000000000000
+      TopMargin = 2.000000000000000000
+      BottomMargin = 2.000000000000000000
+      Frame.Typ = []
+      MirrorMode = []
+      object ReportTitle1: TfrxReportTitle
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 26.456710000000000000
+        Top = 18.897650000000000000
+        Width = 778.583180000000000000
+        object Memo1: TfrxMemoView
+          Align = baWidth
+          AllowVectorExport = True
+          Width = 778.583180000000000000
+          Height = 22.677180000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          Fill.BackColor = 16744448
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Relat'#243'rio de exames')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+      end
+      object PageHeader1: TfrxPageHeader
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 22.677180000000000000
+        Top = 68.031540000000000000
+        Width = 778.583180000000000000
+        object Memo2: TfrxMemoView
+          AllowVectorExport = True
+          Width = 718.110236220472000000
+          Height = 22.677180000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Frame.Width = 2.000000000000000000
+          ParentFont = False
+          Style = 'Header line'
+        end
+        object Memo3: TfrxMemoView
+          AllowVectorExport = True
+          Width = 132.574830000000000000
+          Height = 22.677180000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          Fill.BackColor = 16744448
+          Memo.UTF8W = (
+            'Hor'#225'rio do exame')
+          ParentFont = False
+        end
+        object Memo4: TfrxMemoView
+          AllowVectorExport = True
+          Left = 132.574830000000000000
+          Width = 165.326954940000000000
+          Height = 22.677180000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          Fill.BackColor = 16744448
+          Memo.UTF8W = (
+            'Exame')
+          ParentFont = False
+        end
+        object Memo5: TfrxMemoView
+          AllowVectorExport = True
+          Left = 297.901784940000000000
+          Width = 252.425691810000000000
+          Height = 22.677180000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          Fill.BackColor = 16744448
+          Memo.UTF8W = (
+            'Descri'#231#227'o do prontu'#225'rio')
+          ParentFont = False
+        end
+        object Memo6: TfrxMemoView
+          AllowVectorExport = True
+          Left = 550.327476750000000000
+          Width = 228.255239470000000000
+          Height = 22.677180000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          Fill.BackColor = 16744448
+          Memo.UTF8W = (
+            'Valor do exame')
+          ParentFont = False
+        end
+      end
+      object GroupHeader1: TfrxGroupHeader
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 26.456710000000000000
+        Top = 151.181200000000000000
+        Width = 778.583180000000000000
+        Condition = 'DSExames."data_exam"'
+        object Memo7: TfrxMemoView
+          Align = baWidth
+          AllowVectorExport = True
+          Width = 778.583180000000000000
+          Height = 22.677180000000000000
+          DataSet = relDsExames
+          DataSetName = 'DSExames'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          Fill.BackColor = 16744448
+          Memo.UTF8W = (
+            'Dia do exame : [DSExames."data_exam"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+      end
+      object MasterData1: TfrxMasterData
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 18.897650000000000000
+        Top = 200.315090000000000000
+        Width = 778.583180000000000000
+        DataSet = relDsExames
+        DataSetName = 'DSExames'
+        RowCount = 0
+        object Memo8: TfrxMemoView
+          AllowVectorExport = True
+          Width = 91.000000000000000000
+          Height = 18.897650000000000000
+          DataField = 'horario_exam'
+          DataSet = relDsExames
+          DataSetName = 'DSExames'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[DSExames."horario_exam"]')
+          ParentFont = False
+          Style = 'Data'
+        end
+        object Memo9: TfrxMemoView
+          AllowVectorExport = True
+          Left = 91.000000000000000000
+          Width = 206.901784942867000000
+          Height = 18.897650000000000000
+          DataField = 'desc_exam'
+          DataSet = relDsExames
+          DataSetName = 'DSExames'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[DSExames."desc_exam"]')
+          ParentFont = False
+          Style = 'Data'
+        end
+        object Memo10: TfrxMemoView
+          AllowVectorExport = True
+          Left = 297.901784942867000000
+          Width = 343.134411806484000000
+          Height = 18.897650000000000000
+          DataField = 'desc_pront'
+          DataSet = relDsExames
+          DataSetName = 'DSExames'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[DSExames."desc_pront"]')
+          ParentFont = False
+          Style = 'Data'
+        end
+        object Memo11: TfrxMemoView
+          AllowVectorExport = True
+          Left = 641.036196750000000000
+          Width = 77.074039470000000000
+          Height = 18.897650000000000000
+          DataSet = relDsExames
+          DataSetName = 'DSExames'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'R$ [DSExames."valor_exam"],00')
+          ParentFont = False
+          Style = 'Data'
+        end
+      end
+      object GroupFooter1: TfrxGroupFooter
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Top = 241.889920000000000000
+        Width = 778.583180000000000000
+      end
+      object PageFooter1: TfrxPageFooter
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 26.456710000000000000
+        Top = 302.362400000000000000
+        Width = 778.583180000000000000
+        object Memo12: TfrxMemoView
+          Align = baWidth
+          AllowVectorExport = True
+          Width = 778.583180000000000000
+          Frame.Typ = [ftTop]
+          Frame.Width = 2.000000000000000000
+        end
+        object Memo13: TfrxMemoView
+          AllowVectorExport = True
+          Top = 1.000000000000000000
+          Height = 22.677180000000000000
+          AutoWidth = True
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[Date] [Time]')
+        end
+        object Memo14: TfrxMemoView
+          Align = baRight
+          AllowVectorExport = True
+          Left = 702.992580000000000000
+          Top = 1.000000000000000000
+          Width = 75.590600000000000000
+          Height = 22.677180000000000000
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            'Page [Page#]')
+        end
+        object Memo15: TfrxMemoView
+          AllowVectorExport = True
+          Left = 294.803340000000000000
+          Width = 192.756030000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'Total Exames : R$ [SUM(<DSExames."valor_exam">,MasterData1)],00')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+      end
+    end
+  end
+  object relDsExames: TfrxDBDataset
+    UserName = 'DSExames'
+    CloseDataSource = False
+    DataSet = qryRelExames
+    BCDToCurrency = False
+    DataSetOptions = []
+    Left = 1344
+    Top = 352
   end
 end

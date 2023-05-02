@@ -49,13 +49,14 @@ object frmExames: TfrmExames
       Caption = 'Data da consulta:'
     end
     object btnSalvar: TSpeedButton
-      Left = 378
+      Left = 356
       Top = 342
       Width = 152
       Height = 47
       Caption = 'SALVAR'
       ImageIndex = 1
       ImageName = 'Save_44px'
+      Images = PngImageList1
       Enabled = False
       OnClick = btnSalvarClick
     end
@@ -81,15 +82,17 @@ object frmExames: TfrmExames
       Caption = 'Hor'#225'rio:'
     end
     object btnEditar: TSpeedButton
-      Left = 378
+      Left = 356
       Top = 342
       Width = 152
       Height = 47
       Caption = 'EDITAR'
       ImageIndex = 2
       ImageName = 'Edit_44px'
+      Images = PngImageList1
       Enabled = False
       Visible = False
+      OnClick = btnEditarClick
     end
     object lbPacientes: TLabel
       Left = 314
@@ -165,6 +168,22 @@ object frmExames: TfrmExames
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 2
+      object btnCadExames: TSpeedButton
+        AlignWithMargins = True
+        Left = 688
+        Top = 3
+        Width = 139
+        Height = 59
+        Align = alRight
+        Caption = 'CADASTRAR EXAMES'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        OnClick = btnCadExamesClick
+      end
       object Panel2: TPanel
         Left = 0
         Top = 0
@@ -448,7 +467,7 @@ object frmExames: TfrmExames
         item
           Expanded = False
           FieldName = 'nome_user'
-          Title.Caption = 'M'#233'dico'
+          Title.Caption = 'M'#233'dico/T'#233'cnico'
           Width = 120
           Visible = True
         end
@@ -468,12 +487,14 @@ object frmExames: TfrmExames
         end>
     end
   end
-  object edtExame: TEdit
+  object cmbExame: TComboBox
     Left = 332
     Top = 289
     Width = 213
     Height = 28
+    Enabled = False
     TabOrder = 1
+    OnSelect = cmbExameSelect
   end
   object PngImageList1: TPngImageList
     Height = 44

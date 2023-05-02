@@ -183,6 +183,18 @@
             <Form>frmExames</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="src\view\clinicaMedica.view.cadExames.pas">
+            <Form>frmCadastrarExames</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="src\view\clinicaMedica.view.ProntuarioExame.pas">
+            <Form>frmProntExames</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="src\relatorios\clinicaMedica.rel.exames.pas">
+            <Form>frmRelExames</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

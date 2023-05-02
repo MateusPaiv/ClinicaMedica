@@ -39,7 +39,8 @@ type
     lblBusca: TLabel;
     dbExames: TDBGrid;
     lbExames: TLabel;
-    edtExame: TEdit;
+    btnCadExames: TSpeedButton;
+    cmbExame: TComboBox;
     procedure dbPacientesCellClick(Column: TColumn);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnSairClick(Sender: TObject);
@@ -49,6 +50,9 @@ type
     procedure rdPacienteClick(Sender: TObject);
     procedure rdExamesClick(Sender: TObject);
     procedure dbExamesCellClick(Column: TColumn);
+    procedure btnEditarClick(Sender: TObject);
+    procedure btnCadExamesClick(Sender: TObject);
+    procedure cmbExameSelect(Sender: TObject);
   private
     { Private declarations }
     procedure listar;
@@ -60,6 +64,7 @@ type
     procedure habilitarCampos;
     procedure DesabilitarCampos;
     procedure limparCampos;
+    procedure carregarExames;
   public
     { Public declarations }
   end;
@@ -72,15 +77,105 @@ implementation
 
 {$R *.dfm}
 
+uses clinicaMedica.view.cadExames;
+
 procedure TfrmExames.associarCampos;
 begin
   dm.tbExames.FieldByName('data_exam').AsDateTime := edtDataConsulta.Date;
   dm.tbExames.FieldByName('horario_exam').Value := cmbHora.Text;
-  dm.tbExames.FieldByName('desc_exam').Value := edtExame.Text;
+  dm.tbExames.FieldByName('desc_exam').Value := cmbExame.Text;
   dm.tbExames.FieldByName('valor_exam').Value := edtValor.Text;
   dm.tbExames.FieldByName('id_paci').Value := idPaci;
   dm.tbExames.FieldByName('id_conv').Value := idConv;
   dm.tbExames.FieldByName('id_med').Value := idMed;
+end;
+
+procedure TfrmExames.btnCadExamesClick(Sender: TObject);
+begin
+  frmCadastrarExames := TfrmCadastrarExames.Create(nil);
+  frmCadastrarExames.ShowModal;
+end;
+
+procedure TfrmExames.btnEditarClick(Sender: TObject);
+begin
+  if edtValor.Text = '' then
+  begin
+    MessageDlg('Preencha o valor do exame', mtinformation, [mbOK], 0);
+    edtValor.SetFocus;
+    exit;
+  end;
+
+  if cmbMedico.Text = '' then
+  begin
+    MessageDlg('Preencha o campo médico do exame', mtinformation, [mbOK], 0);
+    cmbMedico.SetFocus;
+    exit;
+  end;
+  if cmbHora.Text = '' then
+  begin
+    MessageDlg('Preencha o horário do exame', mtinformation, [mbOK], 0);
+    cmbHora.SetFocus;
+    exit;
+  end;
+  if cmbConvenios.Text = '' then
+  begin
+    MessageDlg('Preencha o convênio\ou nenhum se não houver', mtinformation,
+      [mbOK], 0);
+    cmbConvenios.SetFocus;
+    exit;
+  end;
+
+  if cmbExame.Text = '' then
+  begin
+    MessageDlg('Preencha o campo "Exame"', mtinformation, [mbOK], 0);
+    cmbExame.SetFocus;
+    exit;
+  end;
+
+  // VERIFICA SE JA EXISTE O EXAME
+  dm.qryExames.Close;
+  dm.qryExames.SQL.Clear;
+  dm.qryExames.SQL.Add
+    ('SELECT e.* , u.* FROM exames as e inner join usuarios as u ON e.id_med = u.id_func_user WHERE e.horario_exam = :hora AND e.data_exam = :data AND u.nome_user = :nome');
+  dm.qryExames.ParamByName('hora').AsTime := StrToTime(cmbHora.Text);
+  dm.qryExames.ParamByName('data').AsDate := edtDataConsulta.Date;
+  dm.qryExames.ParamByName('nome').AsString := cmbMedico.Text;
+  dm.qryExames.Open;
+
+  if not dm.qryExames.IsEmpty then
+  begin
+    MessageDlg('Exame já agendada nesse horário', mtinformation, [mbOK], 0);
+    cmbHora.Text := '';
+    cmbHora.SetFocus;
+    exit;
+  end;
+
+  // pegando id do técnico
+  dm.qryUser.Close;
+  dm.qryUser.SQL.Clear;
+  dm.qryUser.SQL.Add
+    ('SELECT id_func_user FROM usuarios where nome_user = :nome');
+  dm.qryUser.ParamByName('nome').Value := cmbMedico.Text;
+  dm.qryUser.Open;
+  idMed := dm.qryUser.FieldByName('id_func_user').Value;
+
+  // atualizando exame
+  dm.qryExames.Close;
+  dm.qryExames.SQL.Clear;
+  dm.qryExames.SQL.Add
+    ('UPDATE exames SET data_exam = :data , horario_exam = :hora , desc_exam = :exame , id_med = :idmed WHERE id_exam = :idexam');
+  dm.qryExames.ParamByName('hora').AsTime := StrToTime(cmbHora.Text);
+  dm.qryExames.ParamByName('data').AsDate := edtDataConsulta.Date;
+  dm.qryExames.ParamByName('exame').Value := cmbExame.Text;
+  dm.qryExames.ParamByName('idmed').Value := idMed;
+  dm.qryExames.ParamByName('idexam').Value := idExam;
+  dm.qryExames.ExecSQL;
+
+  DesabilitarCampos;
+  listar;
+  listarExames;
+  limparCampos;
+  MessageDlg('Exame editado com sucesso!', mtinformation, [mbOK], 0);
 end;
 
 procedure TfrmExames.btnSairClick(Sender: TObject);
@@ -117,10 +212,28 @@ begin
     exit;
   end;
 
-  if edtExame.Text = '' then
+  if cmbExame.Text = '' then
   begin
     MessageDlg('Preencha o campo "Exame"', mtinformation, [mbOK], 0);
-    edtExame.SetFocus;
+    cmbExame.SetFocus;
+    exit;
+  end;
+
+  // VERIFICA SE JA EXISTE O EXAME
+  dm.qryExames.Close;
+  dm.qryExames.SQL.Clear;
+  dm.qryExames.SQL.Add
+    ('SELECT e.* , u.* FROM exames as e inner join usuarios as u ON e.id_med = u.id_func_user WHERE e.horario_exam = :hora AND e.data_exam = :data AND u.nome_user = :nome');
+  dm.qryExames.ParamByName('hora').AsTime := StrToTime(cmbHora.Text);
+  dm.qryExames.ParamByName('data').AsDate := edtDataConsulta.Date;
+  dm.qryExames.ParamByName('nome').AsString := cmbMedico.Text;
+  dm.qryExames.Open;
+
+  if not dm.qryExames.IsEmpty then
+  begin
+    MessageDlg('Exame já agendada nesse horário', mtinformation, [mbOK], 0);
+    cmbHora.Text := '';
+    cmbHora.SetFocus;
     exit;
   end;
 
@@ -152,24 +265,6 @@ begin
   dm.qryUser.Open;
   idMed := dm.qryUser.FieldByName('id_func_user').Value;
 
-  // VERIFICA SE JA EXISTE O EXAME
-  dm.qryExames.Close;
-  dm.qryExames.SQL.Clear;
-  dm.qryExames.SQL.Add
-    ('SELECT e.* , u.* FROM exames as e inner join usuarios as u ON e.id_med = u.id_func_user WHERE e.horario_exam = :hora AND e.data_exam = :data AND u.nome_user = :nome');
-  dm.qryExames.ParamByName('hora').AsTime := StrToTime(cmbHora.Text);
-  dm.qryExames.ParamByName('data').AsDate := edtDataConsulta.Date;
-  dm.qryExames.ParamByName('nome').AsString := cmbMedico.Text;
-  dm.qryExames.Open;
-
-  if not dm.qryExames.IsEmpty then
-  begin
-    MessageDlg('Consulta já agendada nesse horário', mtinformation, [mbOK], 0);
-    cmbHora.Text := '';
-    cmbHora.SetFocus;
-    exit;
-  end;
-
   associarCampos;
 
   dm.tbExames.Post;
@@ -197,14 +292,31 @@ begin
   end;
 end;
 
+procedure TfrmExames.carregarExames;
+begin
+  dm.qryCadExames.Close;
+  dm.qryCadExames.SQL.Clear;
+  dm.qryCadExames.SQL.Add('SELECT exame FROM cad_exames ');
+  dm.qryCadExames.Open;
+
+  if not dm.qryCadExames.IsEmpty then
+  begin
+    while not dm.qryCadExames.Eof do
+    begin
+      cmbExame.Items.Add(dm.qryCadExames.FieldByName('exame').AsString);
+      dm.qryCadExames.Next;
+    end;
+  end;
+end;
+
 procedure TfrmExames.carregarhora;
 var
   i: integer;
 begin
-  for i := 8 to 22 do
+  for i := 8 to 19 do
   begin
     cmbHora.Items.Add(i.ToString + ':00');
-    cmbHora.Items.Add(i.ToString + ':30');
+    cmbHora.Items.Add(i.ToString + ':45');
   end;
 end;
 
@@ -226,17 +338,36 @@ begin
   end;
 end;
 
+procedure TfrmExames.cmbExameSelect(Sender: TObject);
+begin
+  dm.qryCadExames.Close;
+  dm.qryCadExames.SQL.Clear;
+  dm.qryCadExames.SQL.Add('SELECT valor FROM cad_exames WHERE exame = :exam');
+  dm.qryCadExames.ParamByName('exam').Value := cmbExame.Text;
+  dm.qryCadExames.Open;
+  edtValor.Text := dm.qryCadExames.FieldByName('valor').Value;
+
+end;
+
 procedure TfrmExames.dbExamesCellClick(Column: TColumn);
 begin
+  cmbHora.Clear;
+  cmbConvenios.Clear;
+  cmbMedico.Clear;
+  cmbExame.Clear;
   edtNomePac.Text := dm.qryExames.FieldByName('nome_paci').Value;
   cmbConvenios.Text := dm.qryExames.FieldByName('nome_conv').Value;
   cmbMedico.Text := dm.qryExames.FieldByName('nome_user').Value;
-  edtExame.Text := dm.qryExames.FieldByName('desc_exam').Value;
+  cmbExame.Text := dm.qryExames.FieldByName('desc_exam').Value;
   edtDataConsulta.Date := dm.qryExames.FieldByName('data_exam').Value;
   cmbHora.Text := dm.qryExames.FieldByName('horario_exam').Value;
   edtValor.Text := dm.qryExames.FieldByName('valor_exam').Value;
   idExam := dm.qryExames.FieldByName('id_exam').Value;
   habilitarCampos;
+  carregarhora;
+  carregarConv;
+  carregarMed;
+  carregarExames;
   btnEditar.Visible := true;
   btnEditar.Enabled := true;
 
@@ -247,6 +378,7 @@ begin
   cmbHora.Clear;
   cmbConvenios.Clear;
   cmbMedico.Clear;
+  cmbExame.Clear;
   edtNomePac.Text := dm.qryPaci.FieldByName('nome_paci').Value;
   cmbConvenios.Text := dm.qryPaci.FieldByName('nome_conv').Value;
   idPaci := dm.qryPaci.FieldByName('id_paci').Value;
@@ -254,6 +386,7 @@ begin
   carregarhora;
   carregarConv;
   carregarMed;
+  carregarExames;
   habilitarCampos;
   dm.tbExames.Insert;
 end;
@@ -265,7 +398,7 @@ begin
   cmbMedico.Enabled := false;
   cmbConvenios.Enabled := false;
   cmbHora.Enabled := false;
-  edtExame.Enabled := false;
+  cmbExame.Enabled := false;
 end;
 
 procedure TfrmExames.edtBuscaNomeChange(Sender: TObject);
@@ -273,7 +406,7 @@ begin
   dm.qryPaci.Close;
   dm.qryPaci.SQL.Clear;
   dm.qryPaci.SQL.Add
-    ('SELECT * FROM pacientes WHERE nome_paci LIKE :nome ORDER BY nome_paci asc');
+    ('SELECT p.*, c.nome_conv FROM pacientes as p inner join convenios as c on c.id_conv = p.convenio_paci WHERE nome_paci LIKE :nome ORDER BY nome_paci asc');
   dm.qryPaci.ParamByName('nome').AsString := edtBuscaNome.Text + '%';
   dm.qryPaci.Open;
 end;
@@ -284,28 +417,49 @@ begin
 end;
 
 procedure TfrmExames.FormShow(Sender: TObject);
+var
+  dataHoje: Tdate;
 begin
-  dm.tbExames.Active := true;
-  rdExames.Checked := true;
-  lblBusca.Visible := false;
-  edtBuscaNome.Visible := false;
-  dbPacientes.Visible := false;
-  lbPacientes.Visible := false;
-  dbExames.Visible := true;
-  lbExames.Visible := true;
-  listarExames;
-  listar;
+  dataHoje := now;
+  edtDataConsulta.Date := dataHoje;
+  if cargoUsuario <> 4 then
+  begin
+    dm.tbExames.Active := true;
+    rdExames.Checked := true;
+    lblBusca.Visible := false;
+    edtBuscaNome.Visible := false;
+    dbPacientes.Visible := false;
+    lbPacientes.Visible := false;
+    dbExames.Visible := true;
+    lbExames.Visible := true;
+    listarExames;
+    listar;
+  end
+  else
+  begin
+    dm.tbExames.Active := true;
+    rdPaciente.Visible := false;
+    rdExames.Visible := false;
+    lblBusca.Visible := true;
+    edtBuscaNome.Visible := true;
+    dbPacientes.Visible := true;
+    lbPacientes.Visible := true;
+    dbExames.Visible := false;
+    lbExames.Visible := false;
+    listar;
+    btnCadExames.Visible := false;
+  end;
 
 end;
 
 procedure TfrmExames.habilitarCampos;
 begin
-  edtValor.Enabled := true;
+
   edtDataConsulta.Enabled := true;
   cmbMedico.Enabled := true;
   cmbConvenios.Enabled := true;
   cmbHora.Enabled := true;
-  edtExame.Enabled := true;
+  cmbExame.Enabled := true;
 
 end;
 
@@ -313,7 +467,7 @@ procedure TfrmExames.limparCampos;
 begin
   edtNomePac.Clear;
   edtValor.Clear;
-  edtExame.Clear;
+  cmbExame.Clear;
   cmbMedico.Clear;
   cmbConvenios.Clear;
   cmbHora.Clear;

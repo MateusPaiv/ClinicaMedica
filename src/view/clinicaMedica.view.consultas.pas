@@ -45,6 +45,7 @@ type
     procedure habilitarCampos;
     procedure carregarCampos;
     procedure carregarConvenios;
+
     procedure associarCampos;
     procedure carregarHora;
 
@@ -241,6 +242,8 @@ begin
     end;
   end;
 end;
+
+
 
 procedure TfrmConsulta.carregarHora;
 var

@@ -183,6 +183,22 @@ type
     tbExamesid_med: TIntegerField;
     tbExamesid_conv: TIntegerField;
     tbExamesid_paci: TIntegerField;
+    qryCadExames: TFDQuery;
+    tbCadExames: TFDTable;
+    dsCadExames: TDataSource;
+    tbCadExamesid_cad_exam: TIntegerField;
+    tbCadExamesexame: TWideStringField;
+    tbCadExamesvalor: TBCDField;
+    qryProntExam: TFDQuery;
+    tbProntExam: TFDTable;
+    dsProntExam: TDataSource;
+    tbProntExamid_pront_exam: TIntegerField;
+    tbProntExamdesc_pront: TWideStringField;
+    tbProntExamstatus: TIntegerField;
+    tbProntExamid_exam: TIntegerField;
+    qryRelExames: TFDQuery;
+    relExames: TfrxReport;
+    relDsExames: TfrxDBDataset;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private

@@ -94,6 +94,13 @@ type
     btnCadPaci: TSpeedButton;
     btnExames: TSpeedButton;
     Label1: TLabel;
+    BtnMedExames: TSpeedButton;
+    cardTecnico: TCard;
+    Label2: TLabel;
+    dbExames: TDBGrid;
+    Label3: TLabel;
+    btnRelExames: TSpeedButton;
+    btnAtualizarConsultas: TSpeedButton;
     procedure imgFecharClick(Sender: TObject);
     procedure Timage2Click(Sender: TObject);
     procedure btnFuncionariosClick(Sender: TObject);
@@ -131,6 +138,10 @@ type
     procedure edtBuscaCPFChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnExamesClick(Sender: TObject);
+    procedure BtnMedExamesClick(Sender: TObject);
+    procedure dbExamesCellClick(Column: TColumn);
+    procedure btnRelExamesClick(Sender: TObject);
+    procedure btnAtualizarConsultasClick(Sender: TObject);
   private
     { Private declarations }
     procedure CloseForm;
@@ -142,6 +153,7 @@ type
     procedure listarConsultas;
     procedure listarConsultasRealizadas;
     procedure ListarConsultasMedico;
+    procedure listarExames;
 
     procedure verificaConsHoje;
     procedure ConsultarCEP(cep: string);
@@ -164,7 +176,8 @@ implementation
 {$R *.dfm}
 
 uses clinicaMedica.funcao.verificaNumero, clinicaMedica.funcao.validaCampos,
-  clinicaMedica.view.consultas;
+  clinicaMedica.view.consultas, clinicaMedica.view.ProntuarioExame,
+  clinicaMedica.rel.Exames;
 
 procedure TfrmPrincipal.imgFecharClick(Sender: TObject);
 begin
@@ -227,6 +240,17 @@ begin
 
   lbConsultasRealizadas.caption := dm.qryVerificaConsulta.fieldbyname
     ('count').AsString;
+end;
+
+procedure TfrmPrincipal.listarExames;
+begin
+  dm.qryExames.Close;
+  dm.qryExames.SQL.Clear;
+  dm.qryExames.SQL.add
+    ('select u.nome_user, u.crm, e.* , conv.nome_conv, p.nome_paci from exames as e inner join usuarios as u ON u.id_func_user = e.id_med inner join convenios as conv on e.id_conv = conv.id_conv inner join pacientes as p on e.id_paci = p.id_paci ');
+  dm.qryExames.SQL.add('WHERE u.id_func_user = :idTec AND e.status = 0');
+  dm.qryExames.ParamByName('idTec').Value := idFunc;
+  dm.qryExames.Open;
 end;
 
 procedure TfrmPrincipal.rdCPFClick(Sender: TObject);
@@ -308,6 +332,12 @@ begin
   frmRelatorioCons.showmodal;
 end;
 
+procedure TfrmPrincipal.btnRelExamesClick(Sender: TObject);
+begin
+  frmRelExames := TfrmRelExames.Create(nil);
+  frmRelExames.showmodal;
+end;
+
 procedure TfrmPrincipal.btnRelFinanClick(Sender: TObject);
 begin
   frmrelFinanceiro := Tfrmrelfinanceiro.Create(nil);
@@ -341,6 +371,11 @@ end;
 procedure TfrmPrincipal.btnAtualizarConsultaMedicoClick(Sender: TObject);
 begin
   ListarConsultasMedico;
+end;
+
+procedure TfrmPrincipal.btnAtualizarConsultasClick(Sender: TObject);
+begin
+  listarExames;
 end;
 
 procedure TfrmPrincipal.btnCadastrosClick(Sender: TObject);
@@ -379,6 +414,13 @@ begin
   frmFuncionarios := TFrmFuncionarios.Create(nil);
   pnlOpcoesUsuarios.Visible := false;
   frmFuncionarios.showmodal;
+end;
+
+procedure TfrmPrincipal.BtnMedExamesClick(Sender: TObject);
+begin
+  frmExames := TfrmExames.Create(nil);
+
+  frmExames.showmodal;
 end;
 
 procedure TfrmPrincipal.btnMovimentosClick(Sender: TObject);
@@ -486,6 +528,28 @@ begin
     end;
 
   end;
+end;
+
+procedure TfrmPrincipal.dbExamesCellClick(Column: TColumn);
+begin
+  if dm.qryExames.fieldbyname('status').Value = 1 then
+  begin
+    MessageDlg('Exame já foi realizado!', mtinformation, [mbOK], 0);
+    exit;
+  end;
+
+  frmProntExames := TfrmProntExames.Create(nil);
+  idexamPront := dm.qryExames.fieldbyname('id_exam').Value;
+  idExamPaci := dm.qryExames.fieldbyname('id_paci').Value;
+  frmProntExames.edtConvenios.Text := dm.qryExames.fieldbyname
+    ('nome_conv').Value;
+  frmProntExames.edtDataConsulta.Date := dm.qryExames.fieldbyname
+    ('data_exam').Value;
+  frmProntExames.edtExame.Text := dm.qryExames.fieldbyname('desc_exam').Value;
+  frmProntExames.edtHora.Text := dm.qryExames.fieldbyname('horario_exam').Value;
+  frmProntExames.edtMedico.Text := dm.qryExames.fieldbyname('nome_user').Value;
+  frmProntExames.edtNomePac.Text := dm.qryExames.fieldbyname('nome_paci').Value;
+  frmProntExames.showmodal;
 end;
 
 procedure TfrmPrincipal.dbPacientesDblClick(Sender: TObject);
@@ -728,6 +792,15 @@ begin
         btnAdm.Visible := false;
         btnTelaRecp.Visible := false;
         btnDesafio.Visible := false;
+      end;
+    5:
+      begin
+        cards.ActiveCard := cardTecnico;
+        pnlSideBar.Visible := false;
+        btnAdm.Visible := false;
+        btnTelaRecp.Visible := false;
+        btnDesafio.Visible := false;
+        listarExames;
       end;
   end;
 
