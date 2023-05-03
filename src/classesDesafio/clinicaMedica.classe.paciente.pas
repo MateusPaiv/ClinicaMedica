@@ -35,7 +35,7 @@ var
   pacientesLista: TObjectList<TPaciente>;
   paciente: TPaciente;
   executar: tfrmdesafio;
-  i: integer;
+
 begin
   executar := tfrmdesafio.create(nil);
 
@@ -63,18 +63,18 @@ begin
     pacientesLista.Add(paciente);
 
     dm.qryPaci.Next;
-  
 
   end;
 
   for paciente in pacientesLista do
   begin
-  //A função vem aqui para percorrer toda a lista de clientes e pega apenas o JSON para mandar para API(TESTAR NA EMPRESA QUINTA-FEIRA)
+    // A função vem aqui para percorrer toda a lista de clientes e pega apenas o JSON para mandar para API(TESTAR NA EMPRESA QUINTA-FEIRA)
     // executar.executarEnvioDadoServidor('api/paciente', paciente.JSON);
     ShowMessage(paciente.JSON);
   end;
-  
+
   pacientesLista.Free;
+  executar.Free;
 end;
 
 end.

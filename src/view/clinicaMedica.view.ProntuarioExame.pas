@@ -55,7 +55,9 @@ procedure TfrmProntExames.associarCampos;
 begin
   dm.tbProntExam.FieldByName('desc_pront').Value := edtDesc.Text;
   dm.tbProntExam.FieldByName('id_exam').Value := idexamPront;
-  dm.tbProntExam.FieldByName('status').Value := 1;
+   dm.tbProntExam.FieldByName('status').Value := 1;
+
+
 end;
 
 procedure TfrmProntExames.btnDeclaracaoClick(Sender: TObject);
@@ -79,6 +81,12 @@ begin
     edtDesc.SetFocus;
     exit;
   end;
+  dm.qryExames.Close;
+  dm.qryExames.SQL.Clear;
+  dm.qryExames.SQL.Add('UPDATE exames SET status = 1 WHERE id_exam = :id ');
+  dm.qryExames.ParamByName('id').Value := idexamPront;
+  dm.qryExames.ExecSQL;
+
   associarCampos;
   dm.tbProntExam.Post;
   MessageDlg('Exame finalizado com sucesso', mtInformation, [mbOK], 0);

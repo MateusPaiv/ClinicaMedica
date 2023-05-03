@@ -197,8 +197,8 @@ type
     tbProntExamstatus: TIntegerField;
     tbProntExamid_exam: TIntegerField;
     qryRelExames: TFDQuery;
+    DSRelexames: TfrxDBDataset;
     relExames: TfrxReport;
-    relDsExames: TfrxDBDataset;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private

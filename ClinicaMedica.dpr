@@ -28,7 +28,9 @@ uses
   clinicaMedica.view.Exames in 'src\view\clinicaMedica.view.Exames.pas' {frmExames},
   clinicaMedica.view.cadExames in 'src\view\clinicaMedica.view.cadExames.pas' {frmCadastrarExames},
   clinicaMedica.view.ProntuarioExame in 'src\view\clinicaMedica.view.ProntuarioExame.pas' {frmProntExames},
-  clinicaMedica.rel.exames in 'src\relatorios\clinicaMedica.rel.exames.pas' {frmRelExames};
+  clinicaMedica.rel.exames in 'src\relatorios\clinicaMedica.rel.exames.pas' {frmRelExames},
+  clinicaMedica.classe.medico in 'src\classesDesafio\clinicaMedica.classe.medico.pas',
+  clinicaMedica.classe.consultas in 'src\classesDesafio\clinicaMedica.classe.consultas.pas';
 
 {$R *.res}
 

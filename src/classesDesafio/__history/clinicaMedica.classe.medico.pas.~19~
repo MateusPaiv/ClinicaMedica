@@ -1,0 +1,100 @@
+unit clinicaMedica.classe.medico;
+
+interface
+
+uses clinicaMedica.conn.Conexao, System.Generics.Collections, System.SysUtils,
+  System.JSON, REST.Client, Vcl.Dialogs, clinicaMedica.desafio;
+
+type
+  TMedico = class
+  private
+    Fnome: string;
+    FdataCad: Tdate;
+    Fcpf: string;
+    Fcrm: string;
+    Fidentificador: string;
+    FJSON: string;
+  public
+    property nome: string read Fnome write Fnome;
+    property dataCad: Tdate read FdataCad write FdataCad;
+    property cpf: string read Fcpf write Fcpf;
+    property crm: string read Fcrm write Fcrm;
+    property identificador: string read Fidentificador write Fidentificador;
+    property JSON: string read FJSON write FJSON;
+    function APIMedico: string;
+
+  end;
+
+implementation
+
+// dm.qryUser.close;
+// dm.qryUser.SQL.clear;
+// dm.qryUser.SQL.Add
+// ('select u.crm, f.* from funcionarios as f left join usuarios as u on u.id_func_user = f.id_func where nivel_acesso_user = 4');
+// dm.qryUser.open;
+//
+// while not dm.qryUser.Eof do
+// begin
+//
+// id := dm.qryUser.fieldbyname('id_func').value;
+// nome := dm.qryUser.fieldbyname('nome_func').value;
+// Data := dm.qryUser.fieldbyname('datacadastro').value;
+// cpf := dm.qryUser.fieldbyname('cpf_func').value;
+// crm := dm.qryUser.fieldbyname('crm').value;
+// JSON := '{"identificador" : "M", "cpf" : "' + cpf + '", "crm" : "' + crm +
+// '", "dataCadastro" : "' + FormatDateTime('ddmmyyyy', Data) +
+// '","nome" : "' + nome + '" }';
+// executarEnvioDadoServidor('api/medico', JSON);
+//
+// dm.qryUser.Next;
+//
+// end;
+// if RESTResponse1.StatusCode = 201 then
+// begin
+// MessageDlg('Integração com API feita com sucesso de médico!',
+// mtconfirmation, [mbOK], 0);
+// end
+// else
+// begin
+// MessageDlg('Erro integração médica!', mtError, [mbOK], 0);
+// ShowMessage(RESTResponse1.Content);
+// end;
+{ TMedico }
+
+function TMedico.APIMedico: string;
+var
+  ListaMedicos: TObjectList<TMedico>;
+  medico: TMedico;
+  executar: TfrmDesafio;
+
+begin
+  executar := TfrmDesafio.create(nil);
+
+  ListaMedicos := TObjectList<TMedico>.create;
+
+  dm.qryUser.close;
+  dm.qryUser.SQL.clear;
+  dm.qryUser.SQL.Add
+    ('select u.crm, f.* from funcionarios as f left join usuarios as u on u.id_func_user = f.id_func where nivel_acesso_user = 4');
+  dm.qryUser.open;
+  while not dm.qryUser.Eof do
+  begin
+    medico.create;
+    medico.nome := dm.qryUser.fieldbyname('nome_func').value;
+    medico.dataCad := dm.qryUser.fieldbyname('datacadastro').value;
+    medico.cpf := dm.qryUser.fieldbyname('cpf_func').value;
+    medico.crm := dm.qryUser.fieldbyname('crm').value;
+    medico.JSON := '{"identificador" : "M", "cpf" : "' + medico.cpf + '", "crm" : "' + medico.crm + '", "dataCadastro" : "' + FormatDateTime('ddmmyyyy', medico.dataCad) + '","nome" : "' + medico.nome + '" }';
+
+    ListaMedicos.Add(medico);
+
+    dm.qryUser.Next;
+
+  end;
+
+  for medico in ListaMedicos do
+    
+
+end;
+
+end.

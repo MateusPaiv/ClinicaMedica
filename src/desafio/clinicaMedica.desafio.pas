@@ -37,6 +37,8 @@ var
 
 implementation
 
+uses clinicaMedica.classe.medico,
+  clinicaMedica.classe.consultas;
 {$R *.dfm}
 
 procedure TfrmDesafio.Button1Click(Sender: TObject);
@@ -55,12 +57,20 @@ end;
 procedure TfrmDesafio.Button2Click(Sender: TObject);
 var
   paciente: tpaciente;
+  medico: tMedico;
+  consulta: tconsultas;
 begin
   paciente := tpaciente.create;
+  medico := tMedico.create;
+  consulta := tconsultas.create;
   try
     paciente.APIPacientes;
+    medico.APIMedico;
+    consulta.APIConsultas;
   finally
-    paciente.free;
+    medico.Free;
+    paciente.Free;
+    consulta.Free;
   end;
 end;
 

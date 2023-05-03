@@ -510,6 +510,7 @@ begin
   lbPacientes.Visible := true;
   dbExames.Visible := false;
   lbExames.Visible := false;
+  btnEditar.Visible := false;
 end;
 
 end.
