@@ -17,9 +17,7 @@ object dm: Tdm
     Top = 8
   end
   object PgDriverLink: TFDPhysPgDriverLink
-    VendorLib = 
-      'C:\Users\mateus.5937\Desktop\ClinicaMedica\Win32\Debug\lib\libpq' +
-      '.dll'
+    VendorLib = 'C:\Users\User\Desktop\ClinicaMedica\Win32\Debug\lib\libpq.dll'
     Left = 96
     Top = 8
   end
@@ -2400,7 +2398,6 @@ object dm: Tdm
     end
   end
   object qryRelConsultas: TFDQuery
-    Active = True
     Connection = Connection
     SQL.Strings = (
       
@@ -7865,7 +7862,6 @@ object dm: Tdm
     Top = 608
   end
   object qryRelExames: TFDQuery
-    Active = True
     Connection = Connection
     SQL.Strings = (
       
@@ -8772,5 +8768,10 @@ object dm: Tdm
         end
       end
     end
+  end
+  object qryVerificaStatusFunc: TFDQuery
+    Connection = Connection
+    Left = 560
+    Top = 9
   end
 end

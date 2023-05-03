@@ -25,14 +25,20 @@ object frmRelPront: TfrmRelPront
     Color = clWhite
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 508
     object btnRelatorio: TSpeedButton
       Left = 181
       Top = 112
       Width = 145
       Height = 41
-      Caption = 'Gerar relat'#243'rio'
+      Caption = 'Gerar prontuarios'
       OnClick = btnRelatorioClick
+    end
+    object Label1: TLabel
+      Left = 112
+      Top = 21
+      Width = 203
+      Height = 20
+      Caption = 'Digite pelo nome do paciente:'
     end
     object edtNome: TEdit
       Left = 112

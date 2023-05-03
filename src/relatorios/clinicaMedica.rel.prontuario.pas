@@ -13,6 +13,7 @@ type
     Panel1: TPanel;
     btnRelatorio: TSpeedButton;
     edtNome: TEdit;
+    Label1: TLabel;
     procedure btnRelatorioClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private

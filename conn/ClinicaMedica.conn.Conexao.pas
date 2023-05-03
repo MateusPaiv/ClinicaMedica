@@ -199,6 +199,7 @@ type
     qryRelExames: TFDQuery;
     DSRelexames: TfrxDBDataset;
     relExames: TfrxReport;
+    qryVerificaStatusFunc: TFDQuery;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private

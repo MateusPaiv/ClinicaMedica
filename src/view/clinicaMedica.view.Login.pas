@@ -107,8 +107,22 @@ begin
     MessageDlg('Campo Senha está vazio!', mtInformation, [mbOK], 0);
     exit;
   end;
+  // verifica se funcionario ta desativado
+  dm.qryVerificaStatusFunc.Close;
+  dm.qryVerificaStatusFunc.SQL.Clear;
+  dm.qryVerificaStatusFunc.SQL.Add
+    ('SELECT u.*, f.status FROM usuarios AS u INNER JOIN funcionarios AS f ON u.id_func_user = f.id_func WHERE u.usuario_user = :edtUser and u.senha_user = :edtSenha');
+  dm.qryVerificaStatusFunc.ParamByName('edtUser').Value := Trim(edtUser.Text);
+  dm.qryVerificaStatusFunc.ParamByName('edtSenha').Value := Trim(edtSenha.Text);
+  dm.qryVerificaStatusFunc.Open;
 
-  dm.qryUser.close;
+  if dm.qryVerificaStatusFunc.FieldByName('status').Value = 'N' then
+  begin
+     MessageDlg('Usuario está inativo no sistema!', mtInformation, [mbOK], 0);
+    exit;
+  end;
+
+  dm.qryUser.Close;
   dm.qryUser.SQL.Clear;
   dm.qryUser.SQL.Add
     ('SELECT * FROM usuarios WHERE usuario_user = :edtUser and senha_user = :edtSenha');
@@ -127,7 +141,7 @@ begin
     edtSenha.Clear;
     edtUser.SetFocus;
 
-    close;
+    Close;
   end
   else
   begin
