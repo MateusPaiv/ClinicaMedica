@@ -33,22 +33,13 @@ object frmDesafio: TfrmDesafio
       Height = 20
       Caption = 'Executar envio de dados para servidor '
     end
-    object Button1: TButton
-      Left = 160
-      Top = 120
-      Width = 121
-      Height = 33
-      Caption = 'Executar Desafio'
-      TabOrder = 0
-      OnClick = Button1Click
-    end
     object Button2: TButton
-      Left = 160
-      Top = 176
-      Width = 121
+      Left = 136
+      Top = 112
+      Width = 193
       Height = 41
-      Caption = 'Object'
-      TabOrder = 1
+      Caption = 'Executar envio API'
+      TabOrder = 0
       OnClick = Button2Click
     end
   end

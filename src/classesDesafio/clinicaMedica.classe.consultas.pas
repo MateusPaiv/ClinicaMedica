@@ -21,7 +21,6 @@ type
       write FdataLancamentoConsulta;
     property descPront: string read FdescPront write FdescPront;
     property horaCons: TTime read FhoraCons write FhoraCons;
-    property JSON: string read FJSON write FJSON;
     property idMed: integer read FidMed write FidMed;
     property idPaci: integer read FidPaci write FidPaci;
     function APIConsultas: string;
@@ -36,6 +35,7 @@ var
   ConsultasLista: TObjectList<TConsultas>;
   consulta: TConsultas;
   executar: tfrmdesafio;
+  JSON: string;
 begin
   executar := tfrmdesafio.create(nil);
 
@@ -60,14 +60,6 @@ begin
     consulta.idMed := dm.qryPront.fieldbyname('id_cons_medico').value;
     consulta.descPront := dm.qryPront.fieldbyname('hipotese_diagnostica').value;
 
-    consulta.JSON := '{"dataConsulta" : "' + FormatDateTime('ddmmyyyy',
-      consulta.dataCons) + '", "dataLancamentoConsulta" : "' +
-      FormatDateTime('ddmmyyyy', consulta.dataLancamentoConsulta) +
-      '", "descricaoProntuario" : "' + consulta.descPront +
-      '", "horaConsulta" : "' + TimeToStr(consulta.horaCons) +
-      '","identificador" : "C" , "medicoId" : "' + IntToStr(consulta.idMed) +
-      '", "pacienteId" :"' + IntToStr(consulta.idPaci) + '"}';
-
     ConsultasLista.Add(consulta);
 
     dm.qryPront.Next;
@@ -77,11 +69,22 @@ begin
   for consulta in ConsultasLista do
   begin
     // A função vem aqui para percorrer toda a lista de consulta e pega apenas o JSON para mandar para API(TESTAR NA EMPRESA QUINTA-FEIRA)
-    // executar.executarEnvioDadoServidor('api/consulta', consulta.JSON);
-    ShowMessage(consulta.JSON);
+    JSON := '{"dataConsulta" : "' + FormatDateTime('ddmmyyyy',
+      consulta.dataCons) + '", "dataLancamentoConsulta" : "' +
+      FormatDateTime('ddmmyyyy', consulta.dataLancamentoConsulta) +
+      '", "descricaoProntuario" : "' + consulta.descPront +
+      '", "horaConsulta" : "' + TimeToStr(consulta.horaCons) +
+      '","identificador" : "C" , "medicoId" : "' + IntToStr(consulta.idMed) +
+      '", "pacienteId" :"' + IntToStr(consulta.idPaci) + '"}';
+
+    executar.executarEnvioDadoServidor('api/consulta', JSON);
+
   end;
+  MessageDlg('Integração com API de Consultas feita com sucesso!',
+    mtconfirmation, [mbOK], 0);
 
   ConsultasLista.Free;
+
   executar.Free;
 end;
 

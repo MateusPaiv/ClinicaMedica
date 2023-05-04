@@ -35,6 +35,7 @@ var
   pacientesLista: TObjectList<TPaciente>;
   paciente: TPaciente;
   executar: tfrmdesafio;
+  JSON: string;
 
 begin
   executar := tfrmdesafio.create(nil);
@@ -55,11 +56,6 @@ begin
     paciente.cpf := dm.qryPaci.fieldbyname('cpf_paci').value;
     paciente.cidade := dm.qryPaci.fieldbyname('cidade_paci').value;
 
-    paciente.JSON := '{"dataCadastro" : "' + FormatDateTime('ddmmyyyy',
-      paciente.DataCadastro) + '", "cpf" : "' + paciente.cpf +
-      '", "identificador" : "P", "municipio" : "' + paciente.cidade +
-      ' , "nome" : "' + paciente.Nome + '"}';
-
     pacientesLista.Add(paciente);
 
     dm.qryPaci.Next;
@@ -69,11 +65,22 @@ begin
   for paciente in pacientesLista do
   begin
     // A função vem aqui para percorrer toda a lista de clientes e pega apenas o JSON para mandar para API(TESTAR NA EMPRESA QUINTA-FEIRA)
-    // executar.executarEnvioDadoServidor('api/paciente', paciente.JSON);
-    ShowMessage(paciente.JSON);
+    JSON := '{"dataCadastro" : "' + FormatDateTime('ddmmyyyy',
+      paciente.DataCadastro) + '", "cpf" : "' + paciente.cpf +
+      '", "identificador" : "P", "municipio" : "' + paciente.cidade +
+      '", "nome" : "' + paciente.Nome + '"}';
+
+    executar.executarEnvioDadoServidor('api/paciente', JSON);
   end;
+  MessageDlg('Integração com API de Pacientes feita com sucesso!',
+    mtconfirmation, [mbOK], 0);
+  dm.qryPaci.close;
+  dm.qryPaci.SQL.clear;
+  dm.qryPaci.SQL.Add('select * from pacientes ');
+  dm.qryPaci.open;
 
   pacientesLista.Free;
+
   executar.Free;
 end;
 

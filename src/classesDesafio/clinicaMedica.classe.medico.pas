@@ -34,6 +34,7 @@ var
   ListaMedicos: TObjectList<TMedico>;
   medico: TMedico;
   executar: TfrmDesafio;
+  JSON: string;
 
 begin
   executar := TfrmDesafio.create(nil);
@@ -52,10 +53,6 @@ begin
     medico.dataCad := dm.qryUser.fieldbyname('datacadastro').value;
     medico.cpf := dm.qryUser.fieldbyname('cpf_func').value;
     medico.crm := dm.qryUser.fieldbyname('crm').value;
-    medico.JSON := '{"identificador" : "M", "cpf" : "' + medico.cpf +
-      '", "crm" : "' + medico.crm + '", "dataCadastro" : "' +
-      FormatDateTime('ddmmyyyy', medico.dataCad) + '","nome" : "' +
-      medico.nome + '" }';
 
     ListaMedicos.Add(medico);
 
@@ -66,10 +63,15 @@ begin
   for medico in ListaMedicos do
   begin
     // A função vem aqui para percorrer toda a lista de medicos e pega apenas o JSON para mandar para API(TESTAR NA EMPRESA QUINTA-FEIRA)
-    // executar.executarEnvioDadoServidor('api/medico', medico.JSON);
-    ShowMessage(medico.JSON);
+    JSON := '{"identificador" : "M", "cpf" : "' + medico.cpf + '", "crm" : "' +
+      medico.crm + '", "dataCadastro" : "' + FormatDateTime('ddmmyyyy',
+      medico.dataCad) + '","nome" : "' + medico.nome + '" }';
+    executar.executarEnvioDadoServidor('api/medico', JSON);
+
   end;
-  medico.Free;
+  MessageDlg('Integração com API de Médico feita com sucesso!',mtconfirmation, [mbOK], 0);
+
+  ListaMedicos.Free;
   executar.Free;
 
 end;

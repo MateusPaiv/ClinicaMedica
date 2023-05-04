@@ -2,8 +2,8 @@ object dm: Tdm
   OldCreateOrder = False
   OnCreate = DataModuleCreate
   OnDestroy = DataModuleDestroy
-  Height = 724
-  Width = 1432
+  Height = 689
+  Width = 1257
   object Connection: TFDConnection
     Params.Strings = (
       'Database=apr_mateus'
@@ -17,7 +17,9 @@ object dm: Tdm
     Top = 8
   end
   object PgDriverLink: TFDPhysPgDriverLink
-    VendorLib = 'C:\Users\User\Desktop\ClinicaMedica\Win32\Debug\lib\libpq.dll'
+    VendorLib = 
+      'C:\Users\Auditorio\Desktop\ClinicaMedica\Win32\Debug\lib\libpq.d' +
+      'll'
     Left = 96
     Top = 8
   end
@@ -679,7 +681,7 @@ object dm: Tdm
       'begin'
       ''
       'end.')
-    Left = 1160
+    Left = 992
     Top = 88
     Datasets = <
       item
@@ -959,7 +961,7 @@ object dm: Tdm
     DataSet = qryCarteirinha
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 1160
+    Left = 992
     Top = 136
   end
   object qryCarteirinha: TFDQuery
@@ -968,7 +970,7 @@ object dm: Tdm
       
         'select f.* , c.cargo from funcionarios as f inner join cargos as' +
         ' c on f.cargo_func = c.id_carg ')
-    Left = 1088
+    Left = 920
     Top = 120
   end
   object frxXLSXExport1: TfrxXLSXExport
@@ -979,7 +981,7 @@ object dm: Tdm
     ChunkSize = 0
     OpenAfterExport = False
     PictureType = gpPNG
-    Left = 1160
+    Left = 992
     Top = 8
   end
   object frxPDFExport1: TfrxPDFExport
@@ -1010,7 +1012,7 @@ object dm: Tdm
     PdfA = False
     PDFStandard = psNone
     PDFVersion = pv17
-    Left = 1096
+    Left = 928
     Top = 8
   end
   object relAtestado: TfrxReport
@@ -1030,7 +1032,7 @@ object dm: Tdm
       'begin'
       ''
       'end.')
-    Left = 1128
+    Left = 960
     Top = 192
     Datasets = <
       item
@@ -1734,7 +1736,7 @@ object dm: Tdm
     DataSet = qryAtestado
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 1160
+    Left = 992
     Top = 248
   end
   object qryAtestado: TFDQuery
@@ -1743,7 +1745,7 @@ object dm: Tdm
       
         'select cons.* ,u.nome_user, u.crm from consultas as cons inner j' +
         'oin usuarios as u on cons.id_cons_medico = u.id_func_user')
-    Left = 1080
+    Left = 912
     Top = 216
   end
   object relDeclaracaoComp: TfrxReport
@@ -1763,7 +1765,7 @@ object dm: Tdm
       'begin'
       ''
       'end.')
-    Left = 1192
+    Left = 1024
     Top = 192
     Datasets = <
       item
@@ -2406,7 +2408,7 @@ object dm: Tdm
         's_paciente = p.id_paci inner join usuarios as u on cons.id_cons_' +
         'medico = u.id_func_user inner join convenios as conv on conv.id_' +
         'conv = cons.id_cons_conv')
-    Left = 1088
+    Left = 920
     Top = 328
   end
   object relDsConsultas: TfrxDBDataset
@@ -2415,7 +2417,7 @@ object dm: Tdm
     DataSet = qryRelConsultas
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 1160
+    Left = 992
     Top = 368
   end
   object relConsultas: TfrxReport
@@ -2434,7 +2436,7 @@ object dm: Tdm
       'begin'
       ''
       'end.')
-    Left = 1160
+    Left = 992
     Top = 312
     Datasets = <
       item
@@ -3354,7 +3356,7 @@ object dm: Tdm
       'begin'
       ''
       'end.')
-    Left = 1168
+    Left = 1000
     Top = 496
     Datasets = <
       item
@@ -4336,7 +4338,7 @@ object dm: Tdm
     DataSet = qryRelPacientes
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 1160
+    Left = 992
     Top = 440
   end
   object qryRelPacientes: TFDQuery
@@ -4345,7 +4347,7 @@ object dm: Tdm
       
         'select p.* , c.nome_conv from pacientes as p inner join convenio' +
         's as c on p.convenio_paci = c.id_conv')
-    Left = 1096
+    Left = 928
     Top = 480
   end
   object qryRelFuncionarios: TFDQuery
@@ -4354,7 +4356,7 @@ object dm: Tdm
       
         'select f.* , c.cargo from funcionarios as f inner join cargos as' +
         ' c on f.cargo_func =  c.id_carg ')
-    Left = 1096
+    Left = 928
     Top = 592
   end
   object relFuncionarios: TfrxReport
@@ -4373,7 +4375,7 @@ object dm: Tdm
       'begin'
       ''
       'end.')
-    Left = 1168
+    Left = 1000
     Top = 568
     Datasets = <
       item
@@ -5445,7 +5447,7 @@ object dm: Tdm
     DataSet = qryRelFuncionarios
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 1176
+    Left = 1008
     Top = 624
   end
   object qryRelPront: TFDQuery
@@ -5455,7 +5457,7 @@ object dm: Tdm
         'select p.*, c.*, u.nome_user from prontuarios as p inner join co' +
         'nsultas as c on p.id_pront_paci = c.id_cons_paciente inner join ' +
         'usuarios as u on u.id_func_user = c.id_cons_medico')
-    Left = 1280
+    Left = 1112
     Top = 32
   end
   object relProntuarios: TfrxReport
@@ -5474,7 +5476,7 @@ object dm: Tdm
       'begin'
       ''
       'end.')
-    Left = 1336
+    Left = 1168
     Top = 8
     Datasets = <
       item
@@ -6461,7 +6463,7 @@ object dm: Tdm
     DataSet = qryRelPront
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 1336
+    Left = 1168
     Top = 56
   end
   object qryFinanceiro: TFDQuery
@@ -6511,7 +6513,7 @@ object dm: Tdm
     Connection = Connection
     SQL.Strings = (
       'select * from movimentos')
-    Left = 1280
+    Left = 1112
     Top = 176
   end
   object relFinanceiro: TfrxReport
@@ -6530,7 +6532,7 @@ object dm: Tdm
       'begin'
       ''
       'end.')
-    Left = 1336
+    Left = 1168
     Top = 136
     Datasets = <
       item
@@ -7222,7 +7224,7 @@ object dm: Tdm
     DataSet = qryRelFinan
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 1344
+    Left = 1176
     Top = 192
   end
   object qryVerificaConsulta: TFDQuery
@@ -7247,7 +7249,7 @@ object dm: Tdm
       'begin'
       ''
       'end.')
-    Left = 992
+    Left = 824
     Top = 208
     Datasets = <
       item
@@ -7874,7 +7876,7 @@ object dm: Tdm
       
         'inner join prontuario_exames as prontexam on prontexam.id_exam =' +
         ' e.id_exam')
-    Left = 1280
+    Left = 1112
     Top = 328
   end
   object DSRelexames: TfrxDBDataset
@@ -7883,7 +7885,7 @@ object dm: Tdm
     DataSet = qryRelExames
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 1352
+    Left = 1184
     Top = 360
   end
   object relExames: TfrxReport
@@ -7902,7 +7904,7 @@ object dm: Tdm
       'begin'
       ''
       'end.')
-    Left = 1352
+    Left = 1184
     Top = 288
     Datasets = <
       item

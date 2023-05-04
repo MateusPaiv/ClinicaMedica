@@ -226,6 +226,7 @@ begin
   dm.qryConsMedico.ParamByName('datahoje').AsDate := Now;
   dm.qryConsMedico.ParamByName('idUser').Value := idFunc;
   dm.qryConsMedico.Open;
+  ShowMessage(IntToStr(idfunc));
 end;
 
 procedure TfrmPrincipal.listarConsultasRealizadas;
