@@ -200,6 +200,8 @@ type
     DSRelexames: TfrxDBDataset;
     relExames: TfrxReport;
     qryVerificaStatusFunc: TFDQuery;
+    tbPacidata_nascimento: TDateField;
+    tbFuncdata_nascimento: TDateField;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private

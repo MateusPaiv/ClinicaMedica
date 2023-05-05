@@ -80,6 +80,7 @@ object frmFuncionarios: TfrmFuncionarios
           Expanded = False
           FieldName = 'cargo'
           Title.Caption = 'Cargo'
+          Width = 120
           Visible = True
         end
         item
@@ -367,6 +368,8 @@ object frmFuncionarios: TfrmFuncionarios
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 3
+      ExplicitLeft = 25
+      ExplicitTop = 137
       object Label5: TLabel
         Left = 46
         Top = 37
@@ -582,8 +585,8 @@ object frmFuncionarios: TfrmFuncionarios
         OnClick = btnBuscaCEPClick
       end
       object Label1: TLabel
-        Left = 294
-        Top = 195
+        Left = 526
+        Top = 200
         Width = 38
         Height = 20
         Caption = 'Ativo:'
@@ -624,6 +627,19 @@ object frmFuncionarios: TfrmFuncionarios
         Images = Png
         Enabled = False
         OnClick = btnGerarCarteirinhaClick
+      end
+      object Label6: TLabel
+        Left = 294
+        Top = 198
+        Width = 136
+        Height = 20
+        Caption = 'Data de nascimento:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
       end
       object edtNome: TEdit
         Tag = 5
@@ -767,8 +783,8 @@ object frmFuncionarios: TfrmFuncionarios
         TabOrder = 12
       end
       object cmbStatus: TComboBox
-        Left = 294
-        Top = 221
+        Left = 526
+        Top = 218
         Width = 59
         Height = 23
         Hint = 'Status do Funcion'#225'rio'
@@ -777,6 +793,20 @@ object frmFuncionarios: TfrmFuncionarios
         Items.Strings = (
           'S'
           'N')
+      end
+      object DatePicker1: TDatePicker
+        Left = 294
+        Top = 216
+        Width = 206
+        Height = 25
+        Date = 45051.000000000000000000
+        DateFormat = 'dd/MM/yyyy'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        TabOrder = 14
       end
     end
   end

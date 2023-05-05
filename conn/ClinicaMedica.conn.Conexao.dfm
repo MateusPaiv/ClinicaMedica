@@ -135,6 +135,10 @@ object dm: Tdm
       FieldName = 'datacadastro'
       Origin = 'datacadastro'
     end
+    object tbFuncdata_nascimento: TDateField
+      FieldName = 'data_nascimento'
+      Origin = 'data_nascimento'
+    end
   end
   object dsCargos: TDataSource
     DataSet = qryCargos
@@ -388,6 +392,10 @@ object dm: Tdm
     object tbPacidatacadastro: TDateField
       FieldName = 'datacadastro'
       Origin = 'datacadastro'
+    end
+    object tbPacidata_nascimento: TDateField
+      FieldName = 'data_nascimento'
+      Origin = 'data_nascimento'
     end
   end
   object dsPaci: TDataSource
@@ -3659,7 +3667,7 @@ object dm: Tdm
         end
         object Memo14: TfrxMemoView
           AllowVectorExport = True
-          Top = 113.385900000000000000
+          Top = 132.283550000000000000
           Width = 138.000000000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -3676,7 +3684,7 @@ object dm: Tdm
         object Memo15: TfrxMemoView
           AllowVectorExport = True
           Left = 156.897650000000000000
-          Top = 113.385900000000000000
+          Top = 132.283550000000000000
           Width = 164.488250000000000000
           Height = 18.897650000000000000
           DataField = 'cep_paci'
@@ -3695,7 +3703,7 @@ object dm: Tdm
         end
         object Memo16: TfrxMemoView
           AllowVectorExport = True
-          Top = 132.283550000000000000
+          Top = 151.181200000000000000
           Width = 138.000000000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -3712,7 +3720,7 @@ object dm: Tdm
         object Memo17: TfrxMemoView
           AllowVectorExport = True
           Left = 156.897650000000000000
-          Top = 132.283550000000000000
+          Top = 151.181200000000000000
           Width = 740.000000000000000000
           Height = 18.897650000000000000
           DataField = 'endereco'
@@ -3731,7 +3739,7 @@ object dm: Tdm
         end
         object Memo18: TfrxMemoView
           AllowVectorExport = True
-          Top = 151.181200000000000000
+          Top = 170.078850000000000000
           Width = 138.000000000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -3748,7 +3756,7 @@ object dm: Tdm
         object Memo19: TfrxMemoView
           AllowVectorExport = True
           Left = 156.897650000000000000
-          Top = 151.181200000000000000
+          Top = 170.078850000000000000
           Width = 78.000000000000000000
           Height = 18.897650000000000000
           DataField = 'numerocasa_paci'
@@ -3767,7 +3775,7 @@ object dm: Tdm
         end
         object Memo20: TfrxMemoView
           AllowVectorExport = True
-          Top = 170.078850000000000000
+          Top = 188.976500000000000000
           Width = 138.000000000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -3784,7 +3792,7 @@ object dm: Tdm
         object Memo21: TfrxMemoView
           AllowVectorExport = True
           Left = 156.897650000000000000
-          Top = 170.078850000000000000
+          Top = 188.976500000000000000
           Width = 298.000000000000000000
           Height = 18.897650000000000000
           DataField = 'bairro_paci'
@@ -3803,7 +3811,7 @@ object dm: Tdm
         end
         object Memo22: TfrxMemoView
           AllowVectorExport = True
-          Top = 188.976500000000000000
+          Top = 207.874150000000000000
           Width = 138.000000000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -3820,7 +3828,7 @@ object dm: Tdm
         object Memo23: TfrxMemoView
           AllowVectorExport = True
           Left = 156.897650000000000000
-          Top = 188.976500000000000000
+          Top = 207.874150000000000000
           Width = 446.000000000000000000
           Height = 18.897650000000000000
           DataField = 'cidade_paci'
@@ -3872,6 +3880,36 @@ object dm: Tdm
             '[DSPacientes."nome_conv"]')
           ParentFont = False
           Style = 'Data'
+        end
+        object DSPacientesdata_nascimento: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 158.740260000000000000
+          Top = 113.385900000000000000
+          Width = 162.519790000000000000
+          Height = 18.897650000000000000
+          DataField = 'data_nascimento'
+          DataSet = relDsPacientes
+          DataSetName = 'DSPacientes'
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[DSPacientes."data_nascimento"]')
+        end
+        object Memo30: TfrxMemoView
+          AllowVectorExport = True
+          Top = 113.385900000000000000
+          Width = 138.000000000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          Fill.BackColor = 13395456
+          Memo.UTF8W = (
+            'Data de nascimento:')
+          ParentFont = False
         end
       end
       object PageFooter1: TfrxPageFooter
@@ -3925,7 +3963,7 @@ object dm: Tdm
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            'N'#250'mero de consultas:[COUNT(MasterData1)]')
+            'N'#250'mero de pacientes:[COUNT(MasterData1)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -4342,6 +4380,7 @@ object dm: Tdm
     Top = 440
   end
   object qryRelPacientes: TFDQuery
+    Active = True
     Connection = Connection
     SQL.Strings = (
       
@@ -4351,6 +4390,7 @@ object dm: Tdm
     Top = 480
   end
   object qryRelFuncionarios: TFDQuery
+    Active = True
     Connection = Connection
     SQL.Strings = (
       
@@ -4492,7 +4532,7 @@ object dm: Tdm
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 283.464750000000000000
+        Height = 294.803340000000000000
         Top = 264.567100000000000000
         Width = 740.409927000000000000
         DataSet = relDsFuncionarios2
@@ -4656,29 +4696,9 @@ object dm: Tdm
             'Celular')
           ParentFont = False
         end
-        object Memo11: TfrxMemoView
-          AllowVectorExport = True
-          Left = 162.897650000000000000
-          Top = 75.590600000000000000
-          Width = 100.000000000000000000
-          Height = 18.897650000000000000
-          DataField = 'telefone_func'
-          DataSet = relDsFuncionarios2
-          DataSetName = 'DSFuncionarios2'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[DSFuncionarios2."telefone_func"]')
-          ParentFont = False
-          Style = 'Data'
-        end
         object Memo12: TfrxMemoView
           AllowVectorExport = True
-          Top = 94.488250000000000000
+          Top = 113.385900000000000000
           Width = 144.000000000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -4695,7 +4715,7 @@ object dm: Tdm
         object Memo13: TfrxMemoView
           AllowVectorExport = True
           Left = 162.897650000000000000
-          Top = 94.488250000000000000
+          Top = 113.385900000000000000
           Width = 78.000000000000000000
           Height = 18.897650000000000000
           DataField = 'remuneracao_func'
@@ -4714,7 +4734,7 @@ object dm: Tdm
         end
         object Memo14: TfrxMemoView
           AllowVectorExport = True
-          Top = 113.385900000000000000
+          Top = 132.283550000000000000
           Width = 144.000000000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -4731,7 +4751,7 @@ object dm: Tdm
         object Memo15: TfrxMemoView
           AllowVectorExport = True
           Left = 162.897650000000000000
-          Top = 113.385900000000000000
+          Top = 132.283550000000000000
           Width = 151.000000000000000000
           Height = 18.897650000000000000
           DataField = 'cep_func'
@@ -4750,7 +4770,7 @@ object dm: Tdm
         end
         object Memo16: TfrxMemoView
           AllowVectorExport = True
-          Top = 132.283550000000000000
+          Top = 151.181200000000000000
           Width = 144.000000000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -4767,7 +4787,7 @@ object dm: Tdm
         object Memo17: TfrxMemoView
           AllowVectorExport = True
           Left = 162.897650000000000000
-          Top = 132.283550000000000000
+          Top = 151.181200000000000000
           Width = 740.000000000000000000
           Height = 18.897650000000000000
           DataField = 'endereco_func'
@@ -4786,7 +4806,7 @@ object dm: Tdm
         end
         object Memo18: TfrxMemoView
           AllowVectorExport = True
-          Top = 151.181200000000000000
+          Top = 170.078850000000000000
           Width = 144.000000000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -4803,7 +4823,7 @@ object dm: Tdm
         object Memo19: TfrxMemoView
           AllowVectorExport = True
           Left = 162.897650000000000000
-          Top = 151.181200000000000000
+          Top = 170.078850000000000000
           Width = 593.000000000000000000
           Height = 18.897650000000000000
           DataField = 'complemento_func'
@@ -4822,7 +4842,7 @@ object dm: Tdm
         end
         object Memo20: TfrxMemoView
           AllowVectorExport = True
-          Top = 170.078850000000000000
+          Top = 188.976500000000000000
           Width = 144.000000000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -4839,7 +4859,7 @@ object dm: Tdm
         object Memo21: TfrxMemoView
           AllowVectorExport = True
           Left = 162.897650000000000000
-          Top = 170.078850000000000000
+          Top = 188.976500000000000000
           Width = 298.000000000000000000
           Height = 18.897650000000000000
           DataField = 'bairro_func'
@@ -4858,7 +4878,7 @@ object dm: Tdm
         end
         object Memo22: TfrxMemoView
           AllowVectorExport = True
-          Top = 188.976500000000000000
+          Top = 207.874150000000000000
           Width = 144.000000000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -4875,7 +4895,7 @@ object dm: Tdm
         object Memo23: TfrxMemoView
           AllowVectorExport = True
           Left = 162.897650000000000000
-          Top = 188.976500000000000000
+          Top = 207.874150000000000000
           Width = 372.000000000000000000
           Height = 18.897650000000000000
           DataField = 'cidade_func'
@@ -4894,7 +4914,7 @@ object dm: Tdm
         end
         object Memo24: TfrxMemoView
           AllowVectorExport = True
-          Top = 207.874150000000000000
+          Top = 226.771800000000000000
           Width = 144.000000000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -4911,7 +4931,7 @@ object dm: Tdm
         object Memo25: TfrxMemoView
           AllowVectorExport = True
           Left = 162.897650000000000000
-          Top = 207.874150000000000000
+          Top = 226.771800000000000000
           Width = 41.000000000000000000
           Height = 18.897650000000000000
           DataField = 'uf_func'
@@ -4930,7 +4950,7 @@ object dm: Tdm
         end
         object Memo26: TfrxMemoView
           AllowVectorExport = True
-          Top = 226.771800000000000000
+          Top = 245.669450000000000000
           Width = 144.000000000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -4947,7 +4967,7 @@ object dm: Tdm
         object Memo27: TfrxMemoView
           AllowVectorExport = True
           Left = 162.897650000000000000
-          Top = 226.771800000000000000
+          Top = 245.669450000000000000
           Width = 78.000000000000000000
           Height = 18.897650000000000000
           DataField = 'numerocasa_func'
@@ -4966,7 +4986,7 @@ object dm: Tdm
         end
         object Memo28: TfrxMemoView
           AllowVectorExport = True
-          Top = 245.669450000000000000
+          Top = 264.567100000000000000
           Width = 144.000000000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -4983,7 +5003,7 @@ object dm: Tdm
         object Memo29: TfrxMemoView
           AllowVectorExport = True
           Left = 162.897650000000000000
-          Top = 245.669450000000000000
+          Top = 264.567100000000000000
           Width = 519.000000000000000000
           Height = 18.897650000000000000
           DataField = 'cargo'
@@ -5000,6 +5020,50 @@ object dm: Tdm
           ParentFont = False
           Style = 'Data'
         end
+        object Memo33: TfrxMemoView
+          AllowVectorExport = True
+          Top = 94.488250000000000000
+          Width = 144.000000000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          Fill.BackColor = 13395456
+          Memo.UTF8W = (
+            'Data de nascimento:')
+          ParentFont = False
+        end
+        object DSFuncionarios2telefone_func: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 162.519790000000000000
+          Top = 94.488250000000000000
+          Width = 105.826840000000000000
+          Height = 18.897650000000000000
+          DataField = 'data_nascimento'
+          DataSet = relDsFuncionarios2
+          DataSetName = 'DSFuncionarios2'
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[DSFuncionarios2."data_nascimento"]')
+        end
+        object DSFuncionarios2telefone_func1: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 162.519790000000000000
+          Top = 75.590600000000000000
+          Width = 105.826840000000000000
+          Height = 18.897650000000000000
+          DataField = 'telefone_func'
+          DataSet = relDsFuncionarios2
+          DataSetName = 'DSFuncionarios2'
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[DSFuncionarios2."telefone_func"]')
+        end
       end
       object PageFooter1: TfrxPageFooter
         FillType = ftBrush
@@ -5009,7 +5073,7 @@ object dm: Tdm
         FillGap.Right = 0
         Frame.Typ = []
         Height = 26.456710000000000000
-        Top = 608.504330000000000000
+        Top = 619.842920000000000000
         Width = 740.409927000000000000
         object Memo30: TfrxMemoView
           Align = baWidth
@@ -5038,6 +5102,15 @@ object dm: Tdm
           HAlign = haRight
           Memo.UTF8W = (
             'Page [Page#]')
+        end
+        object Memo34: TfrxMemoView
+          AllowVectorExport = True
+          Left = 291.023810000000000000
+          Width = 245.669450000000000000
+          Height = 18.897650000000000000
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'N'#250'mero de consultas: [COUNT(MasterData1)]')
         end
       end
       object PageHeader1: TfrxPageHeader

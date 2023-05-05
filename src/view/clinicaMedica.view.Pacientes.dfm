@@ -226,6 +226,19 @@ object frmPacientes: TfrmPacientes
         Height = 20
         Caption = 'Conv'#234'nio:'
       end
+      object Label5: TLabel
+        Left = 947
+        Top = 185
+        Width = 136
+        Height = 20
+        Caption = 'Data de nascimento:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+      end
       object cmbConvenio: TComboBox
         Left = 408
         Top = 154
@@ -288,7 +301,7 @@ object frmPacientes: TfrmPacientes
         Left = 123
         Top = 153
         Width = 233
-        Height = 26
+        Height = 28
         Hint = 'CPF'
         Enabled = False
         EditMask = '000\.000\.000\-00;1;_'
@@ -301,7 +314,7 @@ object frmPacientes: TfrmPacientes
         Left = 947
         Top = 153
         Width = 231
-        Height = 29
+        Height = 28
         Hint = 'Endere'#231'o'
         ReadOnly = True
         TabOrder = 6
@@ -351,7 +364,7 @@ object frmPacientes: TfrmPacientes
       end
       object dbPacientes: TDBGrid
         AlignWithMargins = True
-        Left = 123
+        Left = 126
         Top = 339
         Width = 1033
         Height = 169
@@ -495,6 +508,20 @@ object frmPacientes: TfrmPacientes
             Title.Font.Style = [fsBold]
             Visible = True
           end>
+      end
+      object DatePicker1: TDatePicker
+        Left = 947
+        Top = 211
+        Width = 231
+        Height = 28
+        Date = 45051.000000000000000000
+        DateFormat = 'dd/MM/yyyy'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        TabOrder = 12
       end
     end
     object Panel3: TPanel

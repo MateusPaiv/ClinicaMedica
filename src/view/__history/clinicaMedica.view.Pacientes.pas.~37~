@@ -13,7 +13,7 @@ uses
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, REST.Client, Data.Bind.Components, Data.Bind.ObjectScope,
   REST.Response.Adapter, clinicaMedica.view.Funcionarios, System.ImageList,
-  Vcl.ImgList, PngImageList, Vcl.Grids, Vcl.DBGrids;
+  Vcl.ImgList, PngImageList, Vcl.Grids, Vcl.DBGrids, Vcl.WinXPickers;
 
 type
   TfrmPacientes = class(TForm)
@@ -54,6 +54,8 @@ type
     btnSair: TSpeedButton;
     Png: TPngImageList;
     dbPacientes: TDBGrid;
+    DatePicker1: TDatePicker;
+    Label5: TLabel;
     procedure btnSalvarClick(Sender: TObject);
     procedure btnEditClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -110,6 +112,7 @@ begin
   dm.tbPaci.fieldbyname('bairro_paci').Value := edtBairro.Text;
   dm.tbPaci.fieldbyname('cidade_paci').Value := edtMunicipio.Text;
   dm.tbPaci.fieldbyname('datacadastro').Value := Data;
+  dm.tbPaci.fieldbyname('data_nascimento').Value := DatePicker1.Date;
 end;
 
 procedure TfrmPacientes.btnBuscaCEPClick(Sender: TObject);
@@ -242,6 +245,19 @@ begin
     edtCelular.SetFocus;
     exit;
   end;
+  cpfLimpo := '';
+  for i := 1 to Length(edtCpf.Text) do
+  begin
+    if pos(Copy(edtCpf.Text, i, 1), '"!%$#@&*().,:;/<>[]{}=+-_\|') = 0 then
+    begin
+      cpfLimpo := cpfLimpo + Copy(edtCpf.Text, i, 1);
+    end;
+  end;
+
+  if validaCPf(cpfLimpo) = false then
+  begin
+    exit;
+  end;
 
   numeroLimpoRecado := verificaNumero(edtCelRecado.Text);
 
@@ -317,6 +333,8 @@ begin
   carregarComboBox;
   btnEdit.Enabled := true;
   btnSalvar.Enabled := false;
+
+  DatePicker1.Enabled := false;
 
   dm.qryConv.Close;
   dm.qryConv.SQL.Clear;
@@ -406,7 +424,7 @@ begin
   edtNumero.Text := dm.qryPaci.fieldbyname('numerocasa_paci').Value;
   edtBairro.Text := dm.qryPaci.fieldbyname('bairro_paci').Value;
   edtMunicipio.Text := dm.qryPaci.fieldbyname('cidade_paci').Value;
-
+  DatePicker1.Date := dm.qryPaci.fieldbyname('data_nascimento').Value;
   id := dm.qryPaci.fieldbyname('id_paci').Value;
   edtCpf.Enabled := false;
 end;

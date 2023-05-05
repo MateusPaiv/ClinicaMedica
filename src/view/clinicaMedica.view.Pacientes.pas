@@ -13,7 +13,7 @@ uses
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, REST.Client, Data.Bind.Components, Data.Bind.ObjectScope,
   REST.Response.Adapter, clinicaMedica.view.Funcionarios, System.ImageList,
-  Vcl.ImgList, PngImageList, Vcl.Grids, Vcl.DBGrids;
+  Vcl.ImgList, PngImageList, Vcl.Grids, Vcl.DBGrids, Vcl.WinXPickers;
 
 type
   TfrmPacientes = class(TForm)
@@ -54,6 +54,8 @@ type
     btnSair: TSpeedButton;
     Png: TPngImageList;
     dbPacientes: TDBGrid;
+    DatePicker1: TDatePicker;
+    Label5: TLabel;
     procedure btnSalvarClick(Sender: TObject);
     procedure btnEditClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -72,9 +74,6 @@ type
     procedure habilitarCampos;
     procedure desabilitarCampos;
     procedure listar;
-    procedure listarConsultas;
-    procedure listarConsultasRealizadas;
-    procedure ListarConsultasMedico;
     procedure carregarComboBox;
     procedure verificaConsHoje;
     procedure ConsultarCEP(cep: string);
@@ -110,6 +109,7 @@ begin
   dm.tbPaci.fieldbyname('bairro_paci').Value := edtBairro.Text;
   dm.tbPaci.fieldbyname('cidade_paci').Value := edtMunicipio.Text;
   dm.tbPaci.fieldbyname('datacadastro').Value := Data;
+  dm.tbPaci.fieldbyname('data_nascimento').Value := DatePicker1.Date;
 end;
 
 procedure TfrmPacientes.btnBuscaCEPClick(Sender: TObject);
@@ -331,6 +331,8 @@ begin
   btnEdit.Enabled := true;
   btnSalvar.Enabled := false;
 
+  DatePicker1.Enabled := false;
+
   dm.qryConv.Close;
   dm.qryConv.SQL.Clear;
   dm.qryConv.SQL.add('select nome_conv from convenios where id_conv = :conv');
@@ -419,7 +421,7 @@ begin
   edtNumero.Text := dm.qryPaci.fieldbyname('numerocasa_paci').Value;
   edtBairro.Text := dm.qryPaci.fieldbyname('bairro_paci').Value;
   edtMunicipio.Text := dm.qryPaci.fieldbyname('cidade_paci').Value;
-
+  DatePicker1.Date := dm.qryPaci.fieldbyname('data_nascimento').Value;
   id := dm.qryPaci.fieldbyname('id_paci').Value;
   edtCpf.Enabled := false;
 end;
@@ -437,6 +439,7 @@ begin
   edtNumero.Enabled := false;
   edtBairro.Enabled := false;
   edtMunicipio.Enabled := false;
+  DatePicker1.Enabled := false;
 end;
 
 procedure TfrmPacientes.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -472,6 +475,7 @@ begin
   edtNumero.Enabled := true;
   edtBairro.Enabled := true;
   edtMunicipio.Enabled := true;
+  DatePicker1.Enabled := true;
 end;
 
 procedure TfrmPacientes.listar;
@@ -481,21 +485,6 @@ begin
   dm.qryPaci.SQL.add
     ('SELECT p.*, c.nome_conv FROM pacientes as p inner join convenios as c on p.convenio_paci = c.id_conv');
   dm.qryPaci.Open;
-end;
-
-procedure TfrmPacientes.listarConsultas;
-begin
-
-end;
-
-procedure TfrmPacientes.ListarConsultasMedico;
-begin
-
-end;
-
-procedure TfrmPacientes.listarConsultasRealizadas;
-begin
-
 end;
 
 function TfrmPacientes.validaCPf(cpf: string): boolean;

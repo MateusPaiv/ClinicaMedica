@@ -3,8 +3,8 @@ object frmPacientes: TfrmPacientes
   Top = 0
   BorderStyle = bsNone
   Caption = 'frmPacientes'
-  ClientHeight = 567
-  ClientWidth = 1387
+  ClientHeight = 601
+  ClientWidth = 1278
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,49 +14,34 @@ object frmPacientes: TfrmPacientes
   OldCreateOrder = False
   Position = poMainFormCenter
   OnClose = FormClose
+  OnKeyDown = FormKeyDown
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 20
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1387
-    Height = 567
+    Width = 1278
+    Height = 601
     Align = alClient
     BevelOuter = bvNone
     Color = clWhite
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1371
-    ExplicitHeight = 528
-    object Label16: TLabel
-      Left = 570
-      Top = 25
-      Width = 213
-      Height = 30
-      Alignment = taCenter
-      Caption = 'Cadastro de Pacientes'
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clHotLight
-      Font.Height = -21
-      Font.Name = 'Segoe UI'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
     object Panel2: TPanel
       Left = 0
-      Top = 135
-      Width = 1387
-      Height = 432
-      Align = alBottom
+      Top = 65
+      Width = 1278
+      Height = 536
+      Align = alClient
       BevelOuter = bvNone
+      Color = clMenu
+      ParentBackground = False
       TabOrder = 0
-      ExplicitLeft = 64
-      ExplicitTop = 88
-      ExplicitWidth = 1371
+      ExplicitTop = 71
       object btnBuscaCEP: TImage
-        Left = 952
-        Top = 145
+        Left = 872
+        Top = 153
         Width = 30
         Height = 29
         Cursor = crHandPoint
@@ -100,7 +85,7 @@ object frmPacientes: TfrmPacientes
         OnClick = btnBuscaCEPClick
       end
       object btnCadastrar: TSpeedButton
-        Left = 655
+        Left = 559
         Top = 266
         Width = 153
         Height = 54
@@ -111,7 +96,7 @@ object frmPacientes: TfrmPacientes
         OnClick = btnCadastrarClick
       end
       object btnEdit: TSpeedButton
-        Left = 423
+        Left = 351
         Top = 266
         Width = 169
         Height = 54
@@ -130,7 +115,7 @@ object frmPacientes: TfrmPacientes
         OnClick = btnEditClick
       end
       object btnSalvar: TSpeedButton
-        Left = 203
+        Left = 126
         Top = 266
         Width = 169
         Height = 54
@@ -149,15 +134,15 @@ object frmPacientes: TfrmPacientes
         OnClick = btnSalvarClick
       end
       object Label1: TLabel
-        Left = 758
-        Top = 60
+        Left = 678
+        Top = 68
         Width = 133
         Height = 20
         Caption = 'Celular para recado:'
       end
       object Label10: TLabel
-        Left = 758
-        Top = 127
+        Left = 678
+        Top = 135
         Width = 28
         Height = 20
         Caption = 'CEP:'
@@ -169,8 +154,8 @@ object frmPacientes: TfrmPacientes
         ParentFont = False
       end
       object Label11: TLabel
-        Left = 1027
-        Top = 127
+        Left = 947
+        Top = 135
         Width = 65
         Height = 20
         Caption = 'Endere'#231'o:'
@@ -182,8 +167,8 @@ object frmPacientes: TfrmPacientes
         ParentFont = False
       end
       object Label12: TLabel
-        Left = 203
-        Top = 177
+        Left = 123
+        Top = 185
         Width = 92
         Height = 20
         Caption = 'N'#250'mero Casa:'
@@ -195,8 +180,8 @@ object frmPacientes: TfrmPacientes
         ParentFont = False
       end
       object Label13: TLabel
-        Left = 488
-        Top = 180
+        Left = 408
+        Top = 188
         Width = 43
         Height = 20
         Caption = 'Bairro:'
@@ -208,8 +193,8 @@ object frmPacientes: TfrmPacientes
         ParentFont = False
       end
       object Label14: TLabel
-        Left = 758
-        Top = 180
+        Left = 678
+        Top = 188
         Width = 50
         Height = 20
         Caption = 'Cidade:'
@@ -221,48 +206,48 @@ object frmPacientes: TfrmPacientes
         ParentFont = False
       end
       object Label2: TLabel
-        Left = 488
-        Top = 60
+        Left = 408
+        Top = 68
         Width = 49
         Height = 20
         Caption = 'Celular:'
       end
       object Label3: TLabel
-        Left = 203
-        Top = 128
+        Left = 126
+        Top = 135
         Width = 27
         Height = 20
         Caption = 'CPF:'
       end
       object Label4: TLabel
-        Left = 488
-        Top = 128
+        Left = 408
+        Top = 136
         Width = 65
         Height = 20
         Caption = 'Conv'#234'nio:'
       end
       object cmbConvenio: TComboBox
-        Left = 488
-        Top = 146
+        Left = 408
+        Top = 154
         Width = 224
         Height = 28
         Hint = 'Conv'#234'nio'
-        TabOrder = 0
+        TabOrder = 5
       end
       object edtBairro: TEdit
         Tag = 5
-        Left = 488
-        Top = 203
+        Left = 408
+        Top = 214
         Width = 224
         Height = 28
         Hint = 'Municipio'
         ReadOnly = True
-        TabOrder = 1
+        TabOrder = 8
       end
       object edtCelRecado: TMaskEdit
         Tag = 5
-        Left = 758
-        Top = 81
+        Left = 679
+        Top = 94
         Width = 223
         Height = 28
         Hint = 'Celular'
@@ -274,66 +259,66 @@ object frmPacientes: TfrmPacientes
       end
       object edtCelular: TMaskEdit
         Tag = 5
-        Left = 488
-        Top = 81
+        Left = 408
+        Top = 89
         Width = 221
         Height = 28
         Hint = 'Celular'
         Enabled = False
         EditMask = '!\(99\)00000-0000;1;_'
         MaxLength = 14
-        TabOrder = 3
+        TabOrder = 1
         Text = '(  )     -    '
       end
       object edtCep: TMaskEdit
         Tag = 5
-        Left = 758
-        Top = 146
+        Left = 678
+        Top = 154
         Width = 194
         Height = 28
         Hint = 'CEP'
         Enabled = False
         EditMask = '00000\-999;1;_'
         MaxLength = 9
-        TabOrder = 4
+        TabOrder = 10
         Text = '     -   '
       end
       object edtCpf: TMaskEdit
         Tag = 5
-        Left = 203
-        Top = 146
+        Left = 123
+        Top = 153
         Width = 233
-        Height = 28
+        Height = 26
         Hint = 'CPF'
         Enabled = False
         EditMask = '000\.000\.000\-00;1;_'
         MaxLength = 14
-        TabOrder = 5
+        TabOrder = 4
         Text = '   .   .   -  '
       end
       object edtEndereco: TEdit
         Tag = 5
-        Left = 1027
-        Top = 146
+        Left = 947
+        Top = 153
         Width = 231
-        Height = 28
+        Height = 29
         Hint = 'Endere'#231'o'
         ReadOnly = True
         TabOrder = 6
       end
       object edtMunicipio: TEdit
         Tag = 5
-        Left = 758
-        Top = 203
+        Left = 678
+        Top = 211
         Width = 232
         Height = 28
         Hint = 'Municipio'
         ReadOnly = True
-        TabOrder = 7
+        TabOrder = 9
       end
       object edtNomePaci: TLabeledEdit
-        Left = 203
-        Top = 81
+        Left = 123
+        Top = 89
         Width = 227
         Height = 28
         Hint = 'Nome'
@@ -341,39 +326,203 @@ object frmPacientes: TfrmPacientes
         EditLabel.Height = 20
         EditLabel.Caption = 'Nome Paciente:'
         Enabled = False
-        TabOrder = 8
+        TabOrder = 0
       end
       object edtNomeRecado: TLabeledEdit
-        Left = 1027
-        Top = 81
+        Left = 947
+        Top = 89
         Width = 231
         Height = 28
         EditLabel.Width = 98
         EditLabel.Height = 20
         EditLabel.Caption = 'Nome Recado:'
         Enabled = False
-        TabOrder = 9
+        TabOrder = 3
       end
       object edtNumero: TEdit
         Tag = 5
-        Left = 203
-        Top = 203
+        Left = 123
+        Top = 211
         Width = 233
         Height = 28
         Hint = 'N'#250'mero casa'
         Enabled = False
-        TabOrder = 10
+        TabOrder = 7
+      end
+      object dbPacientes: TDBGrid
+        AlignWithMargins = True
+        Left = 123
+        Top = 339
+        Width = 1033
+        Height = 169
+        Margins.Left = 200
+        Margins.Top = 0
+        Margins.Right = 200
+        Margins.Bottom = 40
+        DataSource = dm.dsPaci
+        Options = [dgTitles, dgColumnResize, dgColLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+        TabOrder = 11
+        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -15
+        TitleFont.Name = 'Segoe UI'
+        TitleFont.Style = []
+        OnCellClick = dbPacientesCellClick
+        Columns = <
+          item
+            Expanded = False
+            FieldName = 'id_paci'
+            Title.Caption = 'C'#243'digo'
+            Title.Font.Charset = ANSI_CHARSET
+            Title.Font.Color = clWindowText
+            Title.Font.Height = -15
+            Title.Font.Name = 'Segoe UI'
+            Title.Font.Style = [fsBold]
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'nome_paci'
+            Title.Caption = 'Nome do Paciente'
+            Title.Font.Charset = ANSI_CHARSET
+            Title.Font.Color = clWindowText
+            Title.Font.Height = -15
+            Title.Font.Name = 'Segoe UI'
+            Title.Font.Style = [fsBold]
+            Width = 200
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'numero_paci'
+            Title.Caption = 'N'#250'mero'
+            Title.Font.Charset = ANSI_CHARSET
+            Title.Font.Color = clWindowText
+            Title.Font.Height = -15
+            Title.Font.Name = 'Segoe UI'
+            Title.Font.Style = [fsBold]
+            Width = 100
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'nome_conv'
+            Title.Caption = 'Conv'#234'nio'
+            Title.Font.Charset = ANSI_CHARSET
+            Title.Font.Color = clWindowText
+            Title.Font.Height = -15
+            Title.Font.Name = 'Segoe UI'
+            Title.Font.Style = [fsBold]
+            Width = 100
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'nome_recado_paci'
+            Title.Caption = 'Nome para Recado'
+            Title.Font.Charset = ANSI_CHARSET
+            Title.Font.Color = clWindowText
+            Title.Font.Height = -15
+            Title.Font.Name = 'Segoe UI'
+            Title.Font.Style = [fsBold]
+            Width = 150
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'numero_recado_paci'
+            Title.Caption = 'N'#250'mero para Recado'
+            Title.Font.Charset = ANSI_CHARSET
+            Title.Font.Color = clWindowText
+            Title.Font.Height = -15
+            Title.Font.Name = 'Segoe UI'
+            Title.Font.Style = [fsBold]
+            Width = 150
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'cep_paci'
+            Title.Caption = 'CEP'
+            Title.Font.Charset = ANSI_CHARSET
+            Title.Font.Color = clWindowText
+            Title.Font.Height = -15
+            Title.Font.Name = 'Segoe UI'
+            Title.Font.Style = [fsBold]
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'endereco'
+            Title.Caption = 'Endere'#231'o'
+            Title.Font.Charset = ANSI_CHARSET
+            Title.Font.Color = clWindowText
+            Title.Font.Height = -15
+            Title.Font.Name = 'Segoe UI'
+            Title.Font.Style = [fsBold]
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'numerocasa_paci'
+            Title.Caption = 'N'#250'mero Casa'
+            Title.Font.Charset = ANSI_CHARSET
+            Title.Font.Color = clWindowText
+            Title.Font.Height = -15
+            Title.Font.Name = 'Segoe UI'
+            Title.Font.Style = [fsBold]
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'bairro_paci'
+            Title.Caption = 'Bairro'
+            Title.Font.Charset = ANSI_CHARSET
+            Title.Font.Color = clWindowText
+            Title.Font.Height = -15
+            Title.Font.Name = 'Segoe UI'
+            Title.Font.Style = [fsBold]
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'cidade_paci'
+            Title.Caption = 'Cidade'
+            Title.Font.Charset = ANSI_CHARSET
+            Title.Font.Color = clWindowText
+            Title.Font.Height = -15
+            Title.Font.Name = 'Segoe UI'
+            Title.Font.Style = [fsBold]
+            Visible = True
+          end>
       end
     end
     object Panel3: TPanel
       Left = 0
       Top = 0
-      Width = 1387
+      Width = 1278
       Height = 65
       Align = alTop
       BevelOuter = bvNone
+      Color = clMenu
+      ParentBackground = False
       TabOrder = 1
-      ExplicitWidth = 1371
+      object Label16: TLabel
+        Left = 515
+        Top = 14
+        Width = 213
+        Height = 30
+        Alignment = taCenter
+        Caption = 'Cadastro de Pacientes'
+        Color = clMenu
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clHotLight
+        Font.Height = -21
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
       object pnlSair: TPanel
         Left = 0
         Top = 0
@@ -384,7 +533,6 @@ object frmPacientes: TfrmPacientes
         Color = clSkyBlue
         ParentBackground = False
         TabOrder = 0
-        ExplicitHeight = 73
         object btnSair: TSpeedButton
           Left = 0
           Top = 0

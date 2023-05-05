@@ -15,7 +15,8 @@ uses
   clinicaMedica.funcao.validaCampos, clinicaMedica.funcao.verificaCpf,
   clinicaMedica.funcao.verificaNumero, REST.Types, REST.Response.Adapter,
   REST.Client, Data.Bind.Components, Data.Bind.ObjectScope,
-  clinicaMedica.funcao.verificaemail, clinicaMedica.view.Cargos, Vcl.ExtDlgs;
+  clinicaMedica.funcao.verificaemail, clinicaMedica.view.Cargos, Vcl.ExtDlgs,
+  Vcl.WinXPickers;
 
 type
   TfrmFuncionarios = class(TForm)
@@ -72,6 +73,8 @@ type
     SpeedButton1: TSpeedButton;
     Label1: TLabel;
     btnGerarCarteirinha: TSpeedButton;
+    DatePicker1: TDatePicker;
+    Label6: TLabel;
 
     procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
@@ -149,6 +152,7 @@ begin
   dm.tbFunc.FieldByName('uf_func').Value := edtUf.Text;
   dm.tbFunc.FieldByName('numerocasa_func').Value := edtNumero.Text;
   dm.tbFunc.FieldByName('datacadastro').Value := Data;
+  dm.tbFunc.FieldByName('data_nascimento').Value := DatePicker1.Date;
 
 end;
 
@@ -340,6 +344,7 @@ begin
 
   retornoGetNomeCargo :=
     getNomeCargo(dm.qryFunc.FieldByName('cargo_func').Value);
+
   cmbCargo.Text := retornoGetNomeCargo;
   edtRemuneracao.Text := dm.qryFunc.FieldByName('remuneracao_func').Value;
   edtCep.Text := dm.qryFunc.FieldByName('cep_func').Value;
@@ -349,6 +354,9 @@ begin
   edtComplemento.Text := dm.qryFunc.FieldByName('complemento_func').Value;
   edtMunioipio.Text := dm.qryFunc.FieldByName('cidade_func').Value;
   edtUf.Text := dm.qryFunc.FieldByName('uf_func').Value;
+  DatePicker1.Date := dm.qryFunc.FieldByName('data_nascimento').Value;
+  DatePicker1.Enabled := false;
+
   if dm.qryFunc.FieldByName('endereco_func').Value <> null then
   begin
     edtEndereco.Text := dm.qryFunc.FieldByName('endereco_func').Value;
@@ -404,6 +412,7 @@ begin
   edtNumero.Enabled := false;
   edtComplemento.Enabled := false;
   btnBuscaCEP.Enabled := false;
+  DatePicker1.Enabled := false;
 end;
 
 procedure TfrmFuncionarios.edtBuscaCPFChange(Sender: TObject);
@@ -483,6 +492,7 @@ begin
   edtNumero.Enabled := true;
   edtComplemento.Enabled := true;
   btnBuscaCEP.Enabled := true;
+  DatePicker1.Enabled := true;
 end;
 
 procedure TfrmFuncionarios.btnBuscaCEPClick(Sender: TObject);
@@ -494,7 +504,8 @@ procedure TfrmFuncionarios.listar;
 begin
   dm.qryFunc.Close;
   dm.qryFunc.SQL.Clear;
-  dm.qryFunc.SQL.Add('select funcionarios.*, cargos.cargo from funcionarios inner join cargos on funcionarios.cargo_func = cargos.id_carg');
+  dm.qryFunc.SQL.Add
+    ('select funcionarios.*, cargos.cargo from funcionarios inner join cargos on funcionarios.cargo_func = cargos.id_carg');
   dm.qryFunc.Open;
 end;
 

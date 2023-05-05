@@ -3,8 +3,8 @@ object frmFuncionarios: TfrmFuncionarios
   Top = 0
   BorderStyle = bsNone
   Caption = 'frmFuncionarios'
-  ClientHeight = 798
-  ClientWidth = 1394
+  ClientHeight = 795
+  ClientWidth = 1335
   Color = clBtnHighlight
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,8 +22,8 @@ object frmFuncionarios: TfrmFuncionarios
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1394
-    Height = 798
+    Width = 1335
+    Height = 795
     Align = alClient
     Color = clMenu
     Font.Charset = DEFAULT_CHARSET
@@ -37,8 +37,8 @@ object frmFuncionarios: TfrmFuncionarios
     object DBGrid1: TDBGrid
       AlignWithMargins = True
       Left = 11
-      Top = 415
-      Width = 1372
+      Top = 412
+      Width = 1313
       Height = 372
       Margins.Left = 10
       Margins.Top = 10
@@ -166,7 +166,7 @@ object frmFuncionarios: TfrmFuncionarios
     object pnlTop: TPanel
       Left = 1
       Top = 1
-      Width = 1392
+      Width = 1333
       Height = 64
       Align = alTop
       BevelOuter = bvNone
@@ -202,7 +202,7 @@ object frmFuncionarios: TfrmFuncionarios
       AlignWithMargins = True
       Left = 4
       Top = 68
-      Width = 1386
+      Width = 1327
       Height = 69
       Align = alTop
       BevelOuter = bvNone
@@ -220,20 +220,32 @@ object frmFuncionarios: TfrmFuncionarios
       object lblBusca: TLabel
         Left = 264
         Top = 22
-        Width = 173
-        Height = 17
+        Width = 195
+        Height = 20
         Caption = 'Digite o nome para pesquisa:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
         Visible = False
       end
       object Label15: TLabel
         Left = 43
         Top = 27
-        Width = 177
-        Height = 17
+        Width = 200
+        Height = 20
         Caption = 'Selecione o m'#233'todo de busca:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
       end
       object SpeedButton1: TSpeedButton
-        Left = 1256
+        Left = 1176
         Top = 3
         Width = 107
         Height = 49
@@ -250,7 +262,7 @@ object frmFuncionarios: TfrmFuncionarios
         OnClick = SpeedButton1Click
       end
       object btnEdit: TSpeedButton
-        Left = 1116
+        Left = 1044
         Top = 3
         Width = 108
         Height = 49
@@ -269,7 +281,7 @@ object frmFuncionarios: TfrmFuncionarios
         OnClick = btnEditClick
       end
       object btnCadastrar: TSpeedButton
-        Left = 994
+        Left = 906
         Top = 3
         Width = 108
         Height = 49
@@ -283,8 +295,14 @@ object frmFuncionarios: TfrmFuncionarios
         Left = 264
         Top = 43
         Width = 233
-        Height = 25
+        Height = 28
         Enabled = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 0
         Visible = False
         OnChange = edtBuscaNomeChange
@@ -295,6 +313,12 @@ object frmFuncionarios: TfrmFuncionarios
         Width = 104
         Height = 17
         Caption = 'NOME'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 1
         OnClick = rdNomeClick
       end
@@ -304,19 +328,31 @@ object frmFuncionarios: TfrmFuncionarios
         Width = 55
         Height = 17
         Caption = 'CPF'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 2
         OnClick = rdCPFClick
       end
       object edtBuscaCPF: TMaskEdit
         Tag = 5
         Left = 264
-        Top = 43
+        Top = 45
         Width = 233
-        Height = 25
+        Height = 28
         Hint = 'CPF'
         Enabled = False
         EditMask = '000\.000\.000\-00;1;_'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
         MaxLength = 14
+        ParentFont = False
         TabOrder = 3
         Text = '   .   .   -  '
         Visible = False
@@ -326,8 +362,8 @@ object frmFuncionarios: TfrmFuncionarios
     object pnlCadastros: TPanel
       Left = 1
       Top = 140
-      Width = 1392
-      Height = 265
+      Width = 1333
+      Height = 262
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 3
@@ -557,21 +593,6 @@ object frmFuncionarios: TfrmFuncionarios
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-      end
-      object Image1: TImage
-        Left = 1057
-        Top = 3
-        Width = 250
-        Height = 209
-        Center = True
-      end
-      object btnSelecionarImagem: TSpeedButton
-        Left = 1113
-        Top = 221
-        Width = 139
-        Height = 41
-        Caption = 'SELECIONAR IMAGEM'
-        OnClick = btnSelecionarImagemClick
       end
       object btnSalvar: TSpeedButton
         Left = 829
@@ -1115,10 +1136,6 @@ object frmFuncionarios: TfrmFuncionarios
     UpdateOptions.CheckRequired = False
     StoreDefs = True
     Left = 272
-    Top = 16
-  end
-  object OpenPictureDialog1: TOpenPictureDialog
-    Left = 864
     Top = 16
   end
 end

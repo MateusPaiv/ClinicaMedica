@@ -13,7 +13,7 @@ uses
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, REST.Client, Data.Bind.Components, Data.Bind.ObjectScope,
   REST.Response.Adapter, clinicaMedica.view.Funcionarios, System.ImageList,
-  Vcl.ImgList, PngImageList;
+  Vcl.ImgList, PngImageList, Vcl.Grids, Vcl.DBGrids, Vcl.WinXPickers;
 
 type
   TfrmPacientes = class(TForm)
@@ -53,12 +53,18 @@ type
     pnlSair: TPanel;
     btnSair: TSpeedButton;
     Png: TPngImageList;
+    dbPacientes: TDBGrid;
+    DatePicker1: TDatePicker;
+    Label5: TLabel;
     procedure btnSalvarClick(Sender: TObject);
     procedure btnEditClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnSairClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnCadastrarClick(Sender: TObject);
+    procedure btnBuscaCEPClick(Sender: TObject);
+    procedure dbPacientesCellClick(Column: TColumn);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
   public
@@ -106,6 +112,12 @@ begin
   dm.tbPaci.fieldbyname('bairro_paci').Value := edtBairro.Text;
   dm.tbPaci.fieldbyname('cidade_paci').Value := edtMunicipio.Text;
   dm.tbPaci.fieldbyname('datacadastro').Value := Data;
+  dm.tbPaci.fieldbyname('data_nascimento').Value := DatePicker1.Date;
+end;
+
+procedure TfrmPacientes.btnBuscaCEPClick(Sender: TObject);
+begin
+  ConsultarCEP(RemoveCaracteres(edtCep.Text));
 end;
 
 procedure TfrmPacientes.btnCadastrarClick(Sender: TObject);
@@ -233,6 +245,19 @@ begin
     edtCelular.SetFocus;
     exit;
   end;
+  cpfLimpo := '';
+  for i := 1 to Length(edtCpf.Text) do
+  begin
+    if pos(Copy(edtCpf.Text, i, 1), '"!%$#@&*().,:;/<>[]{}=+-_\|') = 0 then
+    begin
+      cpfLimpo := cpfLimpo + Copy(edtCpf.Text, i, 1);
+    end;
+  end;
+
+  if validaCPf(cpfLimpo) = false then
+  begin
+    exit;
+  end;
 
   numeroLimpoRecado := verificaNumero(edtCelRecado.Text);
 
@@ -300,6 +325,110 @@ begin
   end;
 end;
 
+procedure TfrmPacientes.dbPacientesCellClick(Column: TColumn);
+var
+  i: Integer;
+begin
+  habilitarCampos;
+  carregarComboBox;
+  btnEdit.Enabled := true;
+  btnSalvar.Enabled := false;
+
+  DatePicker1.Enabled := false;
+
+  dm.qryConv.Close;
+  dm.qryConv.SQL.Clear;
+  dm.qryConv.SQL.add('select nome_conv from convenios where id_conv = :conv');
+  dm.qryConv.ParamByName('conv').Value :=
+    dm.qryPaci.fieldbyname('convenio_paci').Value;
+  dm.qryConv.Open;
+
+  cmbConvenio.Text := dm.qryConv.fieldbyname('nome_conv').Value;
+  edtNomePaci.Text := dm.qryPaci.fieldbyname('nome_paci').Value;
+  // PREENCHE OS CAMPO DE CPF
+  cpfLimpo := '';
+  for i := 1 to Length(dm.qryPaci.fieldbyname('cpf_paci').Value) do
+  begin
+    if pos(Copy(dm.qryPaci.fieldbyname('cpf_paci').Value, i, 1),
+      '"!%$#@&*().,:;/<>[]{}=+-_\|') = 0 then
+    begin
+      cpfLimpo := cpfLimpo + Copy(dm.qryPaci.fieldbyname('cpf_paci')
+        .Value, i, 1);
+      case i of
+        3:
+          cpfLimpo := cpfLimpo + '.';
+        6:
+          cpfLimpo := cpfLimpo + '.';
+        9:
+          cpfLimpo := cpfLimpo + '-';
+      end;
+
+    end;
+  end;
+
+  // PREENCHE OS CAMPOS DE TELFONE
+  if dm.qryPaci.fieldbyname('numero_paci').Value <> null then
+  begin
+    nmrLimpo := '';
+    for i := 0 to Length(dm.qryPaci.fieldbyname('numero_paci').Value) do
+    begin
+      if pos(Copy(dm.qryPaci.fieldbyname('numero_paci').Value, i, 1),
+        '"!%$#@&*().,:;/<>[]{}=+-_\|') = 0 then
+      begin
+
+        nmrLimpo := nmrLimpo + Copy(dm.qryPaci.fieldbyname('numero_paci')
+          .Value, i, 1);
+        case i of
+          0:
+            nmrLimpo := nmrLimpo + '(';
+          2:
+            nmrLimpo := nmrLimpo + ')';
+          7:
+            nmrLimpo := nmrLimpo + '-';
+        end;
+
+      end;
+    end;
+
+  end;
+  if dm.qryPaci.fieldbyname('numero_recado_paci').Value <> null then
+  begin
+    numeroLimpoRecado := '';
+    for i := 0 to Length(dm.qryPaci.fieldbyname('numero_recado_paci').Value) do
+    begin
+      if pos(Copy(dm.qryPaci.fieldbyname('numero_recado_paci').Value, i, 1),
+        '"!%$#@&*().,:;/<>[]{}=+-_\|') = 0 then
+      begin
+
+        numeroLimpoRecado := numeroLimpoRecado +
+          Copy(dm.qryPaci.fieldbyname('numero_recado_paci').Value, i, 1);
+        case i of
+          0:
+            numeroLimpoRecado := numeroLimpoRecado + '(';
+          2:
+            numeroLimpoRecado := numeroLimpoRecado + ')';
+          7:
+            numeroLimpoRecado := numeroLimpoRecado + '-';
+        end;
+
+      end;
+    end;
+
+  end;
+  edtCelRecado.Text := numeroLimpoRecado;
+  edtCelular.Text := nmrLimpo;
+  edtCpf.Text := cpfLimpo;
+  edtNomeRecado.Text := dm.qryPaci.fieldbyname('nome_recado_paci').Value;
+  edtCep.Text := dm.qryPaci.fieldbyname('cep_paci').Value;
+  edtEndereco.Text := dm.qryPaci.fieldbyname('endereco').Value;
+  edtNumero.Text := dm.qryPaci.fieldbyname('numerocasa_paci').Value;
+  edtBairro.Text := dm.qryPaci.fieldbyname('bairro_paci').Value;
+  edtMunicipio.Text := dm.qryPaci.fieldbyname('cidade_paci').Value;
+  DatePicker1.Date := dm.qryPaci.fieldbyname('data_nascimento').Value;
+  id := dm.qryPaci.fieldbyname('id_paci').Value;
+  edtCpf.Enabled := false;
+end;
+
 procedure TfrmPacientes.desabilitarCampos;
 begin
   edtNomePaci.Enabled := false;
@@ -313,11 +442,21 @@ begin
   edtNumero.Enabled := false;
   edtBairro.Enabled := false;
   edtMunicipio.Enabled := false;
+  DatePicker1.Enabled := false;
 end;
 
 procedure TfrmPacientes.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Action := cafree;
+end;
+
+procedure TfrmPacientes.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_ESCAPE then
+  begin
+    Close;
+  end;
 end;
 
 procedure TfrmPacientes.FormShow(Sender: TObject);
@@ -339,6 +478,7 @@ begin
   edtNumero.Enabled := true;
   edtBairro.Enabled := true;
   edtMunicipio.Enabled := true;
+  DatePicker1.Enabled := true;
 end;
 
 procedure TfrmPacientes.listar;

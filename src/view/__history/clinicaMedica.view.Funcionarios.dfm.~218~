@@ -1,65 +1,548 @@
-object frmPacientes: TfrmPacientes
+object frmFuncionarios: TfrmFuncionarios
   Left = 0
   Top = 0
   BorderStyle = bsNone
-  Caption = 'frmPacientes'
-  ClientHeight = 601
-  ClientWidth = 1387
-  Color = clBtnFace
+  Caption = 'frmFuncionarios'
+  ClientHeight = 795
+  ClientWidth = 1335
+  Color = clBtnHighlight
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -15
   Font.Name = 'Segoe UI'
   Font.Style = []
   OldCreateOrder = False
-  Position = poMainFormCenter
+  Position = poScreenCenter
   OnClose = FormClose
+  OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 20
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1387
-    Height = 601
+    Width = 1335
+    Height = 795
     Align = alClient
-    BevelOuter = bvNone
-    Color = clWhite
+    Color = clMenu
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Style = []
     ParentBackground = False
+    ParentFont = False
     TabOrder = 0
-    ExplicitWidth = 1371
-    ExplicitHeight = 528
-    object Label16: TLabel
-      Left = 570
-      Top = 25
-      Width = 213
-      Height = 30
-      Alignment = taCenter
-      Caption = 'Cadastro de Pacientes'
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clHotLight
-      Font.Height = -21
+    object DBGrid1: TDBGrid
+      AlignWithMargins = True
+      Left = 11
+      Top = 412
+      Width = 1313
+      Height = 372
+      Margins.Left = 10
+      Margins.Top = 10
+      Margins.Right = 10
+      Margins.Bottom = 10
+      Align = alBottom
+      DataSource = dm.dsFunc
+      DrawingStyle = gdsGradient
+      FixedColor = clWhite
+      GradientEndColor = 12615680
+      GradientStartColor = 16744448
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -13
       Font.Name = 'Segoe UI'
-      Font.Style = [fsBold]
+      Font.Style = []
+      Options = [dgTitles, dgColumnResize, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
       ParentFont = False
+      TabOrder = 0
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -11
+      TitleFont.Name = 'Segoe UI'
+      TitleFont.Style = []
+      OnCellClick = DBGrid1CellClick
+      OnDrawColumnCell = DBGrid1DrawColumnCell
+      OnDblClick = DBGrid1DblClick
+      OnExit = DBGrid1Exit
+      Columns = <
+        item
+          Color = clWhite
+          Expanded = False
+          FieldName = 'id_func'
+          Title.Caption = 'C'#243'digo'
+          Width = 56
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'cargo'
+          Title.Caption = 'Cargo'
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'nome_func'
+          Title.Caption = 'Nome'
+          Width = 50
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'email_func'
+          Title.Caption = 'E-mail'
+          Width = 200
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'datadeadmissao_func'
+          Title.Caption = 'Data De Admissao'
+          Width = 157
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'telefone_func'
+          Title.Caption = 'Telefone'
+          Width = 103
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'cep_func'
+          Title.Caption = 'CEP'
+          Width = 100
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'endereco_func'
+          Title.Caption = 'Endere'#231'o'
+          Width = 200
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'numerocasa_func'
+          Title.Caption = 'N'#250'mero'
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'bairro_func'
+          Title.Caption = 'Bairro'
+          Width = 130
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'cidade_func'
+          Title.Caption = 'Cidade'
+          Width = 130
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'uf_func'
+          Title.Caption = 'UF'
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'status'
+          Title.Caption = 'Ativo'
+          Width = 50
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'foto_func'
+          Visible = False
+        end>
     end
-    object Panel2: TPanel
-      Left = 0
-      Top = 65
-      Width = 1387
-      Height = 536
+    object pnlTop: TPanel
+      Left = 1
+      Top = 1
+      Width = 1333
+      Height = 64
+      Align = alTop
+      BevelOuter = bvNone
+      TabOrder = 1
+      object pnlSair: TPanel
+        Left = 0
+        Top = 0
+        Width = 82
+        Height = 64
+        Align = alLeft
+        BevelOuter = bvNone
+        Color = clSkyBlue
+        ParentBackground = False
+        TabOrder = 0
+        object btnSair: TSpeedButton
+          Left = 0
+          Top = 0
+          Width = 82
+          Height = 64
+          Cursor = crHandPoint
+          Align = alClient
+          ImageIndex = 3
+          ImageName = 'Exit_44px'
+          Images = Png
+          Flat = True
+          OnClick = btnSairClick
+          ExplicitTop = -3
+          ExplicitWidth = 70
+        end
+      end
+    end
+    object pnlBtnsAcoes: TPanel
+      AlignWithMargins = True
+      Left = 4
+      Top = 68
+      Width = 1327
+      Height = 69
+      Align = alTop
+      BevelOuter = bvNone
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      Padding.Left = 10
+      Padding.Top = 10
+      Padding.Right = 10
+      Padding.Bottom = 10
+      ParentFont = False
+      TabOrder = 2
+      object lblBusca: TLabel
+        Left = 264
+        Top = 22
+        Width = 195
+        Height = 20
+        Caption = 'Digite o nome para pesquisa:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        Visible = False
+      end
+      object Label15: TLabel
+        Left = 43
+        Top = 27
+        Width = 200
+        Height = 20
+        Caption = 'Selecione o m'#233'todo de busca:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+      end
+      object SpeedButton1: TSpeedButton
+        Left = 1176
+        Top = 3
+        Width = 107
+        Height = 49
+        Caption = 'CARGO'
+        ImageIndex = 4
+        ImageName = 'Plus_44px'
+        Images = Png
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        OnClick = SpeedButton1Click
+      end
+      object btnEdit: TSpeedButton
+        Left = 1044
+        Top = 3
+        Width = 108
+        Height = 49
+        Cursor = crHandPoint
+        Caption = 'EDITAR'
+        ImageIndex = 1
+        ImageName = 'Edit Profile_44px'
+        Images = Png
+        Enabled = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        OnClick = btnEditClick
+      end
+      object btnCadastrar: TSpeedButton
+        Left = 906
+        Top = 3
+        Width = 108
+        Height = 49
+        Caption = 'NOVO'
+        ImageIndex = 0
+        ImageName = 'Add User Male_44px'
+        Images = Png
+        OnClick = btnCadastrarClick
+      end
+      object edtBuscaNome: TEdit
+        Left = 264
+        Top = 43
+        Width = 233
+        Height = 28
+        Enabled = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 0
+        Visible = False
+        OnChange = edtBuscaNomeChange
+      end
+      object rdNome: TRadioButton
+        Left = 123
+        Top = 48
+        Width = 104
+        Height = 17
+        Caption = 'NOME'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 1
+        OnClick = rdNomeClick
+      end
+      object rdCPF: TRadioButton
+        Left = 62
+        Top = 48
+        Width = 55
+        Height = 17
+        Caption = 'CPF'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 2
+        OnClick = rdCPFClick
+      end
+      object edtBuscaCPF: TMaskEdit
+        Tag = 5
+        Left = 264
+        Top = 45
+        Width = 233
+        Height = 28
+        Hint = 'CPF'
+        Enabled = False
+        EditMask = '000\.000\.000\-00;1;_'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        MaxLength = 14
+        ParentFont = False
+        TabOrder = 3
+        Text = '   .   .   -  '
+        Visible = False
+        OnChange = edtBuscaCPFChange
+      end
+    end
+    object pnlCadastros: TPanel
+      Left = 1
+      Top = 140
+      Width = 1333
+      Height = 262
       Align = alClient
       BevelOuter = bvNone
-      TabOrder = 0
-      ExplicitLeft = 64
-      ExplicitTop = 88
-      ExplicitWidth = 1371
-      ExplicitHeight = 432
+      TabOrder = 3
+      ExplicitLeft = 25
+      ExplicitTop = 137
+      object Label5: TLabel
+        Left = 46
+        Top = 37
+        Width = 44
+        Height = 20
+        Caption = 'Nome:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+      end
+      object Label4: TLabel
+        Left = 294
+        Top = 37
+        Width = 46
+        Height = 20
+        Caption = 'E-mail:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+      end
+      object Label3: TLabel
+        Left = 526
+        Top = 37
+        Width = 27
+        Height = 20
+        Caption = 'CPF:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+      end
+      object Label2: TLabel
+        Left = 768
+        Top = 35
+        Width = 49
+        Height = 20
+        Caption = 'Celular:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+      end
+      object lblCargo: TLabel
+        Left = 46
+        Top = 87
+        Width = 43
+        Height = 20
+        Caption = 'Cargo:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+      end
+      object Label9: TLabel
+        Left = 294
+        Top = 87
+        Width = 94
+        Height = 20
+        Caption = 'Remunera'#231#227'o:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+      end
+      object Label7: TLabel
+        Left = 526
+        Top = 89
+        Width = 28
+        Height = 20
+        Caption = 'CEP:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+      end
+      object Label8: TLabel
+        Left = 766
+        Top = 87
+        Width = 65
+        Height = 20
+        Caption = 'Endere'#231'o:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+      end
+      object Label11: TLabel
+        Left = 46
+        Top = 140
+        Width = 92
+        Height = 20
+        Caption = 'N'#250'mero Casa:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+      end
+      object Label12: TLabel
+        Left = 294
+        Top = 142
+        Width = 43
+        Height = 20
+        Caption = 'Bairro:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+      end
+      object Label13: TLabel
+        Left = 526
+        Top = 141
+        Width = 98
+        Height = 20
+        Caption = 'Complemento:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+      end
+      object Label14: TLabel
+        Left = 768
+        Top = 142
+        Width = 50
+        Height = 20
+        Caption = 'Cidade:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+      end
+      object lblMunicipio: TLabel
+        Left = 46
+        Top = 197
+        Width = 20
+        Height = 20
+        Caption = 'UF:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+      end
       object btnBuscaCEP: TImage
-        Left = 952
-        Top = 145
-        Width = 30
-        Height = 29
+        Left = 709
+        Top = 107
+        Width = 29
+        Height = 25
         Cursor = crHandPoint
         Center = True
         Picture.Data = {
@@ -100,185 +583,89 @@ object frmPacientes: TfrmPacientes
           2FA26391A32079429044CD3F589BCAB4C72874400000000049454E44AE426082}
         OnClick = btnBuscaCEPClick
       end
-      object btnCadastrar: TSpeedButton
-        Left = 655
-        Top = 266
-        Width = 153
-        Height = 54
-        Caption = 'NOVO'
-        ImageIndex = 0
-        ImageName = 'Add User Male_44px'
-        Images = Png
-        OnClick = btnCadastrarClick
-      end
-      object btnEdit: TSpeedButton
-        Left = 423
-        Top = 266
-        Width = 169
-        Height = 54
-        Cursor = crHandPoint
-        Caption = 'EDITAR'
-        ImageIndex = 1
-        ImageName = 'Edit Profile_44px'
-        Images = Png
-        Enabled = False
+      object Label1: TLabel
+        Left = 526
+        Top = 200
+        Width = 38
+        Height = 20
+        Caption = 'Ativo:'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clHotLight
-        Font.Height = -13
+        Font.Color = clWindowText
+        Font.Height = -15
         Font.Name = 'Segoe UI'
-        Font.Style = [fsBold]
+        Font.Style = []
         ParentFont = False
-        OnClick = btnEditClick
       end
       object btnSalvar: TSpeedButton
-        Left = 203
-        Top = 266
-        Width = 169
-        Height = 54
+        Left = 829
+        Top = 207
+        Width = 145
+        Height = 55
         Cursor = crHandPoint
         Caption = 'SALVAR'
         ImageIndex = 2
         ImageName = 'Save_44px'
         Images = Png
-        Enabled = False
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clHotLight
-        Font.Height = -13
+        Font.Color = clBlack
+        Font.Height = -12
         Font.Name = 'Segoe UI'
-        Font.Style = [fsBold]
+        Font.Style = []
         ParentFont = False
+        Visible = False
         OnClick = btnSalvarClick
       end
-      object Label1: TLabel
-        Left = 758
-        Top = 60
-        Width = 133
-        Height = 20
-        Caption = 'Celular para recado:'
+      object btnGerarCarteirinha: TSpeedButton
+        Left = 640
+        Top = 208
+        Width = 177
+        Height = 54
+        Caption = 'GERAR CARTEIRINHA'
+        ImageIndex = 5
+        ImageName = 'Identity Theft_44px'
+        Images = Png
+        Enabled = False
+        OnClick = btnGerarCarteirinhaClick
       end
-      object Label10: TLabel
-        Left = 758
-        Top = 127
-        Width = 28
-        Height = 20
-        Caption = 'CEP:'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -15
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentFont = False
-      end
-      object Label11: TLabel
-        Left = 1027
-        Top = 127
-        Width = 65
-        Height = 20
-        Caption = 'Endere'#231'o:'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -15
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentFont = False
-      end
-      object Label12: TLabel
-        Left = 203
-        Top = 177
-        Width = 92
-        Height = 20
-        Caption = 'N'#250'mero Casa:'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -15
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentFont = False
-      end
-      object Label13: TLabel
-        Left = 488
-        Top = 180
-        Width = 43
-        Height = 20
-        Caption = 'Bairro:'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -15
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentFont = False
-      end
-      object Label14: TLabel
-        Left = 758
-        Top = 180
-        Width = 50
-        Height = 20
-        Caption = 'Cidade:'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -15
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentFont = False
-      end
-      object Label2: TLabel
-        Left = 488
-        Top = 60
-        Width = 49
-        Height = 20
-        Caption = 'Celular:'
-      end
-      object Label3: TLabel
-        Left = 203
-        Top = 128
-        Width = 27
-        Height = 20
-        Caption = 'CPF:'
-      end
-      object Label4: TLabel
-        Left = 488
-        Top = 128
-        Width = 65
-        Height = 20
-        Caption = 'Conv'#234'nio:'
-      end
-      object cmbConvenio: TComboBox
-        Left = 488
-        Top = 146
-        Width = 224
-        Height = 28
-        Hint = 'Conv'#234'nio'
+      object edtNome: TEdit
+        Tag = 5
+        Left = 46
+        Top = 56
+        Width = 206
+        Height = 23
+        Hint = 'Nome'
+        Enabled = False
         TabOrder = 0
       end
-      object edtBairro: TEdit
+      object edtEmail: TEdit
         Tag = 5
-        Left = 488
-        Top = 203
-        Width = 224
-        Height = 28
-        Hint = 'Municipio'
-        ReadOnly = True
+        Left = 294
+        Top = 56
+        Width = 206
+        Height = 23
+        Hint = 'Email'
+        Enabled = False
         TabOrder = 1
       end
-      object edtCelRecado: TMaskEdit
+      object edtCpf: TMaskEdit
         Tag = 5
-        Left = 758
-        Top = 81
-        Width = 223
-        Height = 28
-        Hint = 'Celular'
+        Left = 526
+        Top = 58
+        Width = 206
+        Height = 23
+        Hint = 'CPF'
         Enabled = False
-        EditMask = '!\(99\)00000-0000;1;_'
+        EditMask = '000\.000\.000\-00;1;_'
         MaxLength = 14
         TabOrder = 2
-        Text = '(  )     -    '
+        Text = '   .   .   -  '
       end
       object edtCelular: TMaskEdit
         Tag = 5
-        Left = 488
-        Top = 81
-        Width = 221
-        Height = 28
+        Left = 766
+        Top = 56
+        Width = 208
+        Height = 23
         Hint = 'Celular'
         Enabled = False
         EditMask = '!\(99\)00000-0000;1;_'
@@ -286,313 +673,114 @@ object frmPacientes: TfrmPacientes
         TabOrder = 3
         Text = '(  )     -    '
       end
+      object cmbCargo: TComboBox
+        Tag = 5
+        Left = 46
+        Top = 108
+        Width = 206
+        Height = 23
+        Hint = 'Cargo'
+        Enabled = False
+        TabOrder = 4
+        Items.Strings = (
+          '')
+      end
+      object edtRemuneracao: TEdit
+        Tag = 3
+        Left = 294
+        Top = 108
+        Width = 206
+        Height = 23
+        Hint = 'Remunera'#231#227'o'
+        Enabled = False
+        TabOrder = 5
+      end
       object edtCep: TMaskEdit
         Tag = 5
-        Left = 758
-        Top = 146
-        Width = 194
-        Height = 28
+        Left = 526
+        Top = 108
+        Width = 184
+        Height = 23
         Hint = 'CEP'
         Enabled = False
         EditMask = '00000\-999;1;_'
         MaxLength = 9
-        TabOrder = 4
+        TabOrder = 6
         Text = '     -   '
-      end
-      object edtCpf: TMaskEdit
-        Tag = 5
-        Left = 203
-        Top = 146
-        Width = 233
-        Height = 28
-        Hint = 'CPF'
-        Enabled = False
-        EditMask = '000\.000\.000\-00;1;_'
-        MaxLength = 14
-        TabOrder = 5
-        Text = '   .   .   -  '
       end
       object edtEndereco: TEdit
         Tag = 5
-        Left = 1027
-        Top = 146
-        Width = 231
-        Height = 28
+        Left = 768
+        Top = 108
+        Width = 206
+        Height = 23
         Hint = 'Endere'#231'o'
-        ReadOnly = True
-        TabOrder = 6
-      end
-      object edtMunicipio: TEdit
-        Tag = 5
-        Left = 758
-        Top = 203
-        Width = 232
-        Height = 28
-        Hint = 'Municipio'
         ReadOnly = True
         TabOrder = 7
       end
-      object edtNomePaci: TLabeledEdit
-        Left = 203
-        Top = 81
-        Width = 227
-        Height = 28
-        Hint = 'Nome'
-        EditLabel.Width = 103
-        EditLabel.Height = 20
-        EditLabel.Caption = 'Nome Paciente:'
+      object edtNumero: TEdit
+        Tag = 5
+        Left = 46
+        Top = 161
+        Width = 206
+        Height = 23
+        Hint = 'N'#250'mero casa'
         Enabled = False
         TabOrder = 8
       end
-      object edtNomeRecado: TLabeledEdit
-        Left = 1027
-        Top = 81
-        Width = 231
-        Height = 28
-        EditLabel.Width = 98
-        EditLabel.Height = 20
-        EditLabel.Caption = 'Nome Recado:'
-        Enabled = False
+      object edtBairro: TEdit
+        Tag = 5
+        Left = 294
+        Top = 163
+        Width = 206
+        Height = 23
+        Hint = 'Municipio'
+        ReadOnly = True
         TabOrder = 9
       end
-      object edtNumero: TEdit
+      object edtComplemento: TEdit
         Tag = 5
-        Left = 203
-        Top = 203
-        Width = 233
-        Height = 28
-        Hint = 'N'#250'mero casa'
+        Left = 526
+        Top = 160
+        Width = 206
+        Height = 23
+        Hint = 'Municipio'
         Enabled = False
         TabOrder = 10
       end
-      object dbPacientes: TDBGrid
-        AlignWithMargins = True
-        Left = 203
-        Top = 347
-        Width = 1033
-        Height = 169
-        Margins.Left = 200
-        Margins.Top = 0
-        Margins.Right = 200
-        Margins.Bottom = 40
-        DataSource = dm.dsPaci
-        Options = [dgTitles, dgColumnResize, dgColLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+      object edtMunioipio: TEdit
+        Tag = 5
+        Left = 768
+        Top = 161
+        Width = 206
+        Height = 23
+        Hint = 'Municipio'
+        ReadOnly = True
         TabOrder = 11
-        TitleFont.Charset = DEFAULT_CHARSET
-        TitleFont.Color = clWindowText
-        TitleFont.Height = -15
-        TitleFont.Name = 'Segoe UI'
-        TitleFont.Style = []
-        Columns = <
-          item
-            Expanded = False
-            FieldName = 'id_paci'
-            Title.Caption = 'C'#243'digo'
-            Title.Font.Charset = ANSI_CHARSET
-            Title.Font.Color = clWindowText
-            Title.Font.Height = -15
-            Title.Font.Name = 'Segoe UI'
-            Title.Font.Style = [fsBold]
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'nome_paci'
-            Title.Caption = 'Nome do Paciente'
-            Title.Font.Charset = ANSI_CHARSET
-            Title.Font.Color = clWindowText
-            Title.Font.Height = -15
-            Title.Font.Name = 'Segoe UI'
-            Title.Font.Style = [fsBold]
-            Width = 200
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'numero_paci'
-            Title.Caption = 'N'#250'mero'
-            Title.Font.Charset = ANSI_CHARSET
-            Title.Font.Color = clWindowText
-            Title.Font.Height = -15
-            Title.Font.Name = 'Segoe UI'
-            Title.Font.Style = [fsBold]
-            Width = 100
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'nome_conv'
-            Title.Caption = 'Conv'#234'nio'
-            Title.Font.Charset = ANSI_CHARSET
-            Title.Font.Color = clWindowText
-            Title.Font.Height = -15
-            Title.Font.Name = 'Segoe UI'
-            Title.Font.Style = [fsBold]
-            Width = 100
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'nome_recado_paci'
-            Title.Caption = 'Nome para Recado'
-            Title.Font.Charset = ANSI_CHARSET
-            Title.Font.Color = clWindowText
-            Title.Font.Height = -15
-            Title.Font.Name = 'Segoe UI'
-            Title.Font.Style = [fsBold]
-            Width = 150
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'numero_recado_paci'
-            Title.Caption = 'N'#250'mero para Recado'
-            Title.Font.Charset = ANSI_CHARSET
-            Title.Font.Color = clWindowText
-            Title.Font.Height = -15
-            Title.Font.Name = 'Segoe UI'
-            Title.Font.Style = [fsBold]
-            Width = 150
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'cep_paci'
-            Title.Caption = 'CEP'
-            Title.Font.Charset = ANSI_CHARSET
-            Title.Font.Color = clWindowText
-            Title.Font.Height = -15
-            Title.Font.Name = 'Segoe UI'
-            Title.Font.Style = [fsBold]
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'endereco'
-            Title.Caption = 'Endere'#231'o'
-            Title.Font.Charset = ANSI_CHARSET
-            Title.Font.Color = clWindowText
-            Title.Font.Height = -15
-            Title.Font.Name = 'Segoe UI'
-            Title.Font.Style = [fsBold]
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'numerocasa_paci'
-            Title.Caption = 'N'#250'mero Casa'
-            Title.Font.Charset = ANSI_CHARSET
-            Title.Font.Color = clWindowText
-            Title.Font.Height = -15
-            Title.Font.Name = 'Segoe UI'
-            Title.Font.Style = [fsBold]
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'bairro_paci'
-            Title.Caption = 'Bairro'
-            Title.Font.Charset = ANSI_CHARSET
-            Title.Font.Color = clWindowText
-            Title.Font.Height = -15
-            Title.Font.Name = 'Segoe UI'
-            Title.Font.Style = [fsBold]
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'cidade_paci'
-            Title.Caption = 'Cidade'
-            Title.Font.Charset = ANSI_CHARSET
-            Title.Font.Color = clWindowText
-            Title.Font.Height = -15
-            Title.Font.Name = 'Segoe UI'
-            Title.Font.Style = [fsBold]
-            Visible = True
-          end>
+      end
+      object edtUf: TEdit
+        Tag = 5
+        Left = 46
+        Top = 218
+        Width = 206
+        Height = 23
+        Hint = 'Municipio'
+        ReadOnly = True
+        TabOrder = 12
+      end
+      object cmbStatus: TComboBox
+        Left = 526
+        Top = 218
+        Width = 59
+        Height = 23
+        Hint = 'Status do Funcion'#225'rio'
+        TabOrder = 13
+        Text = 'S'
+        Items.Strings = (
+          'S'
+          'N')
       end
     end
-    object Panel3: TPanel
-      Left = 0
-      Top = 0
-      Width = 1387
-      Height = 65
-      Align = alTop
-      BevelOuter = bvNone
-      TabOrder = 1
-      ExplicitWidth = 1371
-      object pnlSair: TPanel
-        Left = 0
-        Top = 0
-        Width = 82
-        Height = 65
-        Align = alLeft
-        BevelOuter = bvNone
-        Color = clSkyBlue
-        ParentBackground = False
-        TabOrder = 0
-        ExplicitHeight = 73
-        object btnSair: TSpeedButton
-          Left = 0
-          Top = 0
-          Width = 82
-          Height = 65
-          Cursor = crHandPoint
-          Align = alClient
-          ImageIndex = 3
-          ImageName = 'Exit_44px'
-          Images = Png
-          Flat = True
-          OnClick = btnSairClick
-          ExplicitLeft = 24
-        end
-      end
-    end
-  end
-  object RESTResponseDataSetAdapter1: TRESTResponseDataSetAdapter
-    Dataset = MemTable
-    FieldDefs = <>
-    Response = RESTResponse1
-    TypesMode = Rich
-    Left = 952
-    Top = 16
-  end
-  object RESTClient1: TRESTClient
-    Accept = 'application/json, text/plain; q=0.9, text/html;q=0.8,'
-    AcceptCharset = 'utf-8, *;q=0.8'
-    BaseURL = 'http://viacep.com.br/ws'
-    Params = <>
-    Left = 1064
-    Top = 16
-  end
-  object RESTRequest1: TRESTRequest
-    AssignedValues = [rvConnectTimeout, rvReadTimeout]
-    Client = RESTClient1
-    Params = <>
-    Resource = '01001000/json/'
-    Response = RESTResponse1
-    Left = 1144
-    Top = 16
-  end
-  object RESTResponse1: TRESTResponse
-    ContentType = 'application/json'
-    Left = 1224
-    Top = 16
-  end
-  object MemTable: TFDMemTable
-    FieldDefs = <>
-    IndexDefs = <>
-    FetchOptions.AssignedValues = [evMode]
-    FetchOptions.Mode = fmAll
-    ResourceOptions.AssignedValues = [rvSilentMode]
-    ResourceOptions.SilentMode = True
-    UpdateOptions.AssignedValues = [uvUpdateChngFields, uvUpdateMode, uvLockMode, uvLockPoint, uvLockWait, uvRefreshMode, uvFetchGeneratorsPoint, uvCheckRequired, uvCheckReadOnly, uvCheckUpdatable]
-    UpdateOptions.LockWait = True
-    UpdateOptions.FetchGeneratorsPoint = gpNone
-    UpdateOptions.CheckRequired = False
-    StoreDefs = True
-    Left = 1304
-    Top = 16
   end
   object Png: TPngImageList
     Height = 44
@@ -856,7 +1044,100 @@ object frmPacientes: TfrmPacientes
           3054BA4E3D8DF9F5E37A099D6A110547C15170141C0547C1FF6FF0DFBA8A344B
           75AA3ACE0000000049454E44AE426082}
       end>
-    Left = 1296
-    Top = 88
+    Left = 784
+    Top = 16
+  end
+  object RESTRequest1: TRESTRequest
+    AssignedValues = [rvConnectTimeout, rvReadTimeout]
+    Client = RESTClient1
+    Params = <>
+    Resource = '01001000/json/'
+    Response = RESTResponse1
+    Left = 616
+    Top = 24
+  end
+  object RESTClient1: TRESTClient
+    Accept = 'application/json, text/plain; q=0.9, text/html;q=0.8,'
+    AcceptCharset = 'utf-8, *;q=0.8'
+    BaseURL = 'http://viacep.com.br/ws'
+    Params = <>
+    Left = 536
+    Top = 24
+  end
+  object RESTResponse1: TRESTResponse
+    ContentType = 'application/json'
+    Left = 696
+    Top = 24
+  end
+  object RESTResponseDataSetAdapter1: TRESTResponseDataSetAdapter
+    Active = True
+    Dataset = MemTable
+    FieldDefs = <>
+    Response = RESTResponse1
+    TypesMode = Rich
+    Left = 400
+    Top = 16
+  end
+  object MemTable: TFDMemTable
+    Active = True
+    FieldDefs = <
+      item
+        Name = 'cep'
+        DataType = ftWideString
+        Size = 9
+      end
+      item
+        Name = 'logradouro'
+        DataType = ftWideString
+        Size = 11
+      end
+      item
+        Name = 'complemento'
+        DataType = ftWideString
+        Size = 10
+      end
+      item
+        Name = 'bairro'
+        DataType = ftWideString
+        Size = 2
+      end
+      item
+        Name = 'localidade'
+        DataType = ftWideString
+        Size = 9
+      end
+      item
+        Name = 'uf'
+        DataType = ftWideString
+        Size = 2
+      end
+      item
+        Name = 'ibge'
+        DataType = ftInteger
+      end
+      item
+        Name = 'gia'
+        DataType = ftInteger
+      end
+      item
+        Name = 'ddd'
+        DataType = ftInteger
+      end
+      item
+        Name = 'siafi'
+        DataType = ftInteger
+      end>
+    IndexDefs = <>
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvUpdateChngFields, uvUpdateMode, uvLockMode, uvLockPoint, uvLockWait, uvRefreshMode, uvFetchGeneratorsPoint, uvCheckRequired, uvCheckReadOnly, uvCheckUpdatable]
+    UpdateOptions.LockWait = True
+    UpdateOptions.FetchGeneratorsPoint = gpNone
+    UpdateOptions.CheckRequired = False
+    StoreDefs = True
+    Left = 272
+    Top = 16
   end
 end
