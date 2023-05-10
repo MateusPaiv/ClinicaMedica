@@ -56,6 +56,8 @@ type
     dbPacientes: TDBGrid;
     DatePicker1: TDatePicker;
     Label5: TLabel;
+    edtBuscaNome: TEdit;
+    lblBusca: TLabel;
     procedure btnSalvarClick(Sender: TObject);
     procedure btnEditClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -65,6 +67,7 @@ type
     procedure btnBuscaCEPClick(Sender: TObject);
     procedure dbPacientesCellClick(Column: TColumn);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure edtBuscaNomeChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -440,6 +443,16 @@ begin
   edtBairro.Enabled := false;
   edtMunicipio.Enabled := false;
   DatePicker1.Enabled := false;
+end;
+
+procedure TfrmPacientes.edtBuscaNomeChange(Sender: TObject);
+begin
+  dm.qryPaci.Close;
+  dm.qryPaci.SQL.Clear;
+  dm.qryPaci.SQL.add
+    ('SELECT * FROM pacientes WHERE nome_paci LIKE :nome ORDER BY nome_paci asc');
+  dm.qryPaci.ParamByName('nome').AsString := edtBuscaNome.Text + '%';
+  dm.qryPaci.Open;
 end;
 
 procedure TfrmPacientes.FormClose(Sender: TObject; var Action: TCloseAction);

@@ -226,7 +226,7 @@ begin
   dm.qryConsMedico.ParamByName('datahoje').AsDate := Now;
   dm.qryConsMedico.ParamByName('idUser').Value := idFunc;
   dm.qryConsMedico.Open;
-  ShowMessage(IntToStr(idfunc));
+  ShowMessage(IntToStr(idFunc));
 end;
 
 procedure TfrmPrincipal.listarConsultasRealizadas;
@@ -787,6 +787,7 @@ begin
     3:
       begin
         btnCadastros.Enabled := false;
+        btnMovimentos.Enabled := false;
         btnAdm.Visible := false;
         btnTelaRecp.Visible := false;
         btnDesafio.Visible := false;

@@ -43,8 +43,8 @@ type
     procedure dbUsuariosCellClick(Column: TColumn);
     procedure btnEditClick(Sender: TObject);
     procedure edtBuscaUserChange(Sender: TObject);
-    procedure cmbNvlAcessoExit(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure cmbNvlAcessoSelect(Sender: TObject);
   private
     { Private declarations }
   public
@@ -173,13 +173,34 @@ begin
   limpacampos(self);
 end;
 
-procedure TfrmUsuarios.cmbNvlAcessoExit(Sender: TObject);
+procedure TfrmUsuarios.cmbNvlAcessoSelect(Sender: TObject);
 begin
+  if cmbNvlAcesso.Text = 'Administrador' then
+  begin
+    if cargoUsuario <> 1 then
+    begin
+      MessageDlg('Você não tem permissão para cadastrar administrador!',
+        TMsgDlgType.mtInformation, [mbOK], 0);
+      btnSalvar.Enabled := false;
+      exit;
+    end;
+  end else
+  begin
+    btnSalvar.Enabled := true;
+  end;
+
   if cmbNvlAcesso.Text = 'Médico' then
   begin
+
     edtCrm.Visible := true;
     Label2.Visible := true;
+  end
+  else
+  begin
+    edtCrm.Visible := false;
+    Label2.Visible := false;
   end;
+
 end;
 
 procedure TfrmUsuarios.dbUsuariosCellClick(Column: TColumn);
@@ -240,6 +261,7 @@ begin
   desabilitarCampos;
   listar;
   dm.tbUser.Active := true;
+
 end;
 
 procedure TfrmUsuarios.FormKeyDown(Sender: TObject; var Key: Word;

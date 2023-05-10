@@ -18,8 +18,8 @@ object dm: Tdm
   end
   object PgDriverLink: TFDPhysPgDriverLink
     VendorLib = 
-      'C:\Users\Auditorio\Desktop\ClinicaMedica\Win32\Debug\lib\libpq.d' +
-      'll'
+      'C:\Users\mateus.5937\Desktop\ClinicaMedica\Win32\Debug\lib\libpq' +
+      '.dll'
     Left = 96
     Top = 8
   end
@@ -4380,7 +4380,6 @@ object dm: Tdm
     Top = 440
   end
   object qryRelPacientes: TFDQuery
-    Active = True
     Connection = Connection
     SQL.Strings = (
       
@@ -4390,7 +4389,6 @@ object dm: Tdm
     Top = 480
   end
   object qryRelFuncionarios: TFDQuery
-    Active = True
     Connection = Connection
     SQL.Strings = (
       

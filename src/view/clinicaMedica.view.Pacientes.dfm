@@ -38,6 +38,7 @@ object frmPacientes: TfrmPacientes
       Color = clMenu
       ParentBackground = False
       TabOrder = 0
+      ExplicitLeft = 16
       ExplicitTop = 71
       object btnBuscaCEP: TImage
         Left = 872
@@ -238,6 +239,13 @@ object frmPacientes: TfrmPacientes
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
+      end
+      object lblBusca: TLabel
+        Left = 856
+        Top = 266
+        Width = 278
+        Height = 20
+        Caption = 'Digite o nome do paciente para pesquisa:'
       end
       object cmbConvenio: TComboBox
         Left = 408
@@ -522,6 +530,14 @@ object frmPacientes: TfrmPacientes
         Font.Name = 'Segoe UI'
         Font.Style = []
         TabOrder = 12
+      end
+      object edtBuscaNome: TEdit
+        Left = 885
+        Top = 292
+        Width = 228
+        Height = 28
+        TabOrder = 13
+        OnChange = edtBuscaNomeChange
       end
     end
     object Panel3: TPanel
