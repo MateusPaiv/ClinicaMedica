@@ -233,6 +233,7 @@ begin
   // Conexao.Senha := '12345';
   // Conexao.Porta := '5432';
   // Conexao.Base := 'apr_mateus';
+  PgDriverLink.VendorLib := GetCurrentDir + '\lib\' + 'libpq.dll';
 end;
 
 procedure Tdm.DataModuleDestroy(Sender: TObject);
