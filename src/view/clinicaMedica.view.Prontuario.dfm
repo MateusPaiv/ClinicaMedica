@@ -26,8 +26,6 @@ object frmProntuario: TfrmProntuario
     Color = clMenu
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 774
-    ExplicitHeight = 769
     object Label4: TLabel
       Left = 24
       Top = 26
@@ -404,7 +402,7 @@ object frmProntuario: TfrmProntuario
   end
   object Timer1: TTimer
     Enabled = False
-    Interval = 100
+    Interval = 50
     OnTimer = Timer1Timer
     Left = 728
     Top = 56

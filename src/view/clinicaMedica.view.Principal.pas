@@ -217,6 +217,7 @@ var
   Data: TDate;
 begin
   Data := Now;
+
   dm.qryConsMedico.Close;
   dm.qryConsMedico.SQL.Clear;
   dm.qryConsMedico.SQL.add
@@ -226,7 +227,6 @@ begin
   dm.qryConsMedico.ParamByName('datahoje').AsDate := Now;
   dm.qryConsMedico.ParamByName('idUser').Value := idFunc;
   dm.qryConsMedico.Open;
-  ShowMessage(IntToStr(idFunc));
 end;
 
 procedure TfrmPrincipal.listarConsultasRealizadas;

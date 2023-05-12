@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls,
-  clinicaMedica.conn.Conexao;
+  clinicaMedica.conn.Conexao, Vcl.WinXPickers;
 
 type
   TfrmRelPront = class(TForm)
@@ -14,6 +14,10 @@ type
     btnRelatorio: TSpeedButton;
     edtNome: TEdit;
     Label1: TLabel;
+    dataConsulta: TDatePicker;
+    Label2: TLabel;
+    dataConsultaFinal: TDatePicker;
+    Label3: TLabel;
     procedure btnRelatorioClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
@@ -41,8 +45,10 @@ begin
   dm.qryRelPront.sql.Clear;
   dm.qryRelPront.sql.Add
     ('select p.*, c.*, u.nome_user from prontuarios as p inner join consultas as c on p.id_pront_paci = c.id_cons_paciente inner join usuarios as u on u.id_func_user = c.id_cons_medico ');
-  dm.qryRelPront.sql.Add('WHERE c.nome_paci_cons LIKE :nome');
+  dm.qryRelPront.sql.Add('WHERE c.nome_paci_cons LIKE :nome AND dataconsulta BETWEEN :data AND :datafinal');
   dm.qryRelPront.ParamByName('nome').Value := '%' + edtNome.Text + '%';
+  dm.qryRelPront.ParamByName('data').AsDate := dataConsulta.Date ;
+   dm.qryRelPront.ParamByName('datafinal').AsDate := dataConsultaFinal.Date ;
   dm.qryRelPront.Open;
 
   dm.relProntuarios.Variables.Clear;

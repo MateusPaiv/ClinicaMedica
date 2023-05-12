@@ -1,0 +1,74 @@
+object frmRelPront: TfrmRelPront
+  Left = 0
+  Top = 0
+  Caption = 'Relat'#243'rio de pontu'#225'rios'
+  ClientHeight = 266
+  ClientWidth = 530
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -15
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poMainFormCenter
+  OnClose = FormClose
+  PixelsPerInch = 96
+  TextHeight = 20
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 530
+    Height = 266
+    Align = alClient
+    BevelOuter = bvNone
+    Color = clWhite
+    ParentBackground = False
+    TabOrder = 0
+    ExplicitWidth = 490
+    ExplicitHeight = 194
+    object btnRelatorio: TSpeedButton
+      Left = 210
+      Top = 209
+      Width = 145
+      Height = 41
+      Caption = 'Gerar prontuarios'
+      OnClick = btnRelatorioClick
+    end
+    object Label1: TLabel
+      Left = 112
+      Top = 21
+      Width = 203
+      Height = 20
+      Caption = 'Digite pelo nome do paciente:'
+    end
+    object Label2: TLabel
+      Left = 112
+      Top = 104
+      Width = 94
+      Height = 20
+      Caption = 'Data consulta:'
+    end
+    object edtNome: TEdit
+      Left = 112
+      Top = 47
+      Width = 314
+      Height = 28
+      TabOrder = 0
+      TextHint = 'Digite o nome do paciente aqui!'
+    end
+    object dataConsulta: TDatePicker
+      Left = 112
+      Top = 130
+      Width = 217
+      Date = 45058.000000000000000000
+      DateFormat = 'dd/MM/yyyy'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      TabOrder = 1
+    end
+  end
+end

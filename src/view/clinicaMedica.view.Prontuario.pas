@@ -76,7 +76,8 @@ implementation
 
 {$R *.dfm}
 
-uses clinicaMedica.conn.Conexao, clinicaMedica.view.Principal;
+uses clinicaMedica.conn.Conexao, clinicaMedica.view.Principal,
+  clinicaMedica.rel.prontuario;
 
 procedure TfrmProntuario.asssociarCampos;
 begin
@@ -165,7 +166,6 @@ begin
     dm.qryCons.ParamByName('id').value := id;
     dm.qryCons.execSQL;
 
-
     asssociarCampos;
     dm.tbPront.Post;
     messageDlg('Prontuário salvo com sucesso!', MtInformation, [MbOK], 0);
@@ -212,15 +212,18 @@ end;
 
 procedure TfrmProntuario.btnRelatorioClick(Sender: TObject);
 begin
-  dm.qryRelPront.Close;
-  dm.qryRelPront.SQL.Clear;
-  dm.qryRelPront.SQL.Add
-    ('select p.*, c.*, u.nome_user from prontuarios as p inner join consultas as c on p.id_pront_paci = c.id_cons_paciente inner join usuarios as u on u.id_func_user = c.id_cons_medico ');
-  dm.qryRelPront.SQL.Add('WHERE c.nome_paci_cons LIKE :nome');
-  dm.qryRelPront.ParamByName('nome').value := '%' + edtNomePac.Text + '%';
-  dm.qryRelPront.Open;
-  dm.relProntuarios.Variables.Clear;
-  dm.relProntuarios.ShowReport();
+
+  frmRelPront := TfrmRelPront.Create(nil);
+  frmRelPront.showmodal;
+  // dm.qryRelPront.Close;
+  // dm.qryRelPront.SQL.Clear;
+  // dm.qryRelPront.SQL.Add
+  // ('select p.*, c.*, u.nome_user from prontuarios as p inner join consultas as c on p.id_pront_paci = c.id_cons_paciente inner join usuarios as u on u.id_func_user = c.id_cons_medico ');
+  // dm.qryRelPront.SQL.Add('WHERE c.nome_paci_cons LIKE :nome');
+  // dm.qryRelPront.ParamByName('nome').value := '%' + edtNomePac.Text + '%';
+  // dm.qryRelPront.Open;
+  // dm.relProntuarios.Variables.Clear;
+  // dm.relProntuarios.ShowReport();
 end;
 
 procedure TfrmProntuario.FormClose(Sender: TObject; var Action: TCloseAction);

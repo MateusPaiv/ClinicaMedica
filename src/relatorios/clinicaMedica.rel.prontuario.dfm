@@ -2,8 +2,8 @@ object frmRelPront: TfrmRelPront
   Left = 0
   Top = 0
   Caption = 'Relat'#243'rio de pontu'#225'rios'
-  ClientHeight = 194
-  ClientWidth = 490
+  ClientHeight = 266
+  ClientWidth = 543
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,16 +18,18 @@ object frmRelPront: TfrmRelPront
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 490
-    Height = 194
+    Width = 543
+    Height = 266
     Align = alClient
     BevelOuter = bvNone
     Color = clWhite
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 490
+    ExplicitHeight = 194
     object btnRelatorio: TSpeedButton
-      Left = 181
-      Top = 112
+      Left = 202
+      Top = 185
       Width = 145
       Height = 41
       Caption = 'Gerar prontuarios'
@@ -40,6 +42,20 @@ object frmRelPront: TfrmRelPront
       Height = 20
       Caption = 'Digite pelo nome do paciente:'
     end
+    object Label2: TLabel
+      Left = 80
+      Top = 104
+      Width = 78
+      Height = 20
+      Caption = 'Data inicial:'
+    end
+    object Label3: TLabel
+      Left = 314
+      Top = 104
+      Width = 68
+      Height = 20
+      Caption = 'Data final:'
+    end
     object edtNome: TEdit
       Left = 112
       Top = 47
@@ -47,6 +63,32 @@ object frmRelPront: TfrmRelPront
       Height = 28
       TabOrder = 0
       TextHint = 'Digite o nome do paciente aqui!'
+    end
+    object dataConsulta: TDatePicker
+      Left = 80
+      Top = 130
+      Width = 161
+      Date = 45058.000000000000000000
+      DateFormat = 'dd/MM/yyyy'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      TabOrder = 1
+    end
+    object dataConsultaFinal: TDatePicker
+      Left = 314
+      Top = 130
+      Width = 152
+      Date = 45058.000000000000000000
+      DateFormat = 'dd/MM/yyyy'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      TabOrder = 2
     end
   end
 end
