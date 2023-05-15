@@ -197,8 +197,11 @@ type
     tbProntExamstatus: TIntegerField;
     tbProntExamid_exam: TIntegerField;
     qryRelExames: TFDQuery;
-    relExames: TfrxReport;
     DSRelexames: TfrxDBDataset;
+    relExames: TfrxReport;
+    qryVerificaStatusFunc: TFDQuery;
+    tbPacidata_nascimento: TDateField;
+    tbFuncdata_nascimento: TDateField;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private
@@ -230,6 +233,7 @@ begin
   // Conexao.Senha := '12345';
   // Conexao.Porta := '5432';
   // Conexao.Base := 'apr_mateus';
+  PgDriverLink.VendorLib := GetCurrentDir + '\lib\' + 'libpq.dll';
 end;
 
 procedure Tdm.DataModuleDestroy(Sender: TObject);
@@ -247,7 +251,7 @@ begin
   login := 'aprendiz';
   senha := '12345';
   porta := '5432';
-  base := 'apr_mateus';
+  base := 'apr_mateus';                                                S
 
   Result := False;
   Connection.Params.Clear;

@@ -11,15 +11,11 @@ object dm: Tdm
       'Password=12345'
       'Server=bdteste.rpinfo.com.br'
       'DriverID=PG')
-    Connected = True
     LoginPrompt = False
     Left = 32
     Top = 8
   end
   object PgDriverLink: TFDPhysPgDriverLink
-    VendorLib = 
-      'C:\Users\Auditorio\Desktop\ClinicaMedica\Win32\Debug\lib\libpq.d' +
-      'll'
     Left = 96
     Top = 8
   end
@@ -1748,7 +1744,6 @@ object dm: Tdm
     Top = 248
   end
   object qryAtestado: TFDQuery
-    Active = True
     Connection = Connection
     SQL.Strings = (
       
