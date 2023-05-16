@@ -34,8 +34,6 @@ object frmFuncionarios: TfrmFuncionarios
     ParentBackground = False
     ParentFont = False
     TabOrder = 0
-    ExplicitWidth = 1394
-    ExplicitHeight = 798
     object DBGrid1: TDBGrid
       AlignWithMargins = True
       Left = 11
@@ -82,6 +80,7 @@ object frmFuncionarios: TfrmFuncionarios
           Expanded = False
           FieldName = 'cargo'
           Title.Caption = 'Cargo'
+          Width = 120
           Visible = True
         end
         item
@@ -173,7 +172,6 @@ object frmFuncionarios: TfrmFuncionarios
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitWidth = 1392
       object pnlSair: TPanel
         Left = 0
         Top = 0
@@ -220,21 +218,32 @@ object frmFuncionarios: TfrmFuncionarios
       Padding.Bottom = 10
       ParentFont = False
       TabOrder = 2
-      ExplicitWidth = 1386
       object lblBusca: TLabel
         Left = 264
         Top = 22
-        Width = 173
-        Height = 17
+        Width = 195
+        Height = 20
         Caption = 'Digite o nome para pesquisa:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
         Visible = False
       end
       object Label15: TLabel
         Left = 43
         Top = 27
-        Width = 177
-        Height = 17
+        Width = 200
+        Height = 20
         Caption = 'Selecione o m'#233'todo de busca:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
       end
       object SpeedButton1: TSpeedButton
         Left = 1176
@@ -287,8 +296,14 @@ object frmFuncionarios: TfrmFuncionarios
         Left = 264
         Top = 43
         Width = 233
-        Height = 25
+        Height = 28
         Enabled = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 0
         Visible = False
         OnChange = edtBuscaNomeChange
@@ -299,6 +314,12 @@ object frmFuncionarios: TfrmFuncionarios
         Width = 104
         Height = 17
         Caption = 'NOME'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 1
         OnClick = rdNomeClick
       end
@@ -308,19 +329,31 @@ object frmFuncionarios: TfrmFuncionarios
         Width = 55
         Height = 17
         Caption = 'CPF'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 2
         OnClick = rdCPFClick
       end
       object edtBuscaCPF: TMaskEdit
         Tag = 5
         Left = 264
-        Top = 43
+        Top = 45
         Width = 233
-        Height = 25
+        Height = 28
         Hint = 'CPF'
         Enabled = False
         EditMask = '000\.000\.000\-00;1;_'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
         MaxLength = 14
+        ParentFont = False
         TabOrder = 3
         Text = '   .   .   -  '
         Visible = False
@@ -335,8 +368,8 @@ object frmFuncionarios: TfrmFuncionarios
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 3
-      ExplicitWidth = 1392
-      ExplicitHeight = 265
+      ExplicitLeft = 25
+      ExplicitTop = 137
       object Label5: TLabel
         Left = 46
         Top = 37
@@ -552,8 +585,8 @@ object frmFuncionarios: TfrmFuncionarios
         OnClick = btnBuscaCEPClick
       end
       object Label1: TLabel
-        Left = 294
-        Top = 195
+        Left = 526
+        Top = 200
         Width = 38
         Height = 20
         Caption = 'Ativo:'
@@ -594,6 +627,19 @@ object frmFuncionarios: TfrmFuncionarios
         Images = Png
         Enabled = False
         OnClick = btnGerarCarteirinhaClick
+      end
+      object Label6: TLabel
+        Left = 294
+        Top = 198
+        Width = 136
+        Height = 20
+        Caption = 'Data de nascimento:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
       end
       object edtNome: TEdit
         Tag = 5
@@ -737,8 +783,8 @@ object frmFuncionarios: TfrmFuncionarios
         TabOrder = 12
       end
       object cmbStatus: TComboBox
-        Left = 294
-        Top = 221
+        Left = 526
+        Top = 218
         Width = 59
         Height = 23
         Hint = 'Status do Funcion'#225'rio'
@@ -747,6 +793,20 @@ object frmFuncionarios: TfrmFuncionarios
         Items.Strings = (
           'S'
           'N')
+      end
+      object DatePicker1: TDatePicker
+        Left = 294
+        Top = 216
+        Width = 206
+        Height = 25
+        Date = 45051.000000000000000000
+        DateFormat = 'dd/MM/yyyy'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        TabOrder = 14
       end
     end
   end
@@ -1106,10 +1166,6 @@ object frmFuncionarios: TfrmFuncionarios
     UpdateOptions.CheckRequired = False
     StoreDefs = True
     Left = 272
-    Top = 16
-  end
-  object OpenPictureDialog1: TOpenPictureDialog
-    Left = 864
     Top = 16
   end
 end

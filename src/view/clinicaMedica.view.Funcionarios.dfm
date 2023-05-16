@@ -3,8 +3,8 @@ object frmFuncionarios: TfrmFuncionarios
   Top = 0
   BorderStyle = bsNone
   Caption = 'frmFuncionarios'
-  ClientHeight = 795
-  ClientWidth = 1335
+  ClientHeight = 726
+  ClientWidth = 1334
   Color = clBtnHighlight
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,8 +22,8 @@ object frmFuncionarios: TfrmFuncionarios
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1335
-    Height = 795
+    Width = 1334
+    Height = 726
     Align = alClient
     Color = clMenu
     Font.Charset = DEFAULT_CHARSET
@@ -34,12 +34,14 @@ object frmFuncionarios: TfrmFuncionarios
     ParentBackground = False
     ParentFont = False
     TabOrder = 0
+    ExplicitWidth = 1335
+    ExplicitHeight = 795
     object DBGrid1: TDBGrid
       AlignWithMargins = True
       Left = 11
-      Top = 412
-      Width = 1313
-      Height = 372
+      Top = 406
+      Width = 1312
+      Height = 309
       Margins.Left = 10
       Margins.Top = 10
       Margins.Right = 10
@@ -167,11 +169,12 @@ object frmFuncionarios: TfrmFuncionarios
     object pnlTop: TPanel
       Left = 1
       Top = 1
-      Width = 1333
+      Width = 1332
       Height = 64
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 1
+      ExplicitWidth = 1333
       object pnlSair: TPanel
         Left = 0
         Top = 0
@@ -203,7 +206,7 @@ object frmFuncionarios: TfrmFuncionarios
       AlignWithMargins = True
       Left = 4
       Top = 68
-      Width = 1327
+      Width = 1326
       Height = 69
       Align = alTop
       BevelOuter = bvNone
@@ -218,6 +221,7 @@ object frmFuncionarios: TfrmFuncionarios
       Padding.Bottom = 10
       ParentFont = False
       TabOrder = 2
+      ExplicitWidth = 1327
       object lblBusca: TLabel
         Left = 264
         Top = 22
@@ -363,13 +367,13 @@ object frmFuncionarios: TfrmFuncionarios
     object pnlCadastros: TPanel
       Left = 1
       Top = 140
-      Width = 1333
-      Height = 262
+      Width = 1332
+      Height = 256
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 3
-      ExplicitLeft = 25
-      ExplicitTop = 137
+      ExplicitWidth = 1333
+      ExplicitHeight = 262
       object Label5: TLabel
         Left = 46
         Top = 37
